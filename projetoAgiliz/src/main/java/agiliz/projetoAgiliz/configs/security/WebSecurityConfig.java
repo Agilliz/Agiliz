@@ -11,9 +11,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().authenticated()) // Seta que todas as requisições precisam de autenticação
-                .httpBasic(withDefaults());
+            .httpBasic()
+            .and()
+            .authorizeRequests()
+            .anyRequest().authenticated()
+            .and()
+            .csrf().disable();
+            
         return http.build();
     }
 }

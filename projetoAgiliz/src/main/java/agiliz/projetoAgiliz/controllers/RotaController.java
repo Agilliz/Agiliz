@@ -29,6 +29,12 @@ public class RotaController {
     public double calcularDinstancia(@RequestBody DistanciaDTO distanciaDTO){
         return RotaService.calcularDistancia(distanciaDTO.getEndereco1(), distanciaDTO.getEndereco2());
     }
+
+    // @GetMapping("/teste")
+    // public String getMethodName() {
+    //     return "hahahha";
+    // }
+    
     
 }
 
