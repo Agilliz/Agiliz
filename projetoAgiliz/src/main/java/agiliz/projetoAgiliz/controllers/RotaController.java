@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import agiliz.projetoAgiliz.models.Endereco;
 import agiliz.projetoAgiliz.services.RotaService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/rota")
@@ -26,6 +29,7 @@ public class RotaController {
     public double calcularDinstancia(@RequestBody DistanciaDTO distanciaDTO){
         return RotaService.calcularDistancia(distanciaDTO.getEndereco1(), distanciaDTO.getEndereco2());
     }
+    
 }
 
 @Getter
