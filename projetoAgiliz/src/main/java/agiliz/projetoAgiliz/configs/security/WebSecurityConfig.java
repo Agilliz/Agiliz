@@ -22,13 +22,13 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    @Bean
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("agilizDev")
-                .password("bc024d9a-719c-411c-ad7c-2193931e5efc")
-                .roles("ADMIN");
-    }
+    // @Bean
+    // protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth.inMemoryAuthentication()
+    //             .withUser("agilizDev")
+    //             .password("bc024d9a-719c-411c-ad7c-2193931e5efc")
+    //             .roles("ADMIN");
+    // }
 }
 /*
 // _..__.          .__.._

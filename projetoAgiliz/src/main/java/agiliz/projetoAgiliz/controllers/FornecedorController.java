@@ -7,13 +7,13 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
 import agiliz.projetoAgiliz.dto.FornecedorDTO;
 import agiliz.projetoAgiliz.models.FornecedorModel;
+import agiliz.projetoAgiliz.repositories.IFornecedorRepository;
 import agiliz.projetoAgiliz.repositories.IFornecedorRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
