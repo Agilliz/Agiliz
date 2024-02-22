@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import agiliz.projetoAgiliz.models.FornecedorModel;
-import agiliz.projetoAgiliz.repositories.FornecedorRepository;
+import agiliz.projetoAgiliz.repositories.IFornecedorRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/fornecedor")
 public class FornecedorController {
     @Autowired
-    FornecedorRepository fornecedorRepository;
+    IFornecedorRepository fornecedorRepository;
 
     @GetMapping("/")
     public ResponseEntity<MensageriaService<List<FornecedorModel>>> listarFornecedores() {
