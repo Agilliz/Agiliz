@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="zone")
+@Table(name ="zona")
 public class ZonaModel {
 
     @Id
@@ -22,6 +22,6 @@ public class ZonaModel {
     private Integer limiteSuperiorCEP;
     private Integer limiteInferiorCEP;
 
-    @OneToMany(mappedBy = "pacote")
+    @OneToMany(mappedBy = "idPacote")
     private List<PacoteModel> pacotes;
 }

@@ -2,7 +2,6 @@ package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.DistanciaDTO;
 import agiliz.projetoAgiliz.dto.RotaDTO;
-import lombok.Getter;
 
 
 import java.util.List;
@@ -12,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import agiliz.projetoAgiliz.models.Endereco;
 import agiliz.projetoAgiliz.services.RotaService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
