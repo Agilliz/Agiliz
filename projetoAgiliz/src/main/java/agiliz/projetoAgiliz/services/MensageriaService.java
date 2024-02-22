@@ -36,6 +36,11 @@ public class MensageriaService<T> {
         this.data = data;
     }
 
+    public MensageriaService(String mensagemCliente, int status) {
+        this.mensagemCliente = mensagemCliente;
+        this.status = status;
+    }
+
     public MensageriaService(String mensagemCliente, String mensagemServidor, Integer status) {
         this.mensagemCliente = mensagemCliente;
         this.mensagemServidor = mensagemServidor;

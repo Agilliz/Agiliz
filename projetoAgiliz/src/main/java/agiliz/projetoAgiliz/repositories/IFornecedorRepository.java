@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import agiliz.projetoAgiliz.models.FornecedorModel;
 
 @Repository
-public interface FornecedorRepository extends JpaRepository<FornecedorModel, UUID>{
+public interface IFornecedorRepository extends JpaRepository<FornecedorModel, UUID>{
     
 }
