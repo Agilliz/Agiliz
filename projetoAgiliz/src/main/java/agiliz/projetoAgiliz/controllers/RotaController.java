@@ -1,5 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
+import agiliz.projetoAgiliz.dto.DistanciaDTO;
+import agiliz.projetoAgiliz.dto.RotaDTO;
 import lombok.Getter;
 
 
@@ -29,18 +31,4 @@ public class RotaController {
     public double calcularDinstancia(@RequestBody DistanciaDTO distanciaDTO){
         return RotaService.calcularDistancia(distanciaDTO.getEndereco1(), distanciaDTO.getEndereco2());
     }
-
-}
-
-@Getter
-class RotaDTO{
-    List<Endereco> entregas;
-    Endereco inicio;
-    Endereco fim;
-}
-
-@Getter
-class DistanciaDTO{
-    Endereco endereco1;
-    Endereco endereco2;
 }

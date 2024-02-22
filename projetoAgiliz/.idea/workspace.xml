@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9f590d44-5c7f-420d-ada8-968922b3b1bb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/dto/DistanciaDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/dto/RotaDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/controllers/RotaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/controllers/RotaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/models/CalculadoraRotas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/models/CalculadoraRotas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/services/RotaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/agiliz/projetoAgiliz/services/RotaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/controllers/DistanciaDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/controllers/DistanciaDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/controllers/RotaDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/controllers/RotaDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/models/Endereco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/agiliz/projetoAgiliz/models/Endereco.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2cgrmnxz145DG7gRMEgivd4QWyD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9f590d44-5c7f-420d-ada8-968922b3b1bb" name="Changes" comment="" />
+      <created>1708544230491</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1708544230491</updated>
+    </task>
+    <servers />
+  </component>
+</project>
