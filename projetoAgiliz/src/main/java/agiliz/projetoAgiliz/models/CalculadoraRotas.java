@@ -13,13 +13,36 @@ public class CalculadoraRotas {
     private Map<String, List<String>> adjMap;
 
     public CalculadoraRotas(List<Endereco> enderecos){
-        this.enderecos = new HashSet<String>(enderecos.stream().map(Endereco::getId).toList());
+        this.enderecos = new HashSet<>(enderecos.stream().map(Endereco::getId).toList());
         this.mapaDeDistancia = calcularDistancias(enderecos);
         this.adjMap = definirAdjacencia(enderecos);
     }
 
     public List<String> gerarRota(String vtxInicial, String vtxFinal){
-        return visitarNo(vtxFinal, vtxInicial, enderecos, new ArrayList<>());
+        List<String> caminho = visitarNo(vtxFinal, vtxInicial, enderecos, new ArrayList<>());
+        buscaGulosa();
+        System.out.println();
+        return caminho;
+    }
+
+    public void buscaGulosa(){
+        for(Map.Entry<String, Map<String, Double>> mapa : this.mapaDeDistancia.entrySet()){
+            System.out.println("Rotas de "+mapa.getKey());
+            for(Map.Entry<String, Double> entrada : mapa.getValue().entrySet()){
+                System.out.println(entrada.getKey()+": "+entrada.getValue()+"km");
+            }
+        }
+    }
+
+    private double calcularDistancia(int indiceAtual, List<String> enderecos, double distanciaTotal){
+        if(indiceAtual + 1 == enderecos.size()) return distanciaTotal;
+
+        String origem = enderecos.get(indiceAtual);
+        String destino = enderecos.get(indiceAtual + 1);
+
+        distanciaTotal += mapaDeDistancia.get(origem).get(destino);
+
+        return calcularDistancia(indiceAtual + 1, enderecos, distanciaTotal);
     }
 
     private List<String> visitarNo(
