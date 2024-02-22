@@ -1,8 +1,6 @@
 package agiliz.projetoAgiliz.models;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
