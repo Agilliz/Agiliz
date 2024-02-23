@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Service
+@Getter
 public class MensageriaService<T> {
     private String mensagemCliente;
     private String mensagemServidor;
