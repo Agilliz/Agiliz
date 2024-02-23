@@ -48,7 +48,7 @@ public class FornecedorController {
         MensageriaService<List<FornecedorModel>> mensageriaService = new MensageriaService<>(
                 "Nenhum fornecedor encontrado", "No content", 204);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(mensageriaService);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/{idFornecedor}")
@@ -87,6 +87,7 @@ public class FornecedorController {
                 "Fornecedor cadastrado com sucesso",
                 fornecedorModel, 201);
 
+        System.out.println(mensageriaService);
         return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
     }
 
@@ -101,7 +102,13 @@ public class FornecedorController {
             BeanUtils.copyProperties(fornecedorDTO, fornecedorModel);
 
             try {
+
                 fornecedorRepository.save(fornecedorModel);
+                MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
+                        "Fornecedor atualizado com sucesso", fornecedorModel, 200);
+
+                return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
+
             } catch (Exception e) {
                 MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
                         "Ocorreu um erro ao atualizar o fornecedor", fornecedorModel, 400);
@@ -109,6 +116,7 @@ public class FornecedorController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
             }
         }
+
         MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
                 "Fornecedor não encontrado", fornecedorModel, 404);
 
@@ -116,23 +124,23 @@ public class FornecedorController {
     }
 
     @DeleteMapping("/deletar/{idFornecedor}")
-    public ResponseEntity<MensageriaService<FornecedorModel>> deletarFornecedor(@PathVariable UUID idFornecedor){
-        
+    public ResponseEntity<MensageriaService<FornecedorModel>> deletarFornecedor(@PathVariable UUID idFornecedor) {
+
         Optional<FornecedorModel> fornecedor = fornecedorRepository.findById(idFornecedor);
 
-        if(fornecedor.isPresent()){
+        if (fornecedor.isPresent()) {
             try {
                 fornecedorRepository.delete(fornecedor.get());
             } catch (Exception e) {
-                MensageriaService mensageriaService = new MensageriaService("Não foi possível deletar o fornecedor", 
-                                                                            fornecedor, 400);
+                MensageriaService mensageriaService = new MensageriaService("Não foi possível deletar o fornecedor",
+                        fornecedor, 400);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
             }
         }
 
-        MensageriaService mensageriaService = new MensageriaService("Fornecedor não encontrado", 
-                                                                            fornecedor, 404);
-                                                                            
+        MensageriaService mensageriaService = new MensageriaService("Fornecedor não encontrado",
+                fornecedor, 404);
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
 
     }
