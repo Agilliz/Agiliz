@@ -27,17 +27,18 @@ public class ZonaController {
         return service.listarTodos();
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public void cadastrar(@RequestBody ZonaModel zona){
         service.cadastrar(zona);
     }
 
-    @PutMapping("/alterar")
-    public void alterar(@RequestBody ZonaModel zona){
+    @PutMapping
+    public String alterar(@RequestBody ZonaModel zona){
         service.cadastrar(zona);
+        return "PEREÇa";
     }
 
-    @DeleteMapping("/deletar/{idZona}")
+    @DeleteMapping("/{idZona}")
     public void deletar(@PathVariable UUID idZona){
         service.deletarPorId(idZona);
     }
