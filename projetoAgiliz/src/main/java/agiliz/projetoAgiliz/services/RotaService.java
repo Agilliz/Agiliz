@@ -26,3 +26,19 @@ public class RotaService {
         return CalculadoraRotas.calcularHarvesine(endereco1, endereco2);
     }
 }
+
+class EntidadeModel{
+
+}
+
+class EntidadeController{
+
+}
+
+class EntidadeService{
+
+}
+
+class EntidadeRepository{
+
+}
