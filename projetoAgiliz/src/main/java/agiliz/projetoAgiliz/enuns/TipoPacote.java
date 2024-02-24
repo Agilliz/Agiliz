@@ -1,5 +1,8 @@
 package agiliz.projetoAgiliz.enuns;
 
+import lombok.Getter;
+
+@Getter
 public enum TipoPacote {
     ENTREGA("entrega"),
     COLETA("coleta");

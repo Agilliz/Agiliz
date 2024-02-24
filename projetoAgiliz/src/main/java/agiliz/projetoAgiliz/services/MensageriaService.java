@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Service
+@Getter
 public class MensageriaService<T> {
     private String mensagemCliente;
     private String mensagemServidor;

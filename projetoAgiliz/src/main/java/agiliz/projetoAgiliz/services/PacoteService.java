@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.services;
 
 import java.util.UUID;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class PacoteService {
     @Autowired
     private IPacoteRepository repository;
 
-    public Iterable<PacoteModel> listarTodos(){
+    public List<PacoteModel> listarTodos(){
         return repository.findAll();
     }
 

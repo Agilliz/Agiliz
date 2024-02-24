@@ -5,10 +5,10 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import agiliz.projetoAgiliz.models.FornecedorModel;
-import agiliz.projetoAgiliz.models.PacoteModel;
+import agiliz.projetoAgiliz.models.UnidadeModel;
+
 
 @Repository
-public interface IPacoteRepository extends JpaRepository<PacoteModel, UUID>{
+public interface IUnidadeRepository extends JpaRepository<UnidadeModel, UUID>{
     
 }
