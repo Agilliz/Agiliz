@@ -24,10 +24,8 @@ public class UnidadeModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private UUID idUnidade;
-
-    @ManyToOne
-    @JoinColumn(name = "id_fornecedor")
-    private FornecedorModel fornecedor;
+    
+    private UUID fornecedor;
 
     private String rua;
     private String cep;
