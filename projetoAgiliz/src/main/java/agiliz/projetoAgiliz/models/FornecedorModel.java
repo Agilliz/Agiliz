@@ -31,7 +31,7 @@ public class FornecedorModel implements Serializable {
     private String nomeFornecedor;
     private String cnpjMatriz;
 
-    @OneToMany(mappedBy = "fornecedor")
+    @OneToMany(mappedBy = "idFornecedor")
     private List<UnidadeModel> unidades;
 
 }

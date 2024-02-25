@@ -24,8 +24,8 @@ public class UnidadeModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private UUID idUnidade;
-    
-    private UUID fornecedor;
+
+    private UUID idFornecedor;
 
     private String rua;
     private String cep;
