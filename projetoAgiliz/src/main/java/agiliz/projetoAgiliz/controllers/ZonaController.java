@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.BeanUtils;
@@ -33,7 +34,7 @@ public class ZonaController {
     public ResponseEntity<MensageriaService<ZonaModel>> cadastrar(@RequestBody @Valid ZonaDTO zonaDTO) {
         var zona = new ZonaModel();
         BeanUtils.copyProperties(zonaDTO, zona);
-        
+
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(new MensageriaService<ZonaModel>(
                 "Zona cadastrada com sucesso",
@@ -62,6 +63,27 @@ public class ZonaController {
                 zonas,
                 HttpStatus.OK.value()
             ));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MensageriaService<ZonaModel>> listarPorId(@PathVariable UUID id){
+        Optional<ZonaModel> zonaOpt = repository.findById(id);
+
+        if(zonaOpt.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new MensageriaService<>(
+                    "Zona não encontrada",
+                    "No content",
+                    HttpStatus.NOT_FOUND.value()
+                ));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MensageriaService<ZonaModel>(
+                    "Zona: ",
+                    zonaOpt.get(),
+                    HttpStatus.OK.value()
+                ));
     }
 
 
