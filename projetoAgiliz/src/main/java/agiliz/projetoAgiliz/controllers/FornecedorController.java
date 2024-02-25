@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -128,6 +129,12 @@ public class FornecedorController {
         if (fornecedor.isPresent()) {
             try {
                 fornecedorRepository.delete(fornecedor.get());
+                
+                MensageriaService mensageriaService = new MensageriaService("Fornecedor deletado com sucesso", 
+                fornecedor, 200);
+
+                return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
+
             } catch (Exception e) {
                 MensageriaService mensageriaService = new MensageriaService("Não foi possível deletar o fornecedor",
                         fornecedor, 400);
