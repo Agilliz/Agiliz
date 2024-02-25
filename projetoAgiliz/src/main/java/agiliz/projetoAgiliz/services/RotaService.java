@@ -9,7 +9,7 @@ import agiliz.projetoAgiliz.models.Endereco;
 
 @Service
 public class RotaService {
-    public static List<String> calcularRota(
+    public List<String> calcularRota(
             List<Endereco> entregas,
             Endereco inicio,
             Endereco fim
@@ -22,23 +22,7 @@ public class RotaService {
         return rota;
     }
 
-    public static Double calcularDistancia(Endereco endereco1, Endereco endereco2){
+    public Double calcularDistancia(Endereco endereco1, Endereco endereco2){
         return CalculadoraRotas.calcularHarvesine(endereco1, endereco2);
     }
-}
-
-class EntidadeModel{
-
-}
-
-class EntidadeController{
-
-}
-
-class EntidadeService{
-
-}
-
-class EntidadeRepository{
-
 }

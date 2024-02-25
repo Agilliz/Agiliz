@@ -5,6 +5,7 @@ import agiliz.projetoAgiliz.dto.RotaDTO;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,15 +21,19 @@ import agiliz.projetoAgiliz.services.RotaService;
 @RequestMapping("/rota")
 public class RotaController {
 
+    @Autowired
+    private RotaService service;
+
+
     @GetMapping("/calcular-rota")
     public List<String> calcularRota(@RequestParam String rotaString) throws JsonMappingException, JsonProcessingException {
         
         RotaDTO rota = new ObjectMapper().readValue(rotaString, RotaDTO.class);
-        return RotaService.calcularRota(rota.getEntregas(), rota.getInicio(), rota.getFim());
+        return service.calcularRota(rota.getEntregas(), rota.getInicio(), rota.getFim());
     }
 
     @GetMapping("/calcular-distancia")
     public double calcularDinstancia(@RequestParam DistanciaDTO distanciaDTO) {
-        return RotaService.calcularDistancia(distanciaDTO.getEndereco1(), distanciaDTO.getEndereco2());
+        return service.calcularDistancia(distanciaDTO.getEndereco1(), distanciaDTO.getEndereco2());
     }
 }
