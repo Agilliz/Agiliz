@@ -5,6 +5,7 @@ import agiliz.projetoAgiliz.models.ZonaModel;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 
 import java.util.UUID;
 import java.util.List;
@@ -87,10 +88,28 @@ public class ZonaController {
     }
 
 
-    @PutMapping
-    public String alterar(@RequestBody ZonaModel zona) {
-        repository.save(zona);
-        return "PEREÇa";
+    @PutMapping("/{id}")
+    public ResponseEntity<MensageriaService<ZonaModel>> alterar(@RequestBody @Valid ZonaDTO zonaDTO, @PathVariable UUID id) {
+        var zonaOpt = repository.findById(id);
+
+        if(zonaOpt.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new MensageriaService<>(
+                    "Zona não encontrada",
+                    "No content",
+                    HttpStatus.NOT_FOUND.value()
+                ));
+        }
+
+        var zona = zonaOpt.get();
+        BeanUtils.copyProperties(zonaDTO, zona);
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(new MensageriaService<ZonaModel>(
+                "Zona atualizada com sucesso",
+                repository.save(zona),
+                HttpStatus.OK.value()
+            ));
     }
 
     @DeleteMapping("/{id}")

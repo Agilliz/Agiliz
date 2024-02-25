@@ -86,8 +86,7 @@ public class PacoteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO,
-            @PathVariable UUID id) {
+    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO, @PathVariable UUID id) {
         Optional<PacoteModel> pacoteOpt = repository.findById(id);
 
         if (pacoteOpt.isEmpty()){
