@@ -7,7 +7,9 @@ import agiliz.projetoAgiliz.services.MensageriaService;
 import java.util.UUID;
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +25,34 @@ import org.springframework.web.bind.annotation.RestController;
 public class ZonaController {
     @Autowired
     private IZonaRepository repository;
-
-    @GetMapping
-    public ResponseEntity<MensageriaService<List<ZonaModel>>> listar() {
-        
-
-
-        return repository.findAll();
-    }
-
+    
     @PostMapping
     public void cadastrar(@RequestBody ZonaModel zona) {
         repository.save(zona);
     }
+    
+    @GetMapping
+    public ResponseEntity<MensageriaService<List<ZonaModel>>> listar() {
+        List<ZonaModel> zonas = repository.findAll();
+        
+        if(zonas.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(new MensageriaService<>(
+                    "Nenhuma zonas encontrada",
+                    "No content",
+                    HttpStatus.NO_CONTENT.value()
+                ));
+        }
+
+
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(new MensageriaService<List<ZonaModel>>(
+                "Zonas:",
+                zonas,
+                HttpStatus.OK.value()
+            ));
+    }
+
 
     @PutMapping
     public String alterar(@RequestBody ZonaModel zona) {
