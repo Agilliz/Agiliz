@@ -23,6 +23,7 @@ public class CalculadoraRotas {
         List<String> caminho = visitarNo(vtxFinal, vtxInicial, enderecos, new ArrayList<>());
         buscaGulosa();
         System.out.println();
+        System.out.println("Distancia total: "+calcularDistancia(0, caminho, 0));
         return caminho;
     }
 

@@ -1,9 +1,11 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.models.ZonaModel;
-import agiliz.projetoAgiliz.services.ZonaService;
+import agiliz.projetoAgiliz.repositories.IZonaRepository;
 
 import java.util.UUID;
+import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,29 +19,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/zona")
-public class ZonaController {
+public class ZonaController implements Serializable {
+
+    private static long serialVersionUID = 1L;
 
     @Autowired
-    private ZonaService service;
+    private IZonaRepository repository;
 
     @GetMapping
-    public Iterable<ZonaModel> listar(){
-        return service.listarTodos();
+    public List<ZonaModel> listar() {
+        return repository.findAll();
     }
 
     @PostMapping
-    public void cadastrar(@RequestBody ZonaModel zona){
-        service.cadastrar(zona);
+    public void cadastrar(@RequestBody ZonaModel zona) {
+        repository.save(zona);
     }
 
     @PutMapping
-    public String alterar(@RequestBody ZonaModel zona){
-        service.cadastrar(zona);
+    public String alterar(@RequestBody ZonaModel zona) {
+        repository.save(zona);
         return "PEREÇa";
     }
 
-    @DeleteMapping("/{idZona}")
-    public void deletar(@PathVariable UUID idZona){
-        service.deletarPorId(idZona);
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable UUID id) {
+        repository.deleteById(id);
     }
 }
