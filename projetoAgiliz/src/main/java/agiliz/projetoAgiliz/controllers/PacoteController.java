@@ -1,8 +1,10 @@
 package agiliz.projetoAgiliz.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,55 +17,111 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import agiliz.projetoAgiliz.models.FornecedorModel;
+import agiliz.projetoAgiliz.dto.PacoteDTO;
 import agiliz.projetoAgiliz.models.PacoteModel;
+import agiliz.projetoAgiliz.repositories.IPacoteRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
-import agiliz.projetoAgiliz.services.PacoteService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pacote")
 public class PacoteController {
 
     @Autowired
-    private PacoteService service;
+    private IPacoteRepository repository;
+
+    @PostMapping
+    public ResponseEntity<MensageriaService<PacoteModel>> cadastrar(@RequestBody @Valid PacoteDTO pacoteDTO) {
+
+        var pacote = new PacoteModel();
+        BeanUtils.copyProperties(pacoteDTO, pacote);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        new MensageriaService<PacoteModel>(
+                                "Pacote inserido com sucesso",
+                                repository.save(pacote),
+                                HttpStatus.CREATED.value()));
+    }
 
     @GetMapping
     public ResponseEntity<MensageriaService<List<PacoteModel>>> listar() {
-        List<PacoteModel> pacotes = service.listarTodos();
+        List<PacoteModel> pacotes = repository.findAll();
 
-        if (pacotes.isEmpty()){
-            return ResponseEntity.status(204)
-                .body(
-                    new MensageriaService<>(
-                        "Nenhum pacote encontrado",
-                        "No content",
-                        204)
-                );
+        if (pacotes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(
+                            new MensageriaService<>(
+                                    "Nenhum pacote encontrado",
+                                    "No content",
+                                    HttpStatus.NO_CONTENT.value()));
         }
 
-        return ResponseEntity.status(200)
-            .body(
-                new MensageriaService<List<PacoteModel>>(
-                    "Pacotes",
-                    pacotes,
-                    200
-                )
-            );
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        new MensageriaService<List<PacoteModel>>(
+                                "Pacotes",
+                                pacotes,
+                                HttpStatus.OK.value()));
 
     }
 
-    @PostMapping
-    public void cadastrar(@RequestBody PacoteModel pacote) {
-        service.cadastrar(pacote);
+    @GetMapping("/{id}")
+    public ResponseEntity<MensageriaService<PacoteModel>> listarPorId(@PathVariable UUID id) {
+        Optional<PacoteModel> pacote = repository.findById(id);
+
+        if (pacote.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(
+                            new MensageriaService<>(
+                                    "Pacote não encontrado",
+                                    "No content",
+                                    HttpStatus.NOT_FOUND.value()));
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        new MensageriaService<>(
+                                "Pacote: ",
+                                pacote.get(),
+                                HttpStatus.OK.value()));
     }
 
-    @PutMapping
-    public void alterar(@RequestBody PacoteModel pacote) {
-        service.cadastrar(pacote);
+    @PutMapping("/{id}")
+    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO,
+            @PathVariable UUID id) {
+        Optional<PacoteModel> pacoteOpt = repository.findById(id);
+
+        if (pacoteOpt.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(
+                            new MensageriaService<>(
+                                    "Pacote não encontrado",
+                                    "No content",
+                                    HttpStatus.NOT_FOUND.value()));
+
+        var pacote = pacoteOpt.get();
+        BeanUtils.copyProperties(pacoteDTO, pacote);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        new MensageriaService<>(
+                                "Pacote atualizado com sucesso",
+                                repository.save(pacote),
+                                HttpStatus.OK.value()));
     }
 
-    @DeleteMapping("/{idPacote}")
-    public void deletar(@PathVariable UUID idPacote) {
-        service.deletar(idPacote);
+    @DeleteMapping("/{id}")
+    public <T> ResponseEntity<MensageriaService<T>> deletar(@PathVariable UUID id) {
+        Optional<PacoteModel> pacoteOpt = repository.findById(id);
+
+        if (pacoteOpt.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MensageriaService<T>(
+                            "Pacote não encontrado",
+                            HttpStatus.NOT_FOUND.value()));
+
+        repository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(new MensageriaService<T>(
+                            "Pacote deletado com sucesso",
+                            HttpStatus.ACCEPTED.value())); 
     }
 }
