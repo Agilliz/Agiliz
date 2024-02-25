@@ -1,13 +1,16 @@
 package agiliz.projetoAgiliz.controllers;
 
+import agiliz.projetoAgiliz.dto.ZonaDTO;
 import agiliz.projetoAgiliz.models.ZonaModel;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
+import jakarta.validation.Valid;
 
 import java.util.UUID;
 import java.util.List;
 
 import org.apache.catalina.connector.Response;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +30,18 @@ public class ZonaController {
     private IZonaRepository repository;
     
     @PostMapping
-    public void cadastrar(@RequestBody ZonaModel zona) {
-        repository.save(zona);
+    public ResponseEntity<MensageriaService<ZonaModel>> cadastrar(@RequestBody @Valid ZonaDTO zonaDTO) {
+        var zona = new ZonaModel();
+        BeanUtils.copyProperties(zonaDTO, zona);
+        
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(new MensageriaService<ZonaModel>(
+                "Zona cadastrada com sucesso",
+                repository.save(zona),
+                HttpStatus.CREATED.value()
+            ));
     }
-    
+
     @GetMapping
     public ResponseEntity<MensageriaService<List<ZonaModel>>> listar() {
         List<ZonaModel> zonas = repository.findAll();

@@ -32,7 +32,6 @@ public class PacoteController {
 
     @PostMapping
     public ResponseEntity<MensageriaService<PacoteModel>> cadastrar(@RequestBody @Valid PacoteDTO pacoteDTO) {
-
         var pacote = new PacoteModel();
         BeanUtils.copyProperties(pacoteDTO, pacote);
         return ResponseEntity.status(HttpStatus.CREATED)
