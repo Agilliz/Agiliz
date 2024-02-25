@@ -1,4 +1,4 @@
-package agiliz.projetoAgiliz.enuns;
+package agiliz.projetoAgiliz.enums;
 
 import lombok.Getter;
 

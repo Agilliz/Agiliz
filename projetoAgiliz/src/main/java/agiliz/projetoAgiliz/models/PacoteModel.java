@@ -3,8 +3,8 @@ package agiliz.projetoAgiliz.models;
 import java.io.Serializable;
 import java.util.UUID;
 
-import agiliz.projetoAgiliz.enuns.StatusPacote;
-import agiliz.projetoAgiliz.enuns.TipoPacote;
+import agiliz.projetoAgiliz.enums.StatusPacote;
+import agiliz.projetoAgiliz.enums.TipoPacote;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
