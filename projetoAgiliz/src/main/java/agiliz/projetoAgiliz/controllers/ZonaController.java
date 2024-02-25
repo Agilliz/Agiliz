@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/zona")
-public class ZonaController implements Serializable {
-
-    private static long serialVersionUID = 1L;
-
+public class ZonaController {
     @Autowired
     private IZonaRepository repository;
 
