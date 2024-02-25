@@ -1,5 +1,6 @@
 package agiliz.projetoAgiliz.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import agiliz.projetoAgiliz.enuns.StatusPacote;
@@ -18,8 +19,10 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "pacote")
-public class PacoteModel {
+public class PacoteModel implements Serializable {
 
+    private static long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;
