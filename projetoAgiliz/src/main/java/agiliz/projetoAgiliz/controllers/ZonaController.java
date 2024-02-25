@@ -113,7 +113,24 @@ public class ZonaController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable UUID id) {
+    public <T> ResponseEntity<MensageriaService<T>> deletar(@PathVariable UUID id) {
+        var zonaOpt = repository.findById(id);
+
+        if(zonaOpt.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new MensageriaService<T>(
+                    "Zona não encontrada",
+                    "No content",
+                    HttpStatus.NOT_FOUND.value()
+                ));
+        }
+
         repository.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+            .body(new MensageriaService<>(
+                "Zona deletada com sucesso",
+                HttpStatus.ACCEPTED.value()
+            ));
     }
 }
