@@ -5,13 +5,11 @@ import agiliz.projetoAgiliz.models.ZonaModel;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 
 import java.util.UUID;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
