@@ -17,9 +17,7 @@ public class RotaService {
         List<Endereco> enderecos = new ArrayList<>(entregas);
         enderecos.addAll(List.of(inicio, fim));
         CalculadoraRotas calculadoraRotas = new CalculadoraRotas(enderecos);
-        List<String> rota = calculadoraRotas.gerarRota(inicio.getId(), fim.getId());
-        Collections.reverse(rota);
-        return rota;
+        return calculadoraRotas.gerarRota(inicio.getId(), fim.getId());
     }
 
     public Double calcularDistancia(Endereco endereco1, Endereco endereco2){

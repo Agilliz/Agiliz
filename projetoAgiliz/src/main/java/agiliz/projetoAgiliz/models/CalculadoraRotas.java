@@ -13,31 +13,91 @@ public class CalculadoraRotas {
     private Map<String, Map<String, Double>> mapaDeDistancia;
     private Map<String, List<String>> adjMap;
 
-    public CalculadoraRotas(List<Endereco> enderecos){
+    public CalculadoraRotas(List<Endereco> enderecos) {
         this.enderecos = new HashSet<>(enderecos.stream().map(Endereco::getId).toList());
         this.mapaDeDistancia = calcularDistancias(enderecos);
         this.adjMap = definirAdjacencia(enderecos);
     }
 
-    public List<String> gerarRota(String vtxInicial, String vtxFinal){
-        List<String> caminho = visitarNo(vtxFinal, vtxInicial, enderecos, new ArrayList<>());
-        buscaGulosa();
-        System.out.println();
-        System.out.println("Distancia total: "+calcularDistancia(0, caminho, 0));
-        return caminho;
+    public List<String> gerarRota(String vtxInicial, String vtxFinal) {
+        return calcularRota(enderecos, vtxInicial, vtxFinal);
     }
 
-    public void buscaGulosa(){
-        for(Map.Entry<String, Map<String, Double>> mapa : this.mapaDeDistancia.entrySet()){
-            System.out.println("Rotas de "+mapa.getKey());
-            for(Map.Entry<String, Double> entrada : mapa.getValue().entrySet()){
-                System.out.println(entrada.getKey()+": "+entrada.getValue()+"km");
+    private List<String> calcularRota(Set<String> vtxNaoVisitados, String inicio, String fim) {
+        String vtxDistante = getMaisDistante(inicio);
+        List<String> rota = new ArrayList<>(List.of(inicio, vtxDistante, fim));
+        vtxNaoVisitados.removeAll(rota);
+
+        while (!vtxNaoVisitados.isEmpty()) {
+            String j = getVtxMaisDistanteDaRota(rota, vtxNaoVisitados);
+
+            double impactoMinimo = Double.MAX_VALUE;
+            int indiceInsercao = 0;
+
+            for (int i = 0; i < rota.size() - 1; i++) {
+                int k = i + 1;
+
+                double dIj = mapaDeDistancia.get(rota.get(i)).get(j);
+                double dJk = mapaDeDistancia.get(j).get(rota.get(k));
+                double dIk = mapaDeDistancia.get(rota.get(i)).get(rota.get(k));
+                double impacto = dIj + dJk - dIk;
+
+                if(impacto < impactoMinimo){
+                    impactoMinimo = impacto;
+                    indiceInsercao = k;
+                }
+            }
+
+            rota.add(indiceInsercao, j);
+            vtxNaoVisitados.remove(j);
+        }
+
+        return rota;
+    }
+
+    private String getVtxMaisDistanteDaRota(List<String> rota, Set<String> possiveisNos) {
+        double maiorDistancia = Double.MIN_VALUE;
+        String vizinhoDistante = null;
+
+        for (String vtx : rota) {
+            double menorDistancia = Double.MAX_VALUE;
+            String vizinhoProximo = null;
+
+            for (String vizinho : possiveisNos) {
+                if(vizinho.equals(vtx)) continue;
+
+                if (mapaDeDistancia.get(vtx).get(vizinho) < menorDistancia) {
+                    menorDistancia = mapaDeDistancia.get(vtx).get(vizinho);
+                    vizinhoProximo = vizinho;
+                }
+            }
+            
+            if (menorDistancia > maiorDistancia) {
+                maiorDistancia = menorDistancia;
+                vizinhoDistante = vizinhoProximo;
             }
         }
+
+        return vizinhoDistante;
     }
 
-    private double calcularDistancia(int indiceAtual, List<String> enderecos, double distanciaTotal){
-        if(indiceAtual + 1 == enderecos.size()) return distanciaTotal;
+    private String getMaisDistante(String vtx) {
+        double maiorDistancia = Double.MIN_VALUE;
+        String vtxMaisDistante = null;
+
+        for (Map.Entry<String, Double> entry : mapaDeDistancia.get(vtx).entrySet()) {
+            if (entry.getValue() > maiorDistancia) {
+                maiorDistancia = entry.getValue();
+                vtxMaisDistante = entry.getKey();
+            }
+        }
+
+        return vtxMaisDistante;
+    }
+
+    private double calcularDistancia(int indiceAtual, List<String> enderecos, double distanciaTotal) {
+        if (indiceAtual + 1 >= enderecos.size())
+            return distanciaTotal;
 
         String origem = enderecos.get(indiceAtual);
         String destino = enderecos.get(indiceAtual + 1);
@@ -46,34 +106,6 @@ public class CalculadoraRotas {
 
         return calcularDistancia(indiceAtual + 1, enderecos, distanciaTotal);
     }
-
-    private List<String> visitarNo(
-            String vtxAtual,
-            String fim,
-            Set<String> naoVisitados,
-            List<String> visitados
-    ) {
-        naoVisitados.remove(vtxAtual);
-        visitados.add(vtxAtual);
-
-        String proximoVtx = null;
-        double menorDistancia = Double.MAX_VALUE;
-        
-        for (String vizinho : adjMap.get(vtxAtual)) {
-            double distancia = mapaDeDistancia.get(vtxAtual).get(vizinho);
-            if(visitados.contains(vizinho)) continue;
-            if(distancia > menorDistancia) continue;
-            if(vizinho.equals(fim) && naoVisitados.size() > 1) continue; 
-
-            menorDistancia = distancia;
-            proximoVtx = vizinho;
-        }
-        
-        if(proximoVtx != null) visitarNo(proximoVtx, fim, naoVisitados, visitados);
-
-        return visitados;
-    }
-
 
     private static Map<String, List<String>> definirAdjacencia(List<Endereco> enderecos) {
         Map<String, List<String>> adjMap = new HashMap<>();
@@ -112,7 +144,8 @@ public class CalculadoraRotas {
         double latitude1 = Math.toRadians(endereco1.getLatitude());
         double latitude2 = Math.toRadians(endereco2.getLatitude());
 
-        double a = Math.sin(deltaLatitude / 2) * Math.sin(deltaLatitude / 2) + Math.cos(latitude1) * Math.cos(latitude2) * (Math.sin(deltaLongitude / 2) * Math.sin(deltaLongitude / 2));
+        double a = Math.sin(deltaLatitude / 2) * Math.sin(deltaLatitude / 2) + Math.cos(latitude1) * Math.cos(latitude2)
+                * (Math.sin(deltaLongitude / 2) * Math.sin(deltaLongitude / 2));
 
         double c = 2 * Math.asin(Math.sqrt(a));
 

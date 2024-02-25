@@ -24,7 +24,6 @@ public class RotaController {
     @Autowired
     private RotaService service;
 
-
     @GetMapping("/calcular-rota")
     public List<String> calcularRota(@RequestParam String rotaString) throws JsonMappingException, JsonProcessingException {
         

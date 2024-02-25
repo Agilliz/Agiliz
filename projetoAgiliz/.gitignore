@@ -2,3 +2,5 @@ src/main/resources/
 
 application.properties
 /target/
+
+enderecosTesteRota.json

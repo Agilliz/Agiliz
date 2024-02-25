@@ -17,7 +17,8 @@ public class Endereco {
         if (this == o) return true;
         if (!(o instanceof Endereco endereco)) return false;
         return Objects.equals(latitude, endereco.latitude) &&
-             Objects.equals(longitude, endereco.longitude);
+             Objects.equals(longitude, endereco.longitude) &&
+             Objects.equals(id, endereco.id);
     }
 
     @Override
