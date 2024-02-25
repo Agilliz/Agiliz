@@ -2,12 +2,13 @@ package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.models.ZonaModel;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
+import agiliz.projetoAgiliz.services.MensageriaService;
 
 import java.util.UUID;
-import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,10 @@ public class ZonaController {
     private IZonaRepository repository;
 
     @GetMapping
-    public List<ZonaModel> listar() {
+    public ResponseEntity<MensageriaService<List<ZonaModel>>> listar() {
+        
+
+
         return repository.findAll();
     }
 
