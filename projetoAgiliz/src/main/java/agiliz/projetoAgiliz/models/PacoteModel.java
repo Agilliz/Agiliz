@@ -1,9 +1,10 @@
 package agiliz.projetoAgiliz.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-import agiliz.projetoAgiliz.enuns.StatusPacote;
-import agiliz.projetoAgiliz.enuns.TipoPacote;
+import agiliz.projetoAgiliz.enums.StatusPacote;
+import agiliz.projetoAgiliz.enums.TipoPacote;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,8 +19,10 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "pacote")
-public class PacoteModel {
+public class PacoteModel implements Serializable {
 
+    private static long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;

@@ -32,7 +32,6 @@ public class PacoteController {
 
     @PostMapping
     public ResponseEntity<MensageriaService<PacoteModel>> cadastrar(@RequestBody @Valid PacoteDTO pacoteDTO) {
-
         var pacote = new PacoteModel();
         BeanUtils.copyProperties(pacoteDTO, pacote);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -69,13 +68,14 @@ public class PacoteController {
     public ResponseEntity<MensageriaService<PacoteModel>> listarPorId(@PathVariable UUID id) {
         Optional<PacoteModel> pacote = repository.findById(id);
 
-        if (pacote.isEmpty())
+        if (pacote.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(
                             new MensageriaService<>(
                                     "Pacote não encontrado",
                                     "No content",
                                     HttpStatus.NOT_FOUND.value()));
+        }
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(
@@ -86,17 +86,17 @@ public class PacoteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO,
-            @PathVariable UUID id) {
+    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO, @PathVariable UUID id) {
         Optional<PacoteModel> pacoteOpt = repository.findById(id);
 
-        if (pacoteOpt.isEmpty())
+        if (pacoteOpt.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(
                             new MensageriaService<>(
                                     "Pacote não encontrado",
                                     "No content",
                                     HttpStatus.NOT_FOUND.value()));
+        }
 
         var pacote = pacoteOpt.get();
         BeanUtils.copyProperties(pacoteDTO, pacote);
@@ -112,11 +112,12 @@ public class PacoteController {
     public <T> ResponseEntity<MensageriaService<T>> deletar(@PathVariable UUID id) {
         Optional<PacoteModel> pacoteOpt = repository.findById(id);
 
-        if (pacoteOpt.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        if (pacoteOpt.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MensageriaService<T>(
                             "Pacote não encontrado",
                             HttpStatus.NOT_FOUND.value()));
+        }
 
         repository.deleteById(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED)

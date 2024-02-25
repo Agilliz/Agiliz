@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,8 +12,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "zona")
-public class ZonaModel {
+public class ZonaModel implements Serializable {
 
+    private static long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idZona;
