@@ -46,15 +46,7 @@ public class ZonaController {
     public ResponseEntity<MensageriaService<List<ZonaModel>>> listar() {
         List<ZonaModel> zonas = repository.findAll();
         
-        if(zonas.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                .body(new MensageriaService<>(
-                    "Nenhuma zonas encontrada",
-                    "No content",
-                    HttpStatus.NO_CONTENT.value()
-                ));
-        }
-
+        if(zonas.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(new MensageriaService<List<ZonaModel>>(
@@ -68,14 +60,7 @@ public class ZonaController {
     public ResponseEntity<MensageriaService<ZonaModel>> listarPorId(@PathVariable UUID id){
         Optional<ZonaModel> zonaOpt = repository.findById(id);
 
-        if(zonaOpt.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new MensageriaService<>(
-                    "Zona não encontrada",
-                    "No content",
-                    HttpStatus.NOT_FOUND.value()
-                ));
-        }
+        if(zonaOpt.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new MensageriaService<ZonaModel>(
@@ -90,14 +75,7 @@ public class ZonaController {
     public ResponseEntity<MensageriaService<ZonaModel>> alterar(@RequestBody @Valid ZonaDTO zonaDTO, @PathVariable UUID id) {
         var zonaOpt = repository.findById(id);
 
-        if(zonaOpt.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new MensageriaService<>(
-                    "Zona não encontrada",
-                    "No content",
-                    HttpStatus.NOT_FOUND.value()
-                ));
-        }
+        if(zonaOpt.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
         var zona = zonaOpt.get();
         BeanUtils.copyProperties(zonaDTO, zona);
