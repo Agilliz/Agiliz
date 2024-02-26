@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface IZonaRepository extends JpaRepository<ZonaModel, UUID> {
-
+    ZonaModel findByLimiteInferiorGreaterThanEqualAndLimiteSuperiorLessThanEqual();
 }

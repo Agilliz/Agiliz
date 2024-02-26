@@ -28,25 +28,29 @@ import jakarta.validation.Valid;
 public class PacoteController {
 
     @Autowired
-    private IPacoteRepository repository;
+    private IPacoteRepository pacoteRepository;
+
+    @Autowired
+    
 
     @PostMapping
     public ResponseEntity<MensageriaService<PacoteModel>> cadastrar(@RequestBody @Valid PacoteDTO pacoteDTO) {
-
         var pacote = new PacoteModel();
         BeanUtils.copyProperties(pacoteDTO, pacote);
+
+
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(
                         new MensageriaService<PacoteModel>(
                                 "Pacote inserido com sucesso",
-                                repository.save(pacote),
+                                pacoteRepository.save(pacote),
                                 HttpStatus.CREATED.value()));
     }
 
     @GetMapping
     public ResponseEntity<MensageriaService<List<PacoteModel>>> listar() {
-        List<PacoteModel> pacotes = repository.findAll();
+        List<PacoteModel> pacotes = pacoteRepository.findAll();
 
         if (pacotes.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
@@ -63,7 +67,7 @@ public class PacoteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MensageriaService<PacoteModel>> listarPorId(@PathVariable UUID id) {
-        Optional<PacoteModel> pacote = repository.findById(id);
+        Optional<PacoteModel> pacote = pacoteRepository.findById(id);
 
         if (pacote.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -89,7 +93,7 @@ public class PacoteController {
     @PutMapping("/{id}")
     public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO,
             @PathVariable UUID id) {
-        Optional<PacoteModel> pacoteOpt = repository.findById(id);
+        Optional<PacoteModel> pacoteOpt = pacoteRepository.findById(id);
 
         if (pacoteOpt.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -108,7 +112,7 @@ public class PacoteController {
                 .body(
                         new MensageriaService<>(
                                 "Pacote atualizado com sucesso",
-                                repository.save(pacote),
+                                pacoteRepository.save(pacote),
                                 HttpStatus.OK.value()
                         )
                 );
@@ -116,7 +120,7 @@ public class PacoteController {
 
     @DeleteMapping("/{id}")
     public <T> ResponseEntity<MensageriaService<T>> deletar(@PathVariable UUID id) {
-        Optional<PacoteModel> pacoteOpt = repository.findById(id);
+        Optional<PacoteModel> pacoteOpt = pacoteRepository.findById(id);
 
         if (pacoteOpt.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -127,7 +131,7 @@ public class PacoteController {
                 );
         }
 
-        repository.deleteById(id);
+        pacoteRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
                 .body(
                         new MensageriaService<T>(
