@@ -32,8 +32,10 @@ public class PacoteController {
 
     @PostMapping
     public ResponseEntity<MensageriaService<PacoteModel>> cadastrar(@RequestBody @Valid PacoteDTO pacoteDTO) {
+
         var pacote = new PacoteModel();
         BeanUtils.copyProperties(pacoteDTO, pacote);
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(
                         new MensageriaService<PacoteModel>(
@@ -46,21 +48,16 @@ public class PacoteController {
     public ResponseEntity<MensageriaService<List<PacoteModel>>> listar() {
         List<PacoteModel> pacotes = repository.findAll();
 
-        if (pacotes.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(
-                            new MensageriaService<>(
-                                    "Nenhum pacote encontrado",
-                                    "No content",
-                                    HttpStatus.NO_CONTENT.value()));
-        }
+        if (pacotes.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(
                         new MensageriaService<List<PacoteModel>>(
                                 "Pacotes",
                                 pacotes,
-                                HttpStatus.OK.value()));
+                                HttpStatus.OK.value()
+                        )
+                );
 
     }
 
@@ -74,7 +71,9 @@ public class PacoteController {
                             new MensageriaService<>(
                                     "Pacote não encontrado",
                                     "No content",
-                                    HttpStatus.NOT_FOUND.value()));
+                                    HttpStatus.NOT_FOUND.value()
+                                )
+                        );
         }
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -82,11 +81,14 @@ public class PacoteController {
                         new MensageriaService<>(
                                 "Pacote: ",
                                 pacote.get(),
-                                HttpStatus.OK.value()));
+                                HttpStatus.OK.value()
+                        )
+                );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO, @PathVariable UUID id) {
+    public ResponseEntity<MensageriaService<PacoteModel>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO,
+            @PathVariable UUID id) {
         Optional<PacoteModel> pacoteOpt = repository.findById(id);
 
         if (pacoteOpt.isEmpty()){
@@ -95,7 +97,9 @@ public class PacoteController {
                             new MensageriaService<>(
                                     "Pacote não encontrado",
                                     "No content",
-                                    HttpStatus.NOT_FOUND.value()));
+                                    HttpStatus.NOT_FOUND.value()
+                                )
+                        );
         }
 
         var pacote = pacoteOpt.get();
@@ -105,7 +109,9 @@ public class PacoteController {
                         new MensageriaService<>(
                                 "Pacote atualizado com sucesso",
                                 repository.save(pacote),
-                                HttpStatus.OK.value()));
+                                HttpStatus.OK.value()
+                        )
+                );
     }
 
     @DeleteMapping("/{id}")
@@ -116,13 +122,18 @@ public class PacoteController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MensageriaService<T>(
                             "Pacote não encontrado",
-                            HttpStatus.NOT_FOUND.value()));
+                            HttpStatus.NOT_FOUND.value()
+                        )
+                );
         }
 
         repository.deleteById(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body(new MensageriaService<T>(
+                .body(
+                        new MensageriaService<T>(
                             "Pacote deletado com sucesso",
-                            HttpStatus.ACCEPTED.value())); 
+                            HttpStatus.ACCEPTED.value()
+                        )
+                ); 
     }
 }
