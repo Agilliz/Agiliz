@@ -43,12 +43,11 @@ public class CalculadoraRotas {
     }
 
     private List<String> calcularRota(Set<String> vtxNaoVisitados, String inicio, String fim) {
-        String vtxDistante = getMaisDistante(inicio);
-        List<String> rota = new ArrayList<>(List.of(inicio, vtxDistante, fim));
+        List<String> rota = new ArrayList<>(List.of(inicio, getMaisDistante(inicio), fim));
         vtxNaoVisitados.removeAll(rota);
 
         while (!vtxNaoVisitados.isEmpty()) {
-            String j = getVtxMaisDistanteDaRota(rota, vtxNaoVisitados);
+           String j = getVtxMaisDistanteDaRota(rota, vtxNaoVisitados);
 
             double impactoMinimo = Double.MAX_VALUE;
             int indiceInsercao = 0;
@@ -56,10 +55,11 @@ public class CalculadoraRotas {
             for (int i = 0; i < rota.size() - 1; i++) {
                 int k = i + 1;
 
-                double dIj = mapaDeDistancia.get(rota.get(i)).get(j);
-                double dJk = mapaDeDistancia.get(j).get(rota.get(k));
-                double dIk = mapaDeDistancia.get(rota.get(i)).get(rota.get(k));
-                double impacto = dIj + dJk - dIk;
+                double distanciaIJ = mapaDeDistancia.get(rota.get(i)).get(j);
+                double distanciaJK = mapaDeDistancia.get(j).get(rota.get(k));
+                double distanciaIK = mapaDeDistancia.get(rota.get(i)).get(rota.get(k));
+
+                double impacto = distanciaIJ + distanciaJK - distanciaIK;
 
                 if (impacto < impactoMinimo) {
                     impactoMinimo = impacto;
