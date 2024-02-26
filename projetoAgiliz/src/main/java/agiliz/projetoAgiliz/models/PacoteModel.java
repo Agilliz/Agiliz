@@ -32,4 +32,6 @@ public class PacoteModel implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private StatusPacote status;
+
+    private UUID idDestinatario;
 }
