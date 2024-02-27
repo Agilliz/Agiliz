@@ -1,6 +1,6 @@
 src/main/resources/
 
 application.properties
-/target/
+target/
 
 enderecosTesteRota.json

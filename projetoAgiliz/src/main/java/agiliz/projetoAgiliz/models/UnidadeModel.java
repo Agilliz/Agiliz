@@ -30,8 +30,10 @@ public class UnidadeModel implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "fk_zona")
+    @JoinColumn(name = "fk_fornecedor")
     private FornecedorModel fornecedor;
+
+    private UUID idFornecedor;
 
     @JsonIgnore
     @OneToMany(mappedBy = "unidade")
