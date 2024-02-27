@@ -3,6 +3,8 @@ package agiliz.projetoAgiliz.models;
 import java.io.Serializable;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import agiliz.projetoAgiliz.enums.StatusPacote;
 import agiliz.projetoAgiliz.enums.TipoPacote;
 import jakarta.persistence.Entity;
@@ -29,15 +31,24 @@ public class PacoteModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_zona")
-    private ZonaModel zona; 
-
     @Enumerated(EnumType.STRING)
     private TipoPacote tipo;
 
     @Enumerated(EnumType.STRING)
     private StatusPacote status;
 
-    private UUID idDestinatario;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "fk_zona")
+    private ZonaModel zona;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "fk_destinatario")
+    private DestinatarioModel destinatario;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "fk_unidade")
+    private UnidadeModel unidade;
 }

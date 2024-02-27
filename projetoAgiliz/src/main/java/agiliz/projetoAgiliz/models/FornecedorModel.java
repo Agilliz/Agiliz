@@ -28,6 +28,6 @@ public class FornecedorModel implements Serializable {
     private String nomeFornecedor;
     private String cnpjMatriz;
 
-    @OneToMany(mappedBy = "zona")
+    @OneToMany(mappedBy = "fornecedor")
     private List<UnidadeModel> unidades;
 }
