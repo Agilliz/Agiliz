@@ -24,7 +24,6 @@ public class ZonaModel implements Serializable {
     private Integer limiteSuperiorCEP;
     private Integer limiteInferiorCEP;
 
-    @OneToMany
-    @JoinColumn(name = "fk_zona")
+    @OneToMany(mappedBy = "zona")
     private List<PacoteModel> pacotes;
 }

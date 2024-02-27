@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -29,7 +28,6 @@ public class FornecedorModel implements Serializable {
     private String nomeFornecedor;
     private String cnpjMatriz;
 
-    @OneToMany(mappedBy = "idFornecedor")
+    @OneToMany(mappedBy = "fornecedor")
     private List<UnidadeModel> unidades;
-
 }
