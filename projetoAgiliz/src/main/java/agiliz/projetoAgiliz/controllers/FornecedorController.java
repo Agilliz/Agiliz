@@ -36,7 +36,7 @@ public class FornecedorController {
         List<FornecedorModel> fornecedorList = fornecedorRepository.findAll();
 
         if (!fornecedorList.isEmpty()) {
-            MensageriaService<List<FornecedorModel>> mensageriaService = new MensageriaService<>("Fornecedores:",
+            MensageriaService<List<FornecedorModel>> mensageriaService = new MensageriaService<List<FornecedorModel>>("Fornecedores:",
                     fornecedorList, 200);
 
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
