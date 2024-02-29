@@ -2,7 +2,6 @@ package agiliz.projetoAgiliz.dto;
 
 import java.util.UUID;
 
-import agiliz.projetoAgiliz.models.FornecedorModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
