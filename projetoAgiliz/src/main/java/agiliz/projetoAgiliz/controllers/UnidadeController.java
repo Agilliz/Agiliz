@@ -40,9 +40,7 @@ public class UnidadeController {
             MensageriaService mensageriaService = new MensageriaService("Unidades", unidadeList, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
     @GetMapping("/{idUnidade}")
@@ -53,16 +51,14 @@ public class UnidadeController {
             MensageriaService mensageriaService = new MensageriaService("Unidade", unidade, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }
-
         MensageriaService mensageriaService = new MensageriaService("Unidade não encontrada", 404);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
-
     }
+
 
     @PostMapping("/cadastrar")
     public ResponseEntity<MensageriaService<UnidadeModel>> cadastrarUnidade(@RequestBody @Valid UnidadeDTO unidadeDTO) {
         UnidadeModel unidadeModel = new UnidadeModel();
-
         BeanUtils.copyProperties(unidadeDTO, unidadeModel);
 
         try {
@@ -74,7 +70,6 @@ public class UnidadeController {
 
         } catch (Exception e) {
             MensageriaService mensageriaService = new MensageriaService(e, 500);
-
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
         }
     }
