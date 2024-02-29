@@ -20,19 +20,25 @@ public class CalculadoraRotas {
         this.enderecos = new HashSet<>(enderecos.stream().map(Endereco::getId).toList());
         this.mapaDeDistancia = calcularDistancias(enderecos);
         this.mapaFeromonios = inicializarFeromonios(enderecos);
-        this.formigas = new ArrayList<>();
-
-        for (Endereco endereco : enderecos) {
-            this.formigas.add(new Formiga(endereco.getId()));
-        }
     }
+    
+    public void gerarRotaIdeal(String inicio) {
+        this.formigas = new ArrayList<>();
+        
+        for (int i = 0; i < this.enderecos.size(); i++) {
+            this.formigas.add(new Formiga(inicio));
+        }
 
-    public void gerarRotaIdeal() {
-
+        this.enderecos.remove(inicio);
+        
         for (int c = 0; c < 1; c++) {
-
             for (Formiga formiga : this.formigas) {
                 Set<String> cidadesRestantes = new HashSet<>(this.enderecos);
+                
+                Map<String, Double> probabilidades = gerarProbabilidades(formiga.getLocalizacao(), cidadesRestantes);
+
+                System.out.println(inicio);
+                System.out.println("Escolhi: "+escolherAleatoriamente(probabilidades));
             }
         }
     }
@@ -46,18 +52,26 @@ public class CalculadoraRotas {
         int beta = 1;
 
         double totalPorcentagens = 0.;
+
         for(String cidade : cidadesRestantes){
             double distancia = distancias.get(cidade);
             double quantidadeFeromonio = feromonios.get(cidade);
-
-            double fatorDistancia = Math.pow((1 / distancia), alpha);
+            
+            double fatorDistancia = Math.pow((1000 / distancia), alpha);
             double fatorFeromonio = Math.pow(quantidadeFeromonio, beta);
 
             double desejabilidade = fatorDistancia * fatorFeromonio;
 
-            totalPorcentagens += totalPorcentagens;
+            probabilidades.put(cidade, desejabilidade);
+
+            totalPorcentagens += desejabilidade;
         }
 
+        for(Map.Entry<String, Double> entry : probabilidades.entrySet()){
+            probabilidades.put(entry.getKey(), (entry.getValue() / totalPorcentagens));
+        }
+
+        return probabilidades;
     }
 
     public Map<String, Map<String, Double>> inicializarFeromonios(List<Endereco> enderecos) {
@@ -75,14 +89,6 @@ public class CalculadoraRotas {
         }
 
         return mapaFeromonios;
-    }
-
-    public void inicializarColonia() {
-
-    }
-
-    public double calcularProbabilidade() {
-        return 0.;
     }
 
     public String escolherAleatoriamente(Map<String, Double> opcoes) {
@@ -104,16 +110,7 @@ public class CalculadoraRotas {
 
     public List<String> gerarRota(String vtxInicial, String vtxFinal) {
 
-        // for (Map.Entry<String, Map<String, Double>> mapaEntry :
-        // this.mapaFeromonios.entrySet()) {
-        // System.out.println("Origem: " + mapaEntry.getKey());
-
-        // for (Map.Entry<String, Double> entry : mapaEntry.getValue().entrySet()) {
-        // System.out.println("Destino: " + entry.getKey() + ": " + entry.getValue());
-        // }
-
-        // System.out.println();
-        // }
+        gerarRotaIdeal(vtxInicial);
 
         List<String> rota = calcularRota(enderecos, vtxInicial, vtxFinal);
         return kOpt(rota);
