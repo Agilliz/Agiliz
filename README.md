@@ -18,8 +18,4 @@
 </span>
 
 
-<style>
-
-</style>
-
 
