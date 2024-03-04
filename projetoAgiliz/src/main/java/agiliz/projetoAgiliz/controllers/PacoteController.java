@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,14 +53,14 @@ public class PacoteController {
     }
 
     @GetMapping
-    public ResponseEntity<MensageriaService<List<PacoteModel>>> listar() {
-        List<PacoteModel> pacotes = pacoteService.listarTodos();
+    public ResponseEntity<MensageriaService<Page<PacoteModel>>> listar(Pageable pageable) {
+        Page<PacoteModel> pacotes = pacoteService.listarTodos(pageable);
 
         if (pacotes.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(
-                        new MensageriaService<List<PacoteModel>>(
+                        new MensageriaService<Page<PacoteModel>>(
                                 "Pacotes",
                                 pacotes,
                                 HttpStatus.OK.value()

@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,12 +33,12 @@ public class FornecedorController {
     IFornecedorRepository fornecedorRepository;
 
     @GetMapping("/")
-    public ResponseEntity<MensageriaService<List<FornecedorModel>>> listarFornecedores() {
+    public ResponseEntity<MensageriaService<Page<FornecedorModel>>> listarFornecedores(Pageable pageable) {
 
-        List<FornecedorModel> fornecedorList = fornecedorRepository.findAll();
+        Page<FornecedorModel> fornecedorList = fornecedorRepository.findAll(pageable);
 
         if (!fornecedorList.isEmpty()) {
-            MensageriaService<List<FornecedorModel>> mensageriaService = new MensageriaService("Fornecedores:",
+            MensageriaService<Page<FornecedorModel>> mensageriaService = new MensageriaService("Fornecedores:",
                     fornecedorList, 200);
 
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);

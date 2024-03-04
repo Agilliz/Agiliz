@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +35,14 @@ public class UnidadeController {
     IUnidadeRepository unidadeRepository;
 
     @GetMapping("/")
-    public ResponseEntity<MensageriaService<List<UnidadeModel>>> listarUnidades() {
-        List<UnidadeModel> unidadeList = unidadeRepository.findAll();
+    public ResponseEntity<MensageriaService<Page<UnidadeModel>>> listarUnidades(Pageable pageable) {
+        Page<UnidadeModel> unidadeList = unidadeRepository.findAll(pageable);
 
         if (!unidadeList.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Unidades", unidadeList, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
     @GetMapping("/{idUnidade}")
@@ -53,16 +53,14 @@ public class UnidadeController {
             MensageriaService mensageriaService = new MensageriaService("Unidade", unidade, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }
-
         MensageriaService mensageriaService = new MensageriaService("Unidade não encontrada", 404);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
-
     }
+
 
     @PostMapping("/cadastrar")
     public ResponseEntity<MensageriaService<UnidadeModel>> cadastrarUnidade(@RequestBody @Valid UnidadeDTO unidadeDTO) {
         UnidadeModel unidadeModel = new UnidadeModel();
-
         BeanUtils.copyProperties(unidadeDTO, unidadeModel);
 
         try {
@@ -74,7 +72,6 @@ public class UnidadeController {
 
         } catch (Exception e) {
             MensageriaService mensageriaService = new MensageriaService(e, 500);
-
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
         }
     }
