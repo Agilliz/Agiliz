@@ -1,10 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.MultaDTO;
 import agiliz.projetoAgiliz.dto.VeiculoDTO;
-import agiliz.projetoAgiliz.models.MultaModel;
 import agiliz.projetoAgiliz.models.VeiculoModel;
-import agiliz.projetoAgiliz.repositories.IMultaRepository;
 import agiliz.projetoAgiliz.repositories.IVeiculoRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;

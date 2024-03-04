@@ -7,6 +7,8 @@ import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +40,8 @@ public class EnderecoController {
     }
 
     @GetMapping("/")
-    ResponseEntity<MensageriaService<List<EnderecoFinal>>> listarEnderecos() {
-        List<EnderecoFinal> enderecosFinaisList = enderecoFinalRepository.findAll();
+    ResponseEntity<MensageriaService<Page<EnderecoFinal>>> listarEnderecos(Pageable pageable) {
+        Page<EnderecoFinal> enderecosFinaisList = enderecoFinalRepository.findAll(pageable);
         if (!enderecosFinaisList.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Endereço", enderecosFinaisList, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
