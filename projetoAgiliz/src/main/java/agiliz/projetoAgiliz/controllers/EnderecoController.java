@@ -1,11 +1,8 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.EnderecoFinalDTO;
-import agiliz.projetoAgiliz.dto.FuncionarioDTO;
 import agiliz.projetoAgiliz.models.EnderecoFinal;
-import agiliz.projetoAgiliz.models.FuncionarioModel;
 import agiliz.projetoAgiliz.repositories.IEnderecoFinalRepository;
-import agiliz.projetoAgiliz.repositories.IFuncionarioRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
