@@ -39,7 +39,7 @@ public class FuncionarioModel implements Serializable {
     @OneToMany(mappedBy = "idFuncionario")
     private List<MultaModel> multas;
 
-    @OneToMany(mappedBy = "idFuncionario")
+    @OneToMany(mappedBy = "funcionario")
     private List<PacoteModel> pacote;
 
 }

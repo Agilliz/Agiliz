@@ -9,6 +9,7 @@ import agiliz.projetoAgiliz.models.Endereco;
 
 @Service
 public class RotaService {
+
     public List<String> calcularRota(
             List<Endereco> entregas,
             Endereco inicio,
