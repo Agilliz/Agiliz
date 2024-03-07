@@ -6,8 +6,9 @@ import agiliz.projetoAgiliz.repositories.IMultaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,8 @@ public class MultaController {
 
 
     @GetMapping
-    ResponseEntity<MensageriaService<List<MultaModel>>> listarMultas () {
-        List<MultaModel> multasList = multaRepository.findAll();
+    ResponseEntity<MensageriaService<Page<MultaModel>>> listarMultas (Pageable pageable) {
+        Page<MultaModel> multasList = multaRepository.findAll(pageable);
 
         if (!multasList.isEmpty()){
             MensageriaService mensageriaService = new MensageriaService("Multas", multasList, 200);

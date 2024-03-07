@@ -9,6 +9,8 @@ import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +42,8 @@ public class MotoristaDaVezController {
     }
 
     @GetMapping("/")
-    ResponseEntity<MensageriaService<List<MotoristaDaVezModel>>> listarMotoristas() {
-        List<MotoristaDaVezModel> motoristaList = motoristaDaVezRepository.findAll();
+    ResponseEntity<MensageriaService<Page<MotoristaDaVezModel>>> listarMotoristas(Pageable pageable) {
+        Page<MotoristaDaVezModel> motoristaList = motoristaDaVezRepository.findAll(pageable);
 
         if (!motoristaList.isEmpty()){
             MensageriaService mensageriaService = new MensageriaService("Motoristas", motoristaList, 200);

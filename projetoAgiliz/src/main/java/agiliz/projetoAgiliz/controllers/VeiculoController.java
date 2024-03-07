@@ -1,15 +1,14 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.MultaDTO;
 import agiliz.projetoAgiliz.dto.VeiculoDTO;
-import agiliz.projetoAgiliz.models.MultaModel;
 import agiliz.projetoAgiliz.models.VeiculoModel;
-import agiliz.projetoAgiliz.repositories.IMultaRepository;
 import agiliz.projetoAgiliz.repositories.IVeiculoRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +40,8 @@ public class VeiculoController {
     }
 
     @GetMapping("/")
-    ResponseEntity<MensageriaService<List<VeiculoModel>>> listarVeiculos () {
-        List<VeiculoModel> veiculosList = veiculoRepository.findAll();
+    ResponseEntity<MensageriaService<Page<VeiculoModel>>> listarVeiculos (Pageable pageable) {
+        Page<VeiculoModel> veiculosList = veiculoRepository.findAll(pageable);
 
         if (!veiculosList.isEmpty()){
             MensageriaService mensageriaService = new MensageriaService("Veículos", veiculosList, 200);

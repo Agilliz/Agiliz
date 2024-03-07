@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +35,8 @@ public class UnidadeController {
     IUnidadeRepository unidadeRepository;
 
     @GetMapping("/")
-    public ResponseEntity<MensageriaService<List<UnidadeModel>>> listarUnidades() {
-        List<UnidadeModel> unidadeList = unidadeRepository.findAll();
+    public ResponseEntity<MensageriaService<Page<UnidadeModel>>> listarUnidades(Pageable pageable) {
+        Page<UnidadeModel> unidadeList = unidadeRepository.findAll(pageable);
 
         if (!unidadeList.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Unidades", unidadeList, 200);

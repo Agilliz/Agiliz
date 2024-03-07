@@ -6,8 +6,9 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,8 @@ import agiliz.projetoAgiliz.models.DestinatarioModel;
 import agiliz.projetoAgiliz.repositories.IDestinatarioRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
+@SuppressWarnings("rawtypes")
+
 
 @RestController
 @RequestMapping("/destinatario")
@@ -31,8 +34,8 @@ public class DestinatarioController {
     IDestinatarioRepository destinatarioRepository;
 
     @GetMapping("/")
-    public ResponseEntity<MensageriaService<List<DestinatarioModel>>> listDestinatarios() {
-        List listDestinatarios = destinatarioRepository.findAll();
+    public ResponseEntity<MensageriaService<Page<DestinatarioModel>>> listDestinatarios(Pageable pageable) {
+        Page listDestinatarios = destinatarioRepository.findAll(pageable);
 
         if (!listDestinatarios.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService<>("Destinatarios", listDestinatarios, 200);

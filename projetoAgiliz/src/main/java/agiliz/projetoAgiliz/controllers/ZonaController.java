@@ -12,6 +12,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,13 +45,13 @@ public class ZonaController {
     }
 
     @GetMapping
-    public ResponseEntity<MensageriaService<List<ZonaModel>>> listar() {
-        List<ZonaModel> zonas = repository.findAll();
+    public ResponseEntity<MensageriaService<Page<ZonaModel>>> listar(Pageable pageable) {
+        Page<ZonaModel> zonas = repository.findAll(pageable);
         
         if(zonas.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(new MensageriaService<List<ZonaModel>>(
+            .body(new MensageriaService<Page<ZonaModel>>(
                 "Zonas:",
                 zonas,
                 HttpStatus.OK.value()

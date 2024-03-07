@@ -28,11 +28,11 @@ public class UnidadeModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idUnidade;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_fornecedor")
     private FornecedorModel fornecedor;
-
+    
+    @JsonIgnore
     private UUID idFornecedor;
 
     @JsonIgnore

@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import agiliz.projetoAgiliz.models.DestinatarioModel;
@@ -30,8 +32,8 @@ public class PacoteService {
         return pacoteRepository.save(pacote);
     }
 
-    public List<PacoteModel> listarTodos(){
-        return pacoteRepository.findAll();
+    public Page<PacoteModel> listarTodos(Pageable pageable){
+        return pacoteRepository.findAll(pageable);
     }
 
     public Optional<PacoteModel> listarPorId(UUID idPacote){

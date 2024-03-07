@@ -56,4 +56,9 @@ public class PacoteModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fk_unidade")
     private UnidadeModel unidade;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "idFuncionario")
+    private FuncionarioModel idFuncionario;
 }

@@ -8,6 +8,8 @@ import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +41,8 @@ public class FuncionarioController {
     }
 
     @GetMapping("/")
-    ResponseEntity<MensageriaService<List<FuncionarioModel>>> listarFuncionarios() {
-        List<FuncionarioModel> funcionarioList = funcionarioRepository.findAll();
+    ResponseEntity<MensageriaService<Page<FuncionarioModel>>> listarFuncionarios(Pageable pageable) {
+        Page<FuncionarioModel> funcionarioList = funcionarioRepository.findAll(pageable);
         if (!funcionarioList.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Funcionarios", funcionarioList, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
