@@ -1,12 +1,12 @@
 package agiliz.projetoAgiliz.dto;
 
-import agiliz.projetoAgiliz.models.FuncionarioModel;
+import agiliz.projetoAgiliz.models.Colaborador;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record EnderecoFinalDTO(
-                               @NotEmpty FuncionarioModel fkfuncionario,
+                               @NotEmpty Colaborador fkfuncionario,
                                @NotBlank String apelido,
                                @NotBlank String cep,
                                @NotBlank String rua,

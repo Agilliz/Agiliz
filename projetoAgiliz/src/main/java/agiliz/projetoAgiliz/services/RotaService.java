@@ -15,8 +15,8 @@ public class RotaService {
             Endereco inicio,
             Endereco fim
     ) {
-        List<Endereco> enderecos = new ArrayList<>(entregas);
-        enderecos.addAll(List.of(inicio, fim));
+        List<Endereco> enderecos = new ArrayList<>(List.of(inicio, fim));
+        enderecos.addAll(entregas);
         CalculadoraRotas calculadoraRotas = new CalculadoraRotas(enderecos);
         return calculadoraRotas.gerarRota(inicio.getId(), fim.getId());
     }

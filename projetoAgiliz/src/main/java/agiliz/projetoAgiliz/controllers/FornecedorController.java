@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import agiliz.projetoAgiliz.dto.FornecedorDTO;
-import agiliz.projetoAgiliz.models.FornecedorModel;
+import agiliz.projetoAgiliz.models.Fornecedor;
 import agiliz.projetoAgiliz.repositories.IFornecedorRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
@@ -33,34 +33,34 @@ public class FornecedorController {
     IFornecedorRepository fornecedorRepository;
 
     @GetMapping("/")
-    public ResponseEntity<MensageriaService<Page<FornecedorModel>>> listarFornecedores(Pageable pageable) {
+    public ResponseEntity<MensageriaService<Page<Fornecedor>>> listarFornecedores(Pageable pageable) {
 
-        Page<FornecedorModel> fornecedorList = fornecedorRepository.findAll(pageable);
+        Page<Fornecedor> fornecedorList = fornecedorRepository.findAll(pageable);
 
         if (!fornecedorList.isEmpty()) {
-            MensageriaService<Page<FornecedorModel>> mensageriaService = new MensageriaService("Fornecedores:",
+            MensageriaService<Page<Fornecedor>> mensageriaService = new MensageriaService("Fornecedores:",
                     fornecedorList, 200);
 
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }
 
-        MensageriaService<List<FornecedorModel>> mensageriaService = new MensageriaService<>(
+        MensageriaService<List<Fornecedor>> mensageriaService = new MensageriaService<>(
                 "Nenhum fornecedor encontrado", "No content", 204);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/{idFornecedor}")
-    public ResponseEntity<MensageriaService<FornecedorModel>> listarFornecedorPorId(@PathVariable UUID idFornecedor) {
-        Optional<FornecedorModel> fornecedor = fornecedorRepository.findById(idFornecedor);
+    public ResponseEntity<MensageriaService<Fornecedor>> listarFornecedorPorId(@PathVariable UUID idFornecedor) {
+        Optional<Fornecedor> fornecedor = fornecedorRepository.findById(idFornecedor);
 
         if (fornecedor.isPresent() /* Só valida se o optional não ta null */) {
-            MensageriaService<FornecedorModel> mensageriaService = new MensageriaService("Fornecedor", fornecedor, 200);
+            MensageriaService<Fornecedor> mensageriaService = new MensageriaService("Fornecedor", fornecedor, 200);
 
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }
 
-        MensageriaService<FornecedorModel> mensageriaService = new MensageriaService<>("Fornecedor não encontrado",
+        MensageriaService<Fornecedor> mensageriaService = new MensageriaService<>("Fornecedor não encontrado",
                 404);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
@@ -68,33 +68,33 @@ public class FornecedorController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<MensageriaService<FornecedorModel>> cadastrarFornecedor(
+    public ResponseEntity<MensageriaService<Fornecedor>> cadastrarFornecedor(
             @RequestBody @Valid FornecedorDTO fornecedorDTO) {
 
-        FornecedorModel fornecedorModel = new FornecedorModel();
-        BeanUtils.copyProperties(fornecedorDTO, fornecedorModel);
+        Fornecedor fornecedor = new Fornecedor();
+        BeanUtils.copyProperties(fornecedorDTO, fornecedor);
 
         try {
-            fornecedorRepository.save(fornecedorModel);
+            fornecedorRepository.save(fornecedor);
         } catch (Exception e) {
-            MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
-                    "Ocorreu um erro a cadastrar o usuáriofornecedor", fornecedorModel, 400);
+            MensageriaService<Fornecedor> mensageriaService = new MensageriaService(
+                    "Ocorreu um erro a cadastrar o usuáriofornecedor", fornecedor, 400);
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
         }
-        MensageriaService<FornecedorModel> mensageriaService = new MensageriaService<FornecedorModel>(
+        MensageriaService<Fornecedor> mensageriaService = new MensageriaService<Fornecedor>(
                 "Fornecedor cadastrado com sucesso",
-                fornecedorModel, 201);
+                fornecedor, 201);
 
         System.out.println(mensageriaService);
         return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
     }
 
     @PutMapping("alterar/{idFornecedor}")
-    public ResponseEntity<MensageriaService<FornecedorModel>> alterarFornecedor(@PathVariable UUID idFornecedor,
-            @RequestBody @Valid FornecedorDTO fornecedorDTO) {
+    public ResponseEntity<MensageriaService<Fornecedor>> alterarFornecedor(@PathVariable UUID idFornecedor,
+                                                                           @RequestBody @Valid FornecedorDTO fornecedorDTO) {
 
-        FornecedorModel fornecedorModel = new FornecedorModel();
+        Fornecedor fornecedorModel = new Fornecedor();
         Optional fornecedor = fornecedorRepository.findById(idFornecedor);
 
         if (fornecedor.isPresent()) {
@@ -103,29 +103,29 @@ public class FornecedorController {
             try {
 
                 fornecedorRepository.save(fornecedorModel);
-                MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
+                MensageriaService<Fornecedor> mensageriaService = new MensageriaService(
                         "Fornecedor atualizado com sucesso", fornecedorModel, 200);
 
                 return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
 
             } catch (Exception e) {
-                MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
+                MensageriaService<Fornecedor> mensageriaService = new MensageriaService(
                         "Ocorreu um erro ao atualizar o fornecedor", fornecedorModel, 400);
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
             }
         }
 
-        MensageriaService<FornecedorModel> mensageriaService = new MensageriaService(
+        MensageriaService<Fornecedor> mensageriaService = new MensageriaService(
                 "Fornecedor não encontrado", fornecedorModel, 404);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
     }
 
     @DeleteMapping("/deletar/{idFornecedor}")
-    public ResponseEntity<MensageriaService<FornecedorModel>> deletarFornecedor(@PathVariable UUID idFornecedor) {
+    public ResponseEntity<MensageriaService<Fornecedor>> deletarFornecedor(@PathVariable UUID idFornecedor) {
 
-        Optional<FornecedorModel> fornecedor = fornecedorRepository.findById(idFornecedor);
+        Optional<Fornecedor> fornecedor = fornecedorRepository.findById(idFornecedor);
 
         if (fornecedor.isPresent()) {
             try {

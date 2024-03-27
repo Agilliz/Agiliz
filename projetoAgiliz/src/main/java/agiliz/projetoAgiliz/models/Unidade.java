@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "unidade")
-public class UnidadeModel implements Serializable {
+public class Unidade implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -30,14 +30,14 @@ public class UnidadeModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "fk_fornecedor")
-    private FornecedorModel fornecedor;
+    private Fornecedor fornecedor;
     
     @JsonIgnore
     private UUID idFornecedor;
 
     @JsonIgnore
     @OneToMany(mappedBy = "unidade")
-    private List<PacoteModel> pacotes; 
+    private List<Pacote> pacotes;
 
     private String rua;
     private String cep;

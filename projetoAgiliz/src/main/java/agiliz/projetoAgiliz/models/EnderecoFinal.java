@@ -19,8 +19,8 @@ public class EnderecoFinal implements Serializable {
     private UUID idEnderecoFinal;
 
     @ManyToOne
-    @JoinColumn(name = "fk_funcionario")
-    private FuncionarioModel idFuncionario;
+    @JoinColumn(name = "fk_colaborador")
+    private Colaborador colaborador;
 
     private String apelido;
     private String cep;

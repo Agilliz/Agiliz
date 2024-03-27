@@ -1,12 +1,10 @@
 package agiliz.projetoAgiliz.dto;
 
-import agiliz.projetoAgiliz.models.FuncionarioModel;
-import agiliz.projetoAgiliz.models.VeiculoModel;
+import agiliz.projetoAgiliz.models.Colaborador;
+import agiliz.projetoAgiliz.models.Veiculo;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.util.UUID;
-
 public record MotoristaDaVezDTO(
-        @NotEmpty FuncionarioModel funcionario,
-        @NotEmpty VeiculoModel veiculo
+        @NotEmpty Colaborador funcionario,
+        @NotEmpty Veiculo veiculo
 ) {}

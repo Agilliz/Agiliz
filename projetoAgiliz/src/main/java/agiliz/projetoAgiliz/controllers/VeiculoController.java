@@ -1,7 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.VeiculoDTO;
-import agiliz.projetoAgiliz.models.VeiculoModel;
+import agiliz.projetoAgiliz.models.Veiculo;
 import agiliz.projetoAgiliz.repositories.IVeiculoRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,8 +24,8 @@ public class VeiculoController {
     IVeiculoRepository veiculoRepository;
 
     @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<VeiculoModel>> cadastrarVeiculo(@RequestBody @Valid VeiculoDTO veiculoDTO){
-        var veiculo = new VeiculoModel();
+    ResponseEntity<MensageriaService<Veiculo>> cadastrarVeiculo(@RequestBody @Valid VeiculoDTO veiculoDTO){
+        var veiculo = new Veiculo();
         BeanUtils.copyProperties(veiculoDTO, veiculo);
         try {
             MensageriaService mensageriaService = new MensageriaService(
@@ -40,8 +39,8 @@ public class VeiculoController {
     }
 
     @GetMapping("/")
-    ResponseEntity<MensageriaService<Page<VeiculoModel>>> listarVeiculos (Pageable pageable) {
-        Page<VeiculoModel> veiculosList = veiculoRepository.findAll(pageable);
+    ResponseEntity<MensageriaService<Page<Veiculo>>> listarVeiculos (Pageable pageable) {
+        Page<Veiculo> veiculosList = veiculoRepository.findAll(pageable);
 
         if (!veiculosList.isEmpty()){
             MensageriaService mensageriaService = new MensageriaService("Veículos", veiculosList, 200);
@@ -52,8 +51,8 @@ public class VeiculoController {
     }
 
     @GetMapping("/{idVeiculo}")
-    ResponseEntity<MensageriaService<VeiculoModel>> listarVeiculosPorId (@PathVariable UUID idMulta) {
-        Optional<VeiculoModel> veiculoList = veiculoRepository.findById(idMulta);
+    ResponseEntity<MensageriaService<Veiculo>> listarVeiculosPorId (@PathVariable UUID idMulta) {
+        Optional<Veiculo> veiculoList = veiculoRepository.findById(idMulta);
 
         if (veiculoList.isPresent()){
             MensageriaService mensageriaService = new MensageriaService("Veiculo", veiculoList, 200);
@@ -64,8 +63,8 @@ public class VeiculoController {
     }
 
     @DeleteMapping("/{idVeiculo}")
-    ResponseEntity<MensageriaService<VeiculoModel>> deletarVeiculosPorId (@PathVariable UUID idVeiculo) {
-        Optional<VeiculoModel> multasList = veiculoRepository.findById(idVeiculo);
+    ResponseEntity<MensageriaService<Veiculo>> deletarVeiculosPorId (@PathVariable UUID idVeiculo) {
+        Optional<Veiculo> multasList = veiculoRepository.findById(idVeiculo);
 
         if (multasList.isPresent()){
             veiculoRepository.deleteById(idVeiculo);

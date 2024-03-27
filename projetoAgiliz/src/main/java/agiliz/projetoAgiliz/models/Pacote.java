@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "pacote")
-public class PacoteModel implements Serializable {
+public class Pacote implements Serializable {
 
     private static long serialVersionUID = 1L;
 
@@ -40,25 +40,25 @@ public class PacoteModel implements Serializable {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_zona")
-    private ZonaModel zona;
+    private Zona zona;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "fk_funcionario")
-    private FuncionarioModel funcionario;
+    @JoinColumn(name = "fk_colaborador")
+    private Colaborador colaborador;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_destinatario")
-    private DestinatarioModel destinatario;
+    private Destinatario destinatario;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_unidade")
-    private UnidadeModel unidade;
+    private Unidade unidade;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idFuncionario")
-    private FuncionarioModel idFuncionario;
+    private Colaborador idFuncionario;
 }

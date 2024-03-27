@@ -1,9 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.FuncionarioDTO;
 import agiliz.projetoAgiliz.dto.MotoristaDaVezDTO;
-import agiliz.projetoAgiliz.models.FuncionarioModel;
-import agiliz.projetoAgiliz.models.MotoristaDaVezModel;
+import agiliz.projetoAgiliz.models.MotoristaDaVez;
 import agiliz.projetoAgiliz.repositories.IMotoristaDaVezRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
@@ -27,8 +25,8 @@ public class MotoristaDaVezController {
     IMotoristaDaVezRepository motoristaDaVezRepository;
 
     @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<MotoristaDaVezModel>> cadastroMotorista(@RequestBody @Valid MotoristaDaVezDTO motoristaDaVezDTO){
-        var motoristaVez = new MotoristaDaVezModel();
+    ResponseEntity<MensageriaService<MotoristaDaVez>> cadastroMotorista(@RequestBody @Valid MotoristaDaVezDTO motoristaDaVezDTO){
+        var motoristaVez = new MotoristaDaVez();
         BeanUtils.copyProperties(motoristaDaVezDTO, motoristaVez);
         try {
             MensageriaService mensageriaService = new MensageriaService<>(
@@ -42,8 +40,8 @@ public class MotoristaDaVezController {
     }
 
     @GetMapping("/")
-    ResponseEntity<MensageriaService<Page<MotoristaDaVezModel>>> listarMotoristas(Pageable pageable) {
-        Page<MotoristaDaVezModel> motoristaList = motoristaDaVezRepository.findAll(pageable);
+    ResponseEntity<MensageriaService<Page<MotoristaDaVez>>> listarMotoristas(Pageable pageable) {
+        Page<MotoristaDaVez> motoristaList = motoristaDaVezRepository.findAll(pageable);
 
         if (!motoristaList.isEmpty()){
             MensageriaService mensageriaService = new MensageriaService("Motoristas", motoristaList, 200);
@@ -54,8 +52,8 @@ public class MotoristaDaVezController {
     }
 
     @GetMapping("/{idMotoristaVez}")
-    ResponseEntity<MensageriaService<List<MotoristaDaVezModel>>> listarMotoristaPorId(@PathVariable UUID idMotorista) {
-        Optional<MotoristaDaVezModel> motoristaList = motoristaDaVezRepository.findById(idMotorista);
+    ResponseEntity<MensageriaService<List<MotoristaDaVez>>> listarMotoristaPorId(@PathVariable UUID idMotorista) {
+        Optional<MotoristaDaVez> motoristaList = motoristaDaVezRepository.findById(idMotorista);
 
         if (motoristaList.isPresent()){
             MensageriaService mensageriaService = new MensageriaService("Motorista", motoristaList, 200);
@@ -66,8 +64,8 @@ public class MotoristaDaVezController {
     }
 
     @DeleteMapping("/{idMotoristaVez}")
-    ResponseEntity<MensageriaService<List<MotoristaDaVezModel>>> deletarMotoristaPorId(@PathVariable UUID idMotorista){
-        Optional<MotoristaDaVezModel> motoristaList = motoristaDaVezRepository.findById(idMotorista);
+    ResponseEntity<MensageriaService<List<MotoristaDaVez>>> deletarMotoristaPorId(@PathVariable UUID idMotorista){
+        Optional<MotoristaDaVez> motoristaList = motoristaDaVezRepository.findById(idMotorista);
 
         if (motoristaList.isPresent()){
             motoristaDaVezRepository.deleteById(idMotorista);

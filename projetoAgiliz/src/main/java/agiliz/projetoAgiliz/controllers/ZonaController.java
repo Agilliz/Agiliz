@@ -1,13 +1,12 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.ZonaDTO;
-import agiliz.projetoAgiliz.models.ZonaModel;
+import agiliz.projetoAgiliz.models.Zona;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 
 import java.util.UUID;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -32,12 +31,12 @@ public class ZonaController {
     private IZonaRepository repository;
     
     @PostMapping
-    public ResponseEntity<MensageriaService<ZonaModel>> cadastrar(@RequestBody @Valid ZonaDTO zonaDTO) {
-        var zona = new ZonaModel();
+    public ResponseEntity<MensageriaService<Zona>> cadastrar(@RequestBody @Valid ZonaDTO zonaDTO) {
+        var zona = new Zona();
         BeanUtils.copyProperties(zonaDTO, zona);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(new MensageriaService<ZonaModel>(
+            .body(new MensageriaService<Zona>(
                 "Zona cadastrada com sucesso",
                 repository.save(zona),
                 HttpStatus.CREATED.value()
@@ -45,13 +44,13 @@ public class ZonaController {
     }
 
     @GetMapping
-    public ResponseEntity<MensageriaService<Page<ZonaModel>>> listar(Pageable pageable) {
-        Page<ZonaModel> zonas = repository.findAll(pageable);
+    public ResponseEntity<MensageriaService<Page<Zona>>> listar(Pageable pageable) {
+        Page<Zona> zonas = repository.findAll(pageable);
         
         if(zonas.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(new MensageriaService<Page<ZonaModel>>(
+            .body(new MensageriaService<Page<Zona>>(
                 "Zonas:",
                 zonas,
                 HttpStatus.OK.value()
@@ -59,13 +58,13 @@ public class ZonaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MensageriaService<ZonaModel>> listarPorId(@PathVariable UUID id){
-        Optional<ZonaModel> zonaOpt = repository.findById(id);
+    public ResponseEntity<MensageriaService<Zona>> listarPorId(@PathVariable UUID id){
+        Optional<Zona> zonaOpt = repository.findById(id);
 
         if(zonaOpt.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new MensageriaService<ZonaModel>(
+                .body(new MensageriaService<Zona>(
                     "Zona: ",
                     zonaOpt.get(),
                     HttpStatus.OK.value()
@@ -74,7 +73,7 @@ public class ZonaController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<ZonaModel>> alterar(@RequestBody @Valid ZonaDTO zonaDTO, @PathVariable UUID id) {
+    public ResponseEntity<MensageriaService<Zona>> alterar(@RequestBody @Valid ZonaDTO zonaDTO, @PathVariable UUID id) {
         var zonaOpt = repository.findById(id);
 
         if(zonaOpt.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -83,7 +82,7 @@ public class ZonaController {
         BeanUtils.copyProperties(zonaDTO, zona);
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(new MensageriaService<ZonaModel>(
+            .body(new MensageriaService<Zona>(
                 "Zona atualizada com sucesso",
                 repository.save(zona),
                 HttpStatus.OK.value()
