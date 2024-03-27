@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -8,112 +9,46 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.swing.RowFilter.Entry;
-
 public class CalculadoraRotas {
     private Set<String> enderecos;
     private Map<String, Map<String, Double>> mapaDeDistancia;
-    private Map<String, Map<String, Double>> mapaFeromonios;
-    private List<Formiga> formigas;
+    private List<String> vizinhos;
+    private Map<String, List<String>> memo;
 
     public CalculadoraRotas(List<Endereco> enderecos) {
+        enderecos.forEach(endereco -> System.out.println(endereco.getId()));
         this.enderecos = new HashSet<>(enderecos.stream().map(Endereco::getId).toList());
         this.mapaDeDistancia = calcularDistancias(enderecos);
-        this.mapaFeromonios = inicializarFeromonios(enderecos);
-    }
-    
-    public void gerarRotaIdeal(String inicio) {
-        this.formigas = new ArrayList<>();
-        
-        for (int i = 0; i < this.enderecos.size(); i++) {
-            this.formigas.add(new Formiga(inicio));
-        }
-
-        this.enderecos.remove(inicio);
-        
-        for (int c = 0; c < 1; c++) {
-            for (Formiga formiga : this.formigas) {
-                Set<String> cidadesRestantes = new HashSet<>(this.enderecos);
-                
-                Map<String, Double> probabilidades = gerarProbabilidades(formiga.getLocalizacao(), cidadesRestantes);
-
-                System.out.println(inicio);
-                System.out.println("Escolhi: "+escolherAleatoriamente(probabilidades));
-            }
-        }
-    }
-
-    public Map<String, Double> gerarProbabilidades(String vtxAtual, Set<String> cidadesRestantes) {
-        Map<String, Double> distancias = this.mapaDeDistancia.get(vtxAtual);
-        Map<String, Double> feromonios = this.mapaFeromonios.get(vtxAtual);
-        Map<String, Double> probabilidades = new HashMap<>();
-
-        int alpha = 1;
-        int beta = 1;
-
-        double totalPorcentagens = 0.;
-
-        for(String cidade : cidadesRestantes){
-            double distancia = distancias.get(cidade);
-            double quantidadeFeromonio = feromonios.get(cidade);
-            
-            double fatorDistancia = Math.pow((1000 / distancia), alpha);
-            double fatorFeromonio = Math.pow(quantidadeFeromonio, beta);
-
-            double desejabilidade = fatorDistancia * fatorFeromonio;
-
-            probabilidades.put(cidade, desejabilidade);
-
-            totalPorcentagens += desejabilidade;
-        }
-
-        for(Map.Entry<String, Double> entry : probabilidades.entrySet()){
-            probabilidades.put(entry.getKey(), (entry.getValue() / totalPorcentagens));
-        }
-
-        return probabilidades;
-    }
-
-    public Map<String, Map<String, Double>> inicializarFeromonios(List<Endereco> enderecos) {
-        Map<String, Map<String, Double>> mapaFeromonios = new HashMap<>();
-
-        double feromonio = .5;
-
-        for (Endereco origem : enderecos) {
-            mapaFeromonios.put(origem.getId(), new HashMap<>());
-            for (Endereco destino : enderecos) {
-                if (origem.equals(destino))
-                    continue;
-                mapaFeromonios.get(origem.getId()).put(destino.getId(), feromonio);
-            }
-        }
-
-        return mapaFeromonios;
-    }
-
-    public String escolherAleatoriamente(Map<String, Double> opcoes) {
-        double aleatorio = ThreadLocalRandom.current().nextDouble();
-
-        List<Map.Entry<String, Double>> opcoesOrdenadas = opcoes.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .toList();
-
-        String proximoVtx = null;
-
-        for (Map.Entry<String, Double> entry : opcoesOrdenadas) {
-            if (aleatorio >= entry.getValue())
-                proximoVtx = entry.getKey();
-        }
-
-        return proximoVtx;
+        this.vizinhos = new ArrayList<>(enderecos.stream().map(Endereco::getId).toList());
+        this.memo = new HashMap<>();
     }
 
     public List<String> gerarRota(String vtxInicial, String vtxFinal) {
+        List<String> rota = kOpt(calcularRota(enderecos, vtxInicial, vtxFinal));
+        List<String> rotaDinamica = gerarRotaDinamica(vtxInicial, vizinhos);
+        System.out.println(rotaDinamica);
+        return rota;
+    }
 
-        gerarRotaIdeal(vtxInicial);
+    private List<String> gerarRotaDinamica(String vtxAtual, List<String> vizinhos){
+        if(memo.containsKey(vtxAtual)) return memo.get(vtxAtual);
+        if(vizinhos.isEmpty()) return new ArrayList<>();
 
-        List<String> rota = calcularRota(enderecos, vtxInicial, vtxFinal);
-        return kOpt(rota);
+        List<String> rotaIdeal = null;
+        double menorDistancia = Double.MAX_VALUE;
+
+        for(String vizinho : vizinhos){
+            List<String> vizinhosDaVez = new ArrayList<>(vizinhos);
+            vizinhosDaVez.remove(vizinho);
+            List<String> rotaAtual = new ArrayList<>(List.of(vizinho));
+            rotaAtual.addAll(gerarRotaDinamica(vizinho, vizinhosDaVez));
+            double distancia = calcularDistancia(rotaAtual);
+            if(distancia < menorDistancia) rotaIdeal = rotaAtual;
+        }
+
+        //System.out.println(rotaIdeal);
+        memo.put(vtxAtual, rotaIdeal);
+        return rotaIdeal;
     }
 
     private List<String> kOpt(List<String> rota) {
@@ -137,7 +72,7 @@ public class CalculadoraRotas {
 
     private List<String> calcularRota(Set<String> vtxNaoVisitados, String inicio, String fim) {
         List<String> rota = new ArrayList<>(List.of(inicio, getMaisDistante(inicio), fim));
-        vtxNaoVisitados.removeAll(rota);
+        rota.forEach(vtxNaoVisitados::remove);
 
         while (!vtxNaoVisitados.isEmpty()) {
             String j = getVtxMaisDistanteDaRota(rota, vtxNaoVisitados);
@@ -216,20 +151,6 @@ public class CalculadoraRotas {
         }
 
         return distanciaTotal;
-    }
-
-    private static Map<String, List<String>> definirAdjacencia(List<Endereco> enderecos) {
-        Map<String, List<String>> adjMap = new HashMap<>();
-        for (Endereco endereco : enderecos) {
-            adjMap.put(endereco.getId(), new ArrayList<>());
-            for (Endereco enderecoMapa : enderecos) {
-                if (enderecoMapa.equals(endereco))
-                    continue;
-                adjMap.get(endereco.getId()).add(enderecoMapa.getId());
-            }
-        }
-
-        return adjMap;
     }
 
     private static Map<String, Map<String, Double>> calcularDistancias(List<Endereco> enderecos) {

@@ -1,6 +1,5 @@
 package agiliz.projetoAgiliz.controllers;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import agiliz.projetoAgiliz.dto.DestinatarioDTO;
-import agiliz.projetoAgiliz.models.DestinatarioModel;
+import agiliz.projetoAgiliz.models.Destinatario;
 import agiliz.projetoAgiliz.repositories.IDestinatarioRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
@@ -34,7 +33,7 @@ public class DestinatarioController {
     IDestinatarioRepository destinatarioRepository;
 
     @GetMapping("/")
-    public ResponseEntity<MensageriaService<Page<DestinatarioModel>>> listDestinatarios(Pageable pageable) {
+    public ResponseEntity<MensageriaService<Page<Destinatario>>> listDestinatarios(Pageable pageable) {
         Page listDestinatarios = destinatarioRepository.findAll(pageable);
 
         if (!listDestinatarios.isEmpty()) {
@@ -47,9 +46,9 @@ public class DestinatarioController {
     }
 
     @GetMapping("/{idDestinatario}")
-    public ResponseEntity<MensageriaService<DestinatarioModel>> listDestinatarioById(
+    public ResponseEntity<MensageriaService<Destinatario>> listDestinatarioById(
             @PathVariable UUID idDestinatario) {
-        Optional<DestinatarioModel> destinatario = destinatarioRepository.findById(idDestinatario);
+        Optional<Destinatario> destinatario = destinatarioRepository.findById(idDestinatario);
 
         if (destinatario.isPresent()) {
             MensageriaService mensageriaService = new MensageriaService<>("Destinatario", destinatario, 200);
@@ -63,17 +62,17 @@ public class DestinatarioController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<MensageriaService<DestinatarioModel>> cadastrarDestinatario(
+    public ResponseEntity<MensageriaService<Destinatario>> cadastrarDestinatario(
             @RequestBody @Valid DestinatarioDTO destinatarioDTO) {
-        DestinatarioModel destinatarioModel = new DestinatarioModel();
+        Destinatario destinatario = new Destinatario();
 
-        BeanUtils.copyProperties(destinatarioDTO, destinatarioModel);
+        BeanUtils.copyProperties(destinatarioDTO, destinatario);
 
         try {
-            destinatarioRepository.save(destinatarioModel);
+            destinatarioRepository.save(destinatario);
 
             MensageriaService mensageriaService = new MensageriaService<>("Destinatario cadastrado com sucesso",
-                    destinatarioModel, 201);
+                    destinatario, 201);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
         } catch (Exception e) {
@@ -84,11 +83,11 @@ public class DestinatarioController {
     }
 
     @PutMapping("/alterar/{idDestinatario}")
-    public ResponseEntity<MensageriaService<DestinatarioModel>> alterarDestinatario(@PathVariable UUID idDestinatario, @RequestBody @Valid DestinatarioDTO destinatarioDTO){
-        Optional<DestinatarioModel> destinatario = destinatarioRepository.findById(idDestinatario);
+    public ResponseEntity<MensageriaService<Destinatario>> alterarDestinatario(@PathVariable UUID idDestinatario, @RequestBody @Valid DestinatarioDTO destinatarioDTO){
+        Optional<Destinatario> destinatario = destinatarioRepository.findById(idDestinatario);
 
         if (destinatario.isPresent()) {
-            DestinatarioModel destinatarioModel = new DestinatarioModel();
+            Destinatario destinatarioModel = new Destinatario();
             BeanUtils.copyProperties(destinatarioDTO, destinatarioModel);
 
             try {
@@ -109,8 +108,8 @@ public class DestinatarioController {
     }
 
     @DeleteMapping("/deletar/{idDestinatario}")
-    public ResponseEntity<MensageriaService<DestinatarioModel>> deletarDestinatario(@PathVariable UUID idDestinatario){
-        Optional<DestinatarioModel> destinatario = destinatarioRepository.findById(idDestinatario);
+    public ResponseEntity<MensageriaService<Destinatario>> deletarDestinatario(@PathVariable UUID idDestinatario){
+        Optional<Destinatario> destinatario = destinatarioRepository.findById(idDestinatario);
 
         if(destinatario.isPresent()){
             try {

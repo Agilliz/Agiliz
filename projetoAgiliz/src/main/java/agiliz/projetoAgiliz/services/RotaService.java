@@ -9,13 +9,14 @@ import agiliz.projetoAgiliz.models.Endereco;
 
 @Service
 public class RotaService {
+
     public List<String> calcularRota(
             List<Endereco> entregas,
             Endereco inicio,
             Endereco fim
     ) {
-        List<Endereco> enderecos = new ArrayList<>(entregas);
-        enderecos.addAll(List.of(inicio, fim));
+        List<Endereco> enderecos = new ArrayList<>(List.of(inicio, fim));
+        enderecos.addAll(entregas);
         CalculadoraRotas calculadoraRotas = new CalculadoraRotas(enderecos);
         return calculadoraRotas.gerarRota(inicio.getId(), fim.getId());
     }

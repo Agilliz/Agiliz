@@ -6,14 +6,13 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "frota")
-public class MotoristaDaVezModel implements Serializable {
+public class MotoristaDaVez implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -21,18 +20,12 @@ public class MotoristaDaVezModel implements Serializable {
     private UUID idVeiculosFuncionario;
 
     @ManyToOne
-    @JoinColumn(name = "id_funcionario")
-    private FuncionarioModel idFuncionario;
+    @JoinColumn(name = "fk_colaborador")
+    private Colaborador colaborador;
 
     @ManyToOne
     @JoinColumn(name = "id_veiculo")
-    private VeiculoModel idVeiculo;
+    private Veiculo idVeiculo;
 
     private Date Data;
-
-    @ManyToOne
-    @JoinColumn(name = "id_multas")
-    private MultaModel multa;
-
-
 }

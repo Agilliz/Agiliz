@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "Veiculo")
-public class VeiculoModel implements Serializable {
+public class Veiculo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -22,6 +22,6 @@ public class VeiculoModel implements Serializable {
     private String proprietario;
     private String placa;
 
-    @OneToMany(mappedBy = "idFuncionario")
-    private List<FuncionarioModel> funcionario;
+    @OneToMany(mappedBy = "idColaborador")
+    private List<Colaborador> colaborador;
 }

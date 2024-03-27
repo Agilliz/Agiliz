@@ -1,5 +1,7 @@
 package agiliz.projetoAgiliz.models;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,19 +13,20 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "zona")
-public class ZonaModel implements Serializable {
+@Table(name = "vigencia")
+public class Vigencia implements Serializable {
 
     private static long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idZona;
+    private UUID idVigencia;
 
-    private String nomeZona;
-    private Double valor;
-    private Integer limiteSuperiorCEP;
-    private Integer limiteInferiorCEP;
+    private Integer dias;
+    private String descricao;
 
-    @OneToMany(mappedBy = "zona")
-    private List<PacoteModel> pacotes;
+    @JsonIgnore
+    @OneToMany(mappedBy = "vigencia")
+    private List<TipoColaborador> tipoColaboradores;
+
 }
