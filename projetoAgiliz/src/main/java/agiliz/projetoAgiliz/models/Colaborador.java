@@ -49,20 +49,4 @@ public class Colaborador implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "colaborador", fetch=FetchType.EAGER)
     private List<Pagamento> pagamentos;
-
-    public List<Pacote> getPacotesPorTipoZona(TipoZona tipo){
-        return pacotes.stream()
-                .filter(pacote -> pacote.getZona().getTipoZona() == tipo)
-                .toList();
-    }
-
-    public List<Pacote> getPacotesPagamentoPendente(TipoPagamento tipoPagamento){
-        List<Pacote> pacotes = tipoPagamento == TipoPagamento.ZONA_NORMAL
-                ? getPacotesPorTipoZona(TipoZona.ZONA_NORMAL)
-                : getPacotesPorTipoZona(TipoZona.ZONA_NOVA);
-
-        return pacotes.stream()
-                .filter(Predicate.not(Pacote::isPagamentoFeito))
-                .toList();
-    }
 }
