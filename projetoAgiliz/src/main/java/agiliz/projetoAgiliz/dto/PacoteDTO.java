@@ -1,22 +1,11 @@
 package agiliz.projetoAgiliz.dto;
 
-import jakarta.validation.constraints.NotNull;
-
 import java.util.UUID;
 
+// Fazer um para atualização
 public record PacoteDTO(
-        int idTipo,
-        int idStatus,
-        @NotNull UUID fkDestinatario,
+        int tipo,
+        int status,
+        UUID fkDestinatario,
         UUID fkFuncionario
-) {
-    @Override
-    public String toString() {
-        return "PacoteDTO{" +
-                "tipo=" + idTipo +
-                ", status=" + idStatus +
-                ", fkDestinatario=" + fkDestinatario +
-                ", fkFuncionario=" + fkFuncionario +
-                '}';
-    }
-}
+) {}

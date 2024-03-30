@@ -9,6 +9,7 @@ import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
 import agiliz.projetoAgiliz.models.*;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,8 @@ public class PacoteService {
     private IColaboradorRepository funcionarioRepository;
 
     public Pacote inserir(PacoteDTO dto) {
-        var pacote = new Pacote(dto.idTipo(), dto.idStatus());
+        var pacote = new Pacote();
+        BeanUtils.copyProperties(dto, pacote);
         associarDestinatario(dto.fkDestinatario(), pacote);
         associarFuncionario(dto.fkFuncionario(), pacote);
         associarZona(pacote);

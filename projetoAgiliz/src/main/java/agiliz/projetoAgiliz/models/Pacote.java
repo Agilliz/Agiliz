@@ -32,9 +32,9 @@ public class Pacote implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;
 
-    private TipoPacote tipo;
+    private int tipo;
 
-    private StatusPacote status;
+    private int status;
 
     private boolean pagamentoFeito;
 
@@ -58,17 +58,12 @@ public class Pacote implements Serializable {
     @JoinColumn(name = "fk_unidade")
     private Unidade unidade;
 
-    public Pacote(int tipoPacote, int statusPacote){
-        setStatusPacote(statusPacote);
-        setTipoPacote(tipoPacote);
+    public StatusPacote getStatus(){
+        return StatusPacote.valueOf(this.status);
     }
 
-    public void setStatusPacote(int statusPacote){
-        this.status = StatusPacote.valueOf(statusPacote);
-    }
-
-    public void setTipoPacote(int tipoPacote){
-        this.tipo = TipoPacote.valueOf(tipoPacote);
+    public TipoPacote getTipo(){
+        return TipoPacote.valueOf(this.tipo);
     }
 
     @Override

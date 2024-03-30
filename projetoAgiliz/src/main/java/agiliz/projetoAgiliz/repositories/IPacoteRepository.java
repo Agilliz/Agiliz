@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPacoteRepository extends JpaRepository<Pacote, UUID>{
 
-    @Query("SELECT p FROM Pacote p WHERE p.colaborador = ?1 AND p.status = 2 AND pagamentoFeito = false")
+    @Query("SELECT p FROM Pacote p WHERE p.colaborador = ?1 AND p.status = 3 AND pagamentoFeito = false")
     List<Pacote> findPackagesForPayment(Colaborador colaborador);
 }
