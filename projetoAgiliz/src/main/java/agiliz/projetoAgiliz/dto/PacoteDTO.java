@@ -1,14 +1,22 @@
 package agiliz.projetoAgiliz.dto;
 
-import agiliz.projetoAgiliz.enums.StatusPacote;
-import agiliz.projetoAgiliz.enums.TipoPacote;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
 public record PacoteDTO(
-        @NotNull TipoPacote tipo,
-        @NotNull StatusPacote status,
+        int idTipo,
+        int idStatus,
         @NotNull UUID fkDestinatario,
         UUID fkFuncionario
-) {}
+) {
+    @Override
+    public String toString() {
+        return "PacoteDTO{" +
+                "tipo=" + idTipo +
+                ", status=" + idStatus +
+                ", fkDestinatario=" + fkDestinatario +
+                ", fkFuncionario=" + fkFuncionario +
+                '}';
+    }
+}

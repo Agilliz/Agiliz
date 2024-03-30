@@ -3,6 +3,7 @@ package agiliz.projetoAgiliz.services;
 import java.time.LocalDate;
 import java.util.*;
 
+import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.models.Pagamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -19,22 +20,22 @@ public class AgendaDeTarefasService {
     private Map<UUID, Timer> agendaDeTarefas = new HashMap<>();
 
     public void agendarEmissaoPagamento(Pagamento pagamento){
-        UUID idColaborador = pagamento.getColaborador().getIdColaborador();
-        if(agendaDeTarefas.containsKey(idColaborador)) return;
+        Colaborador colaborador = pagamento.getColaborador();
+        if(agendaDeTarefas.containsKey(colaborador.getIdColaborador())) return;
 
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                agendaDeTarefas.remove(idColaborador);
-                emissaoService.emitirPagamento(idColaborador);
+                agendaDeTarefas.remove(colaborador.getIdColaborador());
+                emissaoService.emitirPagamento(colaborador);
                 agendarEmissaoPagamento(pagamento);
             }
         };
 
         int vigencia = pagamento.getTipoColaborador().getVigencia().getDias();
         Timer timer = new Timer();
-        timer.schedule(task, 5000);
-        agendaDeTarefas.put(idColaborador, timer);
+        timer.schedule(task, 15_000);
+        agendaDeTarefas.put(colaborador.getIdColaborador(), timer);
     }
 
     public Date getQuintoDiaUtil(LocalDate dataInicio) {

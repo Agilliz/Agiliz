@@ -44,11 +44,4 @@ public class Pagamento {
     public void setTipoPagamento(int tipoPagamento){
         this.tipoPagamento = TipoPagamento.valueOf(tipoPagamento);
     }
-
-    public String getTipoPagamento(){
-        return tipoPagamento.getAlias();
-    }
-    public TipoPagamento getTipoPagamentoEnum(){
-        return this.tipoPagamento;
-    }
 }

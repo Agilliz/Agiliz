@@ -19,6 +19,6 @@ public class PagamentoAdapter implements Serializable {
         this.tipoColaborador = pagamento.getTipoColaborador().getDescricao();
         this.taxado = pagamento.getTipoColaborador().getTaxado();
         this.remuneracao = pagamento.getRemuneracao();
-        this.tipoPagamento = pagamento.getTipoPagamento();
+        this.tipoPagamento = pagamento.getTipoPagamento().getAlias();
     }
 }

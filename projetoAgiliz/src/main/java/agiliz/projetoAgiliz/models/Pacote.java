@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import agiliz.projetoAgiliz.enums.StatusPacote;
 import agiliz.projetoAgiliz.enums.TipoPacote;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,11 +16,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "pacote")
 public class Pacote implements Serializable {
 
@@ -31,11 +32,11 @@ public class Pacote implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;
 
-    @Enumerated(EnumType.STRING)
     private TipoPacote tipo;
 
-    @Enumerated(EnumType.STRING)
     private StatusPacote status;
+
+    private boolean pagamentoFeito;
 
     @JsonIgnore
     @ManyToOne
@@ -57,8 +58,29 @@ public class Pacote implements Serializable {
     @JoinColumn(name = "fk_unidade")
     private Unidade unidade;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "idFuncionario")
-    private Colaborador idFuncionario;
+    public Pacote(int tipoPacote, int statusPacote){
+        setStatusPacote(statusPacote);
+        setTipoPacote(tipoPacote);
+    }
+
+    public void setStatusPacote(int statusPacote){
+        this.status = StatusPacote.valueOf(statusPacote);
+    }
+
+    public void setTipoPacote(int tipoPacote){
+        this.tipo = TipoPacote.valueOf(tipoPacote);
+    }
+
+    @Override
+    public String toString() {
+        return "Pacote{" +
+                "idPacote=" + idPacote +
+                ", tipo=" + tipo +
+                ", status=" + status +
+                ", zona=" + zona +
+                ", colaborador=" + colaborador +
+                ", destinatario=" + destinatario +
+                ", unidade=" + unidade +
+                '}';
+    }
 }
