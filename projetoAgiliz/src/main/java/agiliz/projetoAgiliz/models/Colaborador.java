@@ -43,10 +43,14 @@ public class Colaborador implements Serializable {
     private List<MotoristaDaVez> veiculosFuncionario;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "colaborador", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "colaborador")
     private List<Pacote> pacotes;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "colaborador", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "colaborador")
     private List<Pagamento> pagamentos;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "colaborador")
+    private List<EmissaoPagamento> emissoes;
 }

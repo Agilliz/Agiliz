@@ -20,14 +20,15 @@ public class EmissaoPagamento implements Serializable {
     private UUID idEmissaoPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "fk_pagamento")
-    private Pagamento pagamento;
+    @JoinColumn(name = "fk_colaborador")
+    private Colaborador colaborador;
 
     private LocalDate data;
     private Double valor;
 
-    public EmissaoPagamento(Double valor) {
+    public EmissaoPagamento(Double valor, Colaborador colaborador) {
         this.valor = valor;
         this.data = LocalDate.now();
+        this.colaborador = colaborador;
     }
 }

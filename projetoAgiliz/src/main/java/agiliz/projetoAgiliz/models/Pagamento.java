@@ -29,10 +29,6 @@ public class Pagamento {
     @JoinColumn(name = "fk_colaborador")
     private Colaborador colaborador;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "pagamento")
-    private List<EmissaoPagamento> emissoes;
-
     private Double remuneracao;
 
     private TipoPagamento tipoPagamento;
