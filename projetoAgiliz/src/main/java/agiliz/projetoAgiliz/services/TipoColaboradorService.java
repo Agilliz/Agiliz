@@ -15,13 +15,10 @@ public class TipoColaboradorService {
     @Autowired
     private ITipoColaboradorRepository tipoColaboradorRepository;
 
-    @Autowired
-    private VigenciaService vigenciaService;
 
     public TipoColaborador inserir(TipoColaboradorDTO dto){
         var tipoColaborador = new TipoColaborador();
         BeanUtils.copyProperties(dto, tipoColaborador);
-        tipoColaborador.setVigencia(vigenciaService.listarPorId(dto.fkVigencia()));
         tipoColaboradorRepository.save(tipoColaborador);
         return tipoColaborador;
     }

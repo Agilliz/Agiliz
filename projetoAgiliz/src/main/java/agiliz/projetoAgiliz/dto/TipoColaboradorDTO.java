@@ -7,5 +7,5 @@ import java.util.UUID;
 public record TipoColaboradorDTO (
         @NotNull String descricao,
         boolean taxado,
-        @NotNull UUID fkVigencia
+        @NotNull int vigencia
 ){}

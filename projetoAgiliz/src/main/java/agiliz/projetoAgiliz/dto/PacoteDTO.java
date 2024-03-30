@@ -1,14 +1,11 @@
 package agiliz.projetoAgiliz.dto;
 
-import agiliz.projetoAgiliz.enums.StatusPacote;
-import agiliz.projetoAgiliz.enums.TipoPacote;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.UUID;
 
+// Fazer um para atualização
 public record PacoteDTO(
-        @NotNull TipoPacote tipo,
-        @NotNull StatusPacote status,
-        @NotNull UUID fkDestinatario,
+        int tipo,
+        int status,
+        UUID fkDestinatario,
         UUID fkFuncionario
 ) {}

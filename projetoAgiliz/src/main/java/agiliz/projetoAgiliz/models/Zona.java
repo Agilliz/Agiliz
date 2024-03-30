@@ -39,12 +39,4 @@ public class Zona implements Serializable {
     public void setTipoZona(int tipoZona){
         this.tipoZona = TipoZona.valueOf(tipoZona);
     }
-
-    public String getTipoZona(){
-        return tipoZona.getAlias();
-    }
-
-    public TipoZona getTipoZonaEnum(){
-        return tipoZona;
-    }
 }

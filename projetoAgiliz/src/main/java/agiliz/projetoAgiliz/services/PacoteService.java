@@ -5,11 +5,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import agiliz.projetoAgiliz.dto.PacoteDTO;
-import agiliz.projetoAgiliz.enums.StatusPacote;
+import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
-import agiliz.projetoAgiliz.models.Colaborador;
-import agiliz.projetoAgiliz.models.Pacote;
-import agiliz.projetoAgiliz.models.Zona;
+import agiliz.projetoAgiliz.models.*;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import agiliz.projetoAgiliz.models.Destinatario;
 import agiliz.projetoAgiliz.repositories.IDestinatarioRepository;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
@@ -36,11 +33,11 @@ public class PacoteService {
     @Autowired
     private IColaboradorRepository funcionarioRepository;
 
-    public Pacote inserir(PacoteDTO pacoteDTO) {
+    public Pacote inserir(PacoteDTO dto) {
         var pacote = new Pacote();
-        BeanUtils.copyProperties(pacoteDTO, pacote);
-        associarDestinatario(pacoteDTO.fkDestinatario(), pacote);
-        associarFuncionario(pacoteDTO.fkFuncionario(), pacote);
+        BeanUtils.copyProperties(dto, pacote);
+        associarDestinatario(dto.fkDestinatario(), pacote);
+        associarFuncionario(dto.fkFuncionario(), pacote);
         associarZona(pacote);
         return pacoteRepository.save(pacote);
     }
@@ -80,21 +77,21 @@ public class PacoteService {
         pacote.setDestinatario(destinatario);
     }
 
-    public List<Pacote> listarPorIdFuncionario(UUID id){
-        return pacoteRepository.findByIdFuncionario(id);
+    public List<Pacote> listarPacotesParaPagar(Pagamento pagamento){
+        List<Pacote> pacotes = pacoteRepository.findPackagesForPayment(pagamento.getColaborador());
+
+        return pacotes.stream()
+                    .filter((pagamento.getTipoPagamento() == TipoPagamento.ZONA_NOVA
+                            ? pacote -> pacote.getZona().getTipoZona() == TipoZona.ZONA_NOVA
+                            : pacote -> pacote.getZona().getTipoZona() == TipoZona.ZONA_NORMAL))
+                    .toList();
     }
 
-    public List<Pacote> consultarPacotesEntreguesZonaNova(UUID id){
-        return listarPorIdFuncionario(id).stream()
-                .filter(pacote -> pacote.getStatus() == StatusPacote.ENTREGUE &&
-                        pacote.getZona().getTipoZonaEnum() == TipoZona.ZONA_NOVA)
-                .toList();
-    }
 
-    public List<Pacote> consultarPacotesEntreguesZonaNormal(UUID id){
-        return listarPorIdFuncionario(id).stream()
-                .filter(pacote -> pacote.getStatus() == StatusPacote.ENTREGUE &&
-                        pacote.getZona().getTipoZonaEnum() == TipoZona.ZONA_NORMAL)
-                .toList();
+    public void confirmarPagamentoEntregas(List<Pacote> pacotes) {
+        for(Pacote pacote : pacotes){
+            pacote.setPagamentoFeito(true);
+            pacoteRepository.save(pacote);
+        }
     }
 }

@@ -6,6 +6,7 @@ import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.services.AgendaDeTarefasService;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
+import agiliz.projetoAgiliz.utils.CalculadoraDatas;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -81,6 +82,6 @@ public class ColaboradorController {
     @GetMapping("/teste-chave")
     public Date getData(){
         LocalDate dataChave = LocalDate.of(2024, 8, 10);
-        return agenda.getQuintoDiaUtil(dataChave);
+        return CalculadoraDatas.calcularQuintoDiaUtil(dataChave);
     }
 }

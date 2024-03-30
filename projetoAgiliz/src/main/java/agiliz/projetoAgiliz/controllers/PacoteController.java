@@ -39,7 +39,9 @@ public class PacoteController {
                         new MensageriaService<>(
                                 "Pacote inserido com sucesso",
                                 pacoteService.inserir(pacoteDTO),
-                                HttpStatus.CREATED.value()));
+                                HttpStatus.CREATED.value()
+                        )
+                );
     }
 
     @GetMapping

@@ -1,7 +1,5 @@
 package agiliz.projetoAgiliz.enums;
 
-import java.util.Arrays;
-
 public enum TipoPagamento {
     ZONA_NORMAL(1, "zona normal"),
     ZONA_NOVA(2, "zona nova"),
