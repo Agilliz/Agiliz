@@ -3,15 +3,12 @@ package agiliz.projetoAgiliz.services;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 import agiliz.projetoAgiliz.dto.PacoteDTO;
-import agiliz.projetoAgiliz.enums.StatusPacote;
 import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
 import agiliz.projetoAgiliz.models.*;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -79,10 +76,7 @@ public class PacoteService {
     }
 
     public List<Pacote> listarPacotesParaPagar(Pagamento pagamento){
-        List<Pacote> pacotes = pacoteRepository.findByColaboradorAndPagamentoFeito(
-                pagamento.getColaborador(),
-                false
-        );
+        List<Pacote> pacotes = pacoteRepository.findPackagesForPayment(pagamento.getColaborador());
 
         return pacotes.stream()
                     .filter((pagamento.getTipoPagamento() == TipoPagamento.ZONA_NOVA
