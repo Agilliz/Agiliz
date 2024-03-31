@@ -18,7 +18,8 @@ public class AgendaDePagamento extends Agenda<Vigencia, UUID> {
 
     public void agendar(Vigencia vigencia, UUID idColaborador, Runnable atividade) {
         Timer timer = new Timer();
-        timer.schedule(new Tarefa(atividade), getDataExecucao(vigencia));
+//        timer.schedule(new Tarefa(atividade), getDataExecucao(vigencia));
+        timer.schedule(new Tarefa(atividade), 15_000);
         this.agendamentos.put(idColaborador, timer);
     }
 

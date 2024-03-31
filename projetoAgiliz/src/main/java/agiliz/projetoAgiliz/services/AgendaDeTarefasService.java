@@ -23,10 +23,7 @@ public class AgendaDeTarefasService {
     public void agendarEmissaoPagamento(Pagamento pagamento){
         UUID idPagamento = pagamento.getIdPagamento();
 
-        if(agendaDePagamento.jaEstaAgendado(idPagamento)) return;
-
         Runnable tarefa = () -> {
-            agendaDePagamento.cancelarTarefa(idPagamento);
             emissaoService.emitirPagamento(pagamento);
             agendarEmissaoPagamento(pagamento);
         };
