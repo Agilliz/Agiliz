@@ -16,10 +16,12 @@ public class AgendaDePagamento extends Agenda<Vigencia, UUID> {
         super();
     }
 
-    public void agendar(Vigencia vigencia, UUID idColaborador, Runnable atividade) {
+    public void agendar(Vigencia vigencia, UUID idPagamento, Runnable atividade) {
         Timer timer = new Timer();
-        timer.schedule(new Tarefa(atividade), getDataExecucao(vigencia));
-        this.agendamentos.put(idColaborador, timer);
+//        timer.schedule(new Tarefa(atividade), getDataExecucao(vigencia));
+        timer.schedule(new Tarefa(atividade), 15_000);
+
+        this.agendamentos.put(idPagamento, timer);
     }
 
     private Date getDataExecucao(Vigencia vigencia){

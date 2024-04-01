@@ -21,18 +21,14 @@ public class AgendaDeTarefasService {
     private AgendaDePagamento agendaDePagamento;
 
     public void agendarEmissaoPagamento(Pagamento pagamento){
-        Colaborador colaborador = pagamento.getColaborador();
-        UUID idColaborador = colaborador.getIdColaborador();
-
-        if(agendaDePagamento.jaEstaAgendado(idColaborador)) return;
+        UUID idPagamento = pagamento.getIdPagamento();
 
         Runnable tarefa = () -> {
-            agendaDePagamento.cancelarTarefa(idColaborador);
-            emissaoService.emitirPagamento(colaborador);
+            emissaoService.emitirPagamento(pagamento);
             agendarEmissaoPagamento(pagamento);
         };
 
-        agendaDePagamento.agendar(pagamento.getTipoColaborador().getVigencia(), idColaborador, tarefa);
+        agendaDePagamento.agendar(pagamento.getTipoColaborador().getVigencia(), idPagamento, tarefa);
     }
 
     public void cancelarPagamento(UUID idColaborador){
