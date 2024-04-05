@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tipo-colaborador")
+@CrossOrigin
 public class TipoColaboradorController {
 
     @Autowired

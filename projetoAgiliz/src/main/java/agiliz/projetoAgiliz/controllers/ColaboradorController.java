@@ -20,6 +20,8 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/funcionario")
+@CrossOrigin
+
 public class ColaboradorController {
 
     @Autowired

@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/motorista")
+@CrossOrigin
 public class MotoristaDaVezController {
 
     @Autowired

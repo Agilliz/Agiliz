@@ -6,10 +6,7 @@ import agiliz.projetoAgiliz.dto.RotaDTO;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -19,6 +16,7 @@ import agiliz.projetoAgiliz.services.RotaService;
 
 @RestController
 @RequestMapping("/rota")
+@CrossOrigin
 public class RotaController {
 
     @Autowired
