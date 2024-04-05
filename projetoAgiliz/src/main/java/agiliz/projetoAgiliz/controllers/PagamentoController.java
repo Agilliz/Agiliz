@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/pagamento")
+@CrossOrigin
 public class PagamentoController {
     @Autowired
     private PagamentoService pagamentoService;

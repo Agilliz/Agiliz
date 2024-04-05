@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/veiculo")
+@CrossOrigin
 public class VeiculoController {
 
     @Autowired

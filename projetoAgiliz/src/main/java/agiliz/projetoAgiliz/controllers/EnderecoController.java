@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/endereco")
+@CrossOrigin
 public class EnderecoController {
 
     @Autowired
