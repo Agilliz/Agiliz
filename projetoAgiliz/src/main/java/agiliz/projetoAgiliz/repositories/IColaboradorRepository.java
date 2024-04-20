@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface IColaboradorRepository extends JpaRepository<Colaborador, UUID> {
 
-    @Query("SELECT new Colaborador(f.emailColaborador, f.senhaColaborador) FROM Colaborador f WHERE f.emailColaborador = :email")
+    @Query("SELECT new Colaborador(f.emailColaborador, f.senhaColaborador) ]FROM Colaborador f WHERE f.emailColaborador = :email")
     Optional<LoginDTO> findByEmailColaborador(@Param("email") String email);
     
 }
