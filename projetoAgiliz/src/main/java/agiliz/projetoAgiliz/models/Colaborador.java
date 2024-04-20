@@ -1,23 +1,24 @@
 package agiliz.projetoAgiliz.models;
 
-import agiliz.projetoAgiliz.enums.TipoPagamento;
-import agiliz.projetoAgiliz.enums.TipoZona;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "funcionario")
-public class Colaborador implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Colaborador implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -53,4 +54,11 @@ public class Colaborador implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "colaborador")
     private List<EmissaoPagamento> emissoes;
+
+    public Colaborador(String emailColaborador, String senhaColaborador) {
+        this.emailColaborador = emailColaborador;
+        this.senhaColaborador = senhaColaborador;
+    }
+
+    
 }
