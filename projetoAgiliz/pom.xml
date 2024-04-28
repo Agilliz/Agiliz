@@ -33,6 +33,8 @@
 			<version>0.11.5</version>
 		</dependency>
 
+		
+
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

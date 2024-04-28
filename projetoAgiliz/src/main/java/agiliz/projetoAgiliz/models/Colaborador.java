@@ -55,6 +55,10 @@ public class Colaborador implements Serializable{
     @OneToMany(mappedBy = "colaborador")
     private List<EmissaoPagamento> emissoes;
 
+    @ManyToOne
+    @JoinColumn(name = "fornecedor")
+    private Fornecedor fornecedor;
+
     public Colaborador(String emailColaborador, String senhaColaborador) {
         this.emailColaborador = emailColaborador;
         this.senhaColaborador = senhaColaborador;

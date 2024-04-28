@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import agiliz.projetoAgiliz.dto.FornecedorDTO;
+import agiliz.projetoAgiliz.dto.UnidadeSimplesDTO;
 import agiliz.projetoAgiliz.models.Fornecedor;
 import agiliz.projetoAgiliz.repositories.IFornecedorRepository;
+import agiliz.projetoAgiliz.services.FornecedorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
 
@@ -31,6 +33,9 @@ public class FornecedorController {
         Page<Fornecedor> fornecedorList = fornecedorRepository.findAll(pageable);
 
         if (!fornecedorList.isEmpty()) {
+            
+            FornecedorService.removeIdFornecedor(fornecedorList);
+            
             MensageriaService<Page<Fornecedor>> mensageriaService = new MensageriaService("Fornecedores:",
                     fornecedorList, 200);
 

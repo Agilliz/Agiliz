@@ -31,9 +31,6 @@ public class Unidade implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fk_fornecedor")
     private Fornecedor fornecedor;
-    
-    @JsonIgnore
-    private UUID idFornecedor;
 
     @JsonIgnore
     @OneToMany(mappedBy = "unidade")
