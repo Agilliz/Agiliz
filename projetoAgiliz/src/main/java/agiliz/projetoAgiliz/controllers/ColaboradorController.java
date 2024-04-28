@@ -7,7 +7,6 @@ import agiliz.projetoAgiliz.services.AgendaDeTarefasService;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.utils.CalculadoraDatas;
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/funcionario")
@@ -69,6 +69,12 @@ public class ColaboradorController {
             MensageriaService mensageriaService = new MensageriaService(e, 500);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
         }
+    }
+
+    @DeleteMapping("/deletar/{idColaborador}")
+    public ResponseEntity deleteColaboradorById(@PathVariable UUID idColaborador) throws Exception{
+        colaboradorService.deletarPorId(idColaborador);
+        return ResponseEntity.status(204).build();
     }
 
     @GetMapping("/")

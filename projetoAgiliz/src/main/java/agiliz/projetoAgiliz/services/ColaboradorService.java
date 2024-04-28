@@ -8,6 +8,7 @@ import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,13 @@ public class ColaboradorService {
         user.setToken(token);
 
         return user;
+    }
+
+    public void deletarPorId(UUID idColaborador) throws Exception{
+        if(colaboradorRepository.findById(idColaborador).isPresent()){
+            colaboradorRepository.deleteById(idColaborador);
+            return;
+        }
+        throw new Exception("Funcionário não encontrado");
     }
 }
