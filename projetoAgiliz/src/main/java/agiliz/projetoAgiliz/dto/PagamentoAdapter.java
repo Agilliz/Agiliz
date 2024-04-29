@@ -1,4 +1,4 @@
-package agiliz.projetoAgiliz.adapters;
+package agiliz.projetoAgiliz.dto;
 
 import agiliz.projetoAgiliz.models.Pagamento;
 import lombok.Getter;

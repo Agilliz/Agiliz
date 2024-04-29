@@ -71,7 +71,7 @@ public class PacoteService {
     }
 
     private void associarDestinatario(UUID idDestinatario, Pacote pacote){
-        Optional<Destinatario> destinatarioOpt = destinatarioRepository.findById(idDestinatario);
+        var destinatarioOpt = destinatarioRepository.findById(idDestinatario);
         if(destinatarioOpt.isEmpty()) return;
         var destinatario = destinatarioOpt.get();
         pacote.setDestinatario(destinatario);

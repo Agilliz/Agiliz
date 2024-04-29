@@ -1,10 +1,8 @@
 package agiliz.projetoAgiliz.models;
 
-import java.util.List;
 import java.util.UUID;
 
 import agiliz.projetoAgiliz.enums.TipoPagamento;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

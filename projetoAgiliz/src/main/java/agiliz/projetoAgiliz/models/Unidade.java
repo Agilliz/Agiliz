@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+import agiliz.projetoAgiliz.utils.IObservador;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "unidade")
-public class Unidade implements Serializable {
+public class Unidade implements Serializable, IObservador {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -44,4 +45,9 @@ public class Unidade implements Serializable {
     private Integer numero;
     private String digitosVerificadores;
     private String telefoneUnidade;
+
+    @Override
+    public void receberAtualizacoes() {
+
+    }
 }

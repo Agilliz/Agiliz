@@ -2,6 +2,7 @@ package agiliz.projetoAgiliz.controllers;
 
 
 import agiliz.projetoAgiliz.dto.ColaboradorDTO;
+import agiliz.projetoAgiliz.dto.ColaboradorResponse;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.services.AgendaDeTarefasService;
 import agiliz.projetoAgiliz.services.ColaboradorService;
@@ -32,11 +33,14 @@ public class ColaboradorController {
 
 
     @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<Colaborador>> cadastroColaborador(@RequestBody @Valid ColaboradorDTO colaboradorDTO){
+    ResponseEntity<MensageriaService<ColaboradorResponse>> cadastroColaborador(@RequestBody @Valid ColaboradorDTO colaboradorDTO){
+
+        var colaborador = colaboradorService.inserir(colaboradorDTO);
+
         try {
             MensageriaService mensageriaService = new MensageriaService<>(
-                    "Funcionario Cadastrado com Sucesso",
-                    colaboradorService.inserir(colaboradorDTO), 200);
+                    "Funcionario Cadastrado com Sucesso", new ColaboradorResponse(colaborador)
+                    , 200);
             return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
         } catch (Exception e) {
             MensageriaService mensageriaService = new MensageriaService(e, 500);
@@ -46,7 +50,7 @@ public class ColaboradorController {
 
     @GetMapping("/")
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
-        Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
+        var colaboradores = colaboradorService.listarTodos(pageable);
 
         if (!colaboradores.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Funcionarios", colaboradores, 200);
