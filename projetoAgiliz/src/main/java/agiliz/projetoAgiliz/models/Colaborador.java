@@ -1,7 +1,10 @@
 package agiliz.projetoAgiliz.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -13,7 +16,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "funcionario")
-public class Colaborador implements Serializable {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Colaborador implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -30,21 +35,34 @@ public class Colaborador implements Serializable {
     private Date dataAdmissao;
     private String telefoneColaborador;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "colaborador")
     private List<EnderecoFinal> enderecosFinais;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "colaborador")
     private List<MotoristaDaVez> veiculosFuncionario;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "colaborador")
     private List<Pacote> pacotes;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "colaborador")
     private List<Pagamento> pagamentos;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "colaborador")
     private List<EmissaoPagamento> emissoes;
+
+    @ManyToOne
+    @JoinColumn(name = "fornecedor")
+    private Fornecedor fornecedor;
+
+    public Colaborador(String emailColaborador, String senhaColaborador) {
+        this.emailColaborador = emailColaborador;
+        this.senhaColaborador = senhaColaborador;
+    }
+
+    
 }

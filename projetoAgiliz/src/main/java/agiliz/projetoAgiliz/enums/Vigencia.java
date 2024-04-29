@@ -23,4 +23,6 @@ public enum Vigencia {
 
         throw new IllegalArgumentException("Código inválido");
     }
+
+    
 }

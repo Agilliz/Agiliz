@@ -5,32 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35d466dd-ff30-475b-8ef3-4b4116138c34" name="Changes" comment="Remoção de alguns métodos inúteis">
-      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/ColaboradorResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/TipoColaboradorResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/ZonaGet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/adapters/PagamentoAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/PagamentoAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ColaboradorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ColaboradorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/EmissaoPagamentoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/EmissaoPagamentoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/PagamentoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/PagamentoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/TipoColaboradorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/TipoColaboradorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ZonaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ZonaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Colaborador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Destinatario.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Destinatario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Pagamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Pagamento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Unidade.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Unidade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IColaboradorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IColaboradorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IEmissaoPagamentoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IEmissaoPagamentoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/ITipoColaboradorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/ITipoColaboradorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IZonaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IZonaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColaboradorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColaboradorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/EmissaoPagamentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/EmissaoPagamentoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PacoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PacoteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PagamentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PagamentoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/TipoColaboradorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/TipoColaboradorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/utils/CalculadoraDatas.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/utils/CalculadoraDatas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/utils/IObservador.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/utils/IObservador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/SecurityConfiguracao.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/SecurityConfiguracao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/models/Endereco.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/models/Endereco.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +20,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
-        <option value="Interface" />
         <option value="Record" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -62,21 +42,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aluno/Documents/GIT/Agiliz&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "C:/Users/Aluno/Downloads/web-continuada-2-2024-main/web-continuada-2-2024-main",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="agiliz.projetoAgiliz.utils" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager">
     <configuration name="ProjetoAgilizApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="agiliz.projetoAgiliz.ProjetoAgilizApplication" />
@@ -107,23 +82,6 @@
       <updated>1708796833504</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="CUSTOM_BOOLEAN_PROPERTIES">
-                <map>
-                  <entry key="Show.Git.Branches" value="true" />
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Remoção de alguns métodos inúteis" />
