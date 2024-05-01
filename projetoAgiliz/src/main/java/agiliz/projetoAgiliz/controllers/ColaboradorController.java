@@ -7,6 +7,8 @@ import agiliz.projetoAgiliz.services.AgendaDeTarefasService;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.utils.CalculadoraDatas;
+import agiliz.projetoAgiliz.utils.GeradorArquivo;
+import agiliz.projetoAgiliz.utils.ListaObj;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -126,5 +128,25 @@ public class ColaboradorController {
     public Date getData() {
         LocalDate dataChave = LocalDate.of(2024, 8, 10);
         return CalculadoraDatas.calcularQuintoDiaUtil(dataChave);
+    }
+
+//     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
+//     public ResponseEntity<byte[]> gravarArquivo() throws Exception{
+//         try{
+//             ListaObj<Colaborador> colaboradores = colaboradorService.listarTodos();
+//
+//             return ResponseEntity.status(HttpStatus.OK).body(GeradorArquivo.gravarArquivo(colaboradores, "Arquivo dos colaboradores"));
+//         }catch (Exception e){
+//             System.out.println(e);
+//             throw new Exception(e);
+//         }
+//
+//     }
+
+    @GetMapping("/ler-arquivo")
+    public void lerArquivo(ListaObj listaObj){
+
+
+        GeradorArquivo.leArquivoCsv("Arquivo dos colaboradores");
     }
 }

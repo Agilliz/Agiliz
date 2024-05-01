@@ -7,6 +7,7 @@ import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +46,9 @@ public class ColaboradorService {
     public Page<Colaborador> listarTodos(Pageable pageable) {
         return colaboradorRepository.findAll(pageable);
     }
+//    public List<Colaborador> listarTodos() {
+//        return colaboradorRepository.findAll(Colaborador);
+//    }
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
         
