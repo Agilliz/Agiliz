@@ -130,18 +130,18 @@ public class ColaboradorController {
         return CalculadoraDatas.calcularQuintoDiaUtil(dataChave);
     }
 
-//     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
-//     public ResponseEntity<byte[]> gravarArquivo() throws Exception{
-//         try{
-//             ListaObj<Colaborador> colaboradores = colaboradorService.listarTodos();
-//
-//             return ResponseEntity.status(HttpStatus.OK).body(GeradorArquivo.gravarArquivo(colaboradores, "Arquivo dos colaboradores"));
-//         }catch (Exception e){
-//             System.out.println(e);
-//             throw new Exception(e);
-//         }
-//
-//     }
+    @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
+    public ResponseEntity<byte[]> gravarArquivo() throws Exception{
+        try{
+            ListaObj<Colaborador> colaboradores = (ListaObj<Colaborador>) colaboradorService.listarTodos();
+
+            return ResponseEntity.status(HttpStatus.OK).body(GeradorArquivo.gravarArquivo(colaboradores, "Arquivo dos colaboradores"));
+        }catch (Exception e){
+            System.out.println(e);
+            throw new Exception(e);
+        }
+
+    }
 
     @GetMapping("/ler-arquivo")
     public void lerArquivo(ListaObj listaObj){

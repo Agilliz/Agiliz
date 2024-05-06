@@ -46,9 +46,9 @@ public class ColaboradorService {
     public Page<Colaborador> listarTodos(Pageable pageable) {
         return colaboradorRepository.findAll(pageable);
     }
-//    public List<Colaborador> listarTodos() {
-//        return colaboradorRepository.findAll(Colaborador);
-//    }
+    public List<Colaborador> listarTodos() {
+        return colaboradorRepository.findAll();
+    }
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
         
