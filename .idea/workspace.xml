@@ -5,12 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35d466dd-ff30-475b-8ef3-4b4116138c34" name="Changes" comment="Remoção de alguns métodos inúteis">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/FinanceiroController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/DadosFinanceiros.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UnidadeSimples.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/FinanceiroService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/SecurityConfiguracao.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/SecurityConfiguracao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/models/Endereco.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/models/Endereco.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ColaboradorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ColaboradorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/FornecedorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/PacoteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/PacoteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/UnidadeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/UnidadeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/PacoteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/PacoteDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UnidadeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UnidadeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UnidadeSimplesDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UnidadeSimplesDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UserDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/UserDetailsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Colaborador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Fornecedor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Unidade.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/models/Unidade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IFornecedorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IPacoteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IPacoteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IUnidadeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IUnidadeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/AutenticacaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/AutenticacaoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColaboradorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColaboradorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/FornecedorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PacoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PacoteService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PagamentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PagamentoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/UnidadeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/UnidadeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,15 +42,18 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -48,10 +73,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "dev",
-    "last_opened_file_path": "C:/Users/Aluno/Downloads/web-continuada-2-2024-main/web-continuada-2-2024-main",
+    "last_opened_file_path": "C:/Users/Aluno/Documents/GIT/Agiliz/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Aluno\Documents\GIT\Agiliz\projetoAgiliz\src\main\java\agiliz\projetoAgiliz\configs" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="ProjetoAgilizApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="agiliz.projetoAgiliz.ProjetoAgilizApplication" />

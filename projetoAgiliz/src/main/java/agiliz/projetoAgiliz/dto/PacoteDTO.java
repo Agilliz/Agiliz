@@ -7,5 +7,6 @@ public record PacoteDTO(
         int tipo,
         int status,
         UUID fkDestinatario,
-        UUID fkFuncionario
+        UUID fkFuncionario,
+        UUID fkUnidade
 ) {}

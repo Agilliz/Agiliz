@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+import agiliz.projetoAgiliz.utils.IObservador;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "destinatario")
-public class Destinatario implements Serializable {
+public class Destinatario implements Serializable, IObservador {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -34,4 +35,9 @@ public class Destinatario implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "destinatario")
     private List<Pacote> pacotes;
+
+    @Override
+    public void receberAtualizacoes() {
+
+    }
 }

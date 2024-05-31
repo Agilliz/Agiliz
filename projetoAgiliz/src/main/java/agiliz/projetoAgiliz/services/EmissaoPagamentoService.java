@@ -1,6 +1,5 @@
 package agiliz.projetoAgiliz.services;
 
-import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.models.EmissaoPagamento;
 import agiliz.projetoAgiliz.models.Pagamento;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -27,11 +25,12 @@ public class EmissaoPagamentoService {
 
     public void emitirPagamento(Pagamento pagamento){
         double valor = contratoFactory.gerarContrato(pagamento).efetuarPagamento();
+
         if(valor == 0) return;
 
-        Colaborador colaborador = pagamento.getColaborador();
+        var colaborador = pagamento.getColaborador();
 
-        Optional<EmissaoPagamento> emissaoCadastrada = emissaoRepository
+        var emissaoCadastrada = emissaoRepository
                 .findByColaboradorAndFechada(colaborador, false);
 
         EmissaoPagamento emissao;

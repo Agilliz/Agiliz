@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.ZonaDTO;
+import agiliz.projetoAgiliz.dto.ZonaGet;
 import agiliz.projetoAgiliz.models.Zona;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -38,13 +39,13 @@ public class ZonaController {
     }
 
     @GetMapping
-    public ResponseEntity<MensageriaService<Page<Zona>>> listar(Pageable pageable) {
-        Page<Zona> zonas = repository.findAll(pageable);
-        
+    public ResponseEntity<MensageriaService<Zona>> listar(Pageable pageable) {
+        var zonas = repository.findAll();
+
         if(zonas.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(new MensageriaService<Page<Zona>>(
+            .body(new MensageriaService<>(
                 "Zonas:",
                 zonas,
                 HttpStatus.OK.value()

@@ -20,8 +20,8 @@ public class CalculadoraDatas {
         int diaInicial = instanciaCalendario.get(Calendar.DAY_OF_MONTH);
         while(
                 diasUteis <= 5 ||
-                        instanciaCalendario.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
-                        instanciaCalendario.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+                instanciaCalendario.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
+                instanciaCalendario.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
         ){
             int diaAtual = diaInicial + dia;
             instanciaCalendario.set(Calendar.DAY_OF_MONTH, diaAtual);

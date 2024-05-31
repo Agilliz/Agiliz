@@ -7,6 +7,7 @@ import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,11 +46,14 @@ public class ColaboradorService {
     public Page<Colaborador> listarTodos(Pageable pageable) {
         return colaboradorRepository.findAll(pageable);
     }
+    public List<Colaborador> listarTodos() {
+        return colaboradorRepository.findAll();
+    }
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
         
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
-        
+
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
         
         Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());

@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.dto.TipoColaboradorDTO;
+import agiliz.projetoAgiliz.dto.TipoColaboradorResponse;
 import agiliz.projetoAgiliz.models.TipoColaborador;
 import agiliz.projetoAgiliz.repositories.ITipoColaboradorRepository;
 import org.springframework.beans.BeanUtils;
@@ -23,7 +24,7 @@ public class TipoColaboradorService {
         return tipoColaborador;
     }
 
-    public List<TipoColaborador> listar(){
-        return tipoColaboradorRepository.findAll();
+    public List<TipoColaboradorResponse> listar(){
+        return tipoColaboradorRepository.findAllTipoColaboradorResponse();
     }
 }

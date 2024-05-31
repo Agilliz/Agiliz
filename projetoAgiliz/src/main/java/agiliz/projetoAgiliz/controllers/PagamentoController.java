@@ -1,6 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.adapters.PagamentoAdapter;
+import agiliz.projetoAgiliz.dto.PagamentoAdapter;
 import agiliz.projetoAgiliz.dto.PagamentoDTO;
 import agiliz.projetoAgiliz.utils.FolhaDePagamento;
 import agiliz.projetoAgiliz.models.Pagamento;

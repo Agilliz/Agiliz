@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.TipoColaboradorDTO;
+import agiliz.projetoAgiliz.dto.TipoColaboradorResponse;
 import agiliz.projetoAgiliz.models.TipoColaborador;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.services.TipoColaboradorService;
@@ -34,13 +35,13 @@ public class TipoColaboradorController {
     }
 
     @GetMapping
-    public ResponseEntity<MensageriaService<List<TipoColaborador>>> listar(){
-        List<TipoColaborador> tiposColaborador = tipoColaboradorService.listar();
+    public ResponseEntity<MensageriaService<List<TipoColaboradorResponse>>> listar(){
+        var tiposColaborador = tipoColaboradorService.listar();
 
         if(tiposColaborador.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                new MensageriaService<List<TipoColaborador>>(
+                new MensageriaService<List<TipoColaboradorResponse>>(
                         "Tipos colaboradores: ",
                         tiposColaborador,
                         HttpStatus.OK.value()
