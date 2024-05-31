@@ -8,30 +8,29 @@ import agiliz.projetoAgiliz.dto.PacoteDTO;
 import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
 import agiliz.projetoAgiliz.models.*;
-import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
+import agiliz.projetoAgiliz.repositories.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import agiliz.projetoAgiliz.repositories.IDestinatarioRepository;
-import agiliz.projetoAgiliz.repositories.IPacoteRepository;
-import agiliz.projetoAgiliz.repositories.IZonaRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@RequiredArgsConstructor
 public class PacoteService {
-    @Autowired
-    private IPacoteRepository pacoteRepository;
 
-    @Autowired
-    private IZonaRepository zonaRepository;
+    private final IPacoteRepository pacoteRepository;
 
-    @Autowired
-    private IDestinatarioRepository destinatarioRepository;
+    private final IZonaRepository zonaRepository;
 
-    @Autowired
-    private IColaboradorRepository funcionarioRepository;
+    private final IDestinatarioRepository destinatarioRepository;
+
+    private final IColaboradorRepository funcionarioRepository;
+
+    private final UnidadeService unidadeService;
 
     public Pacote inserir(PacoteDTO dto) {
         var pacote = new Pacote();
@@ -39,7 +38,14 @@ public class PacoteService {
         associarDestinatario(dto.fkDestinatario(), pacote);
         associarFuncionario(dto.fkFuncionario(), pacote);
         associarZona(pacote);
+        associarUnidade(dto.fkUnidade(), pacote);
         return pacoteRepository.save(pacote);
+    }
+
+    private void associarUnidade(UUID fkUnidade, Pacote pacote) {
+        var unidade = unidadeService.getUnidadePorId(fkUnidade);
+        unidadeService.contabilizarRetornoTotal(unidade, pacote.getZona().getValor());
+        pacote.setUnidade(unidade);
     }
 
     private void associarFuncionario(UUID fkFuncionario, Pacote pacote) {

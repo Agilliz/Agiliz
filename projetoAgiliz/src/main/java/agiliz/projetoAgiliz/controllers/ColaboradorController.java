@@ -29,7 +29,7 @@ import java.util.UUID;
 @CrossOrigin
 public class ColaboradorController {
 
-    @Autowired 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -56,8 +56,8 @@ public class ColaboradorController {
         Colaborador colaborador = new Colaborador();
 
         String senhaCriptografada = passwordEncoder.encode(colaboradorDTO.senhaColaborador());
-        
-        BeanUtils.copyProperties(colaboradorDTO, colaborador);
+
+          BeanUtils.copyProperties(colaboradorDTO, colaborador);
 
         colaborador.setSenhaColaborador(senhaCriptografada);
         

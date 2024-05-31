@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import agiliz.projetoAgiliz.models.Pacote;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +19,12 @@ import agiliz.projetoAgiliz.services.PacoteService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/pacote")
+@RequestMapping("/pacotes")
 @CrossOrigin
+@RequiredArgsConstructor
 public class PacoteController {
-    @Autowired
-    private PacoteService pacoteService;
+
+    private final PacoteService pacoteService;
     
     @PostMapping
     public ResponseEntity<MensageriaService<Pacote>> cadastrar(
