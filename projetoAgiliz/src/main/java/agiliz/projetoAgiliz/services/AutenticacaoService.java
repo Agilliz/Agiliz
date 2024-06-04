@@ -23,7 +23,7 @@ public class AutenticacaoService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<LoginDTO> user = colaboradorRepository.findByEmailColaborador(username);
-        
+
 
         if (user.isEmpty()) {
             throw new UsernameNotFoundException(String.format("Usuário %s não encontrado", username));

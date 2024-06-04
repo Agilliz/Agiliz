@@ -54,6 +54,7 @@ public class UnidadeController {
     public ResponseEntity<MensageriaService<Unidade>> cadastrarUnidade(@RequestBody @Valid UnidadeDTO unidadeDTO) {
         Unidade unidade = new Unidade();
         BeanUtils.copyProperties(unidadeDTO, unidade);
+        unidade.setRetornoTotal(0.);
 
         try {
             unidadeRepository.save(unidade);
@@ -69,9 +70,10 @@ public class UnidadeController {
     }
 
     @PutMapping("alterar/{idUnidade}")
-    public ResponseEntity<MensageriaService<Unidade>> alterarUnidadePorId(@PathVariable UUID idUnidade,
-                                                                          @RequestBody @Valid UnidadeDTO unidadeDTO) {
-        
+    public ResponseEntity<MensageriaService<Unidade>> alterarUnidadePorId(
+            @PathVariable UUID idUnidade,
+            @RequestBody @Valid UnidadeDTO unidadeDTO
+    ) {
         Optional<Unidade> unidade = unidadeRepository.findById(idUnidade);
 
         if(unidade.isPresent()){

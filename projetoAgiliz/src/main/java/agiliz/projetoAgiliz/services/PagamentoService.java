@@ -54,7 +54,7 @@ public class PagamentoService {
         BeanUtils.copyProperties(dto, pagamento);
         pagamento.setTipoColaborador(retornarTipoColaborador(dto.fkTipoColaborador()));
         pagamento.setColaborador(retornarFuncionario(dto.fkFuncionario()));
-        agenda.agendarEmissaoPagamento(pagamento);
+        //agenda.agendarEmissaoPagamento(pagamento);
         return pagamento;
     }
 

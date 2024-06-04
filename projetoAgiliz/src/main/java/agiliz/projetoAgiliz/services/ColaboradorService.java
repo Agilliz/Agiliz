@@ -48,7 +48,7 @@ public class ColaboradorService {
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
-        
+
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
         
         Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
