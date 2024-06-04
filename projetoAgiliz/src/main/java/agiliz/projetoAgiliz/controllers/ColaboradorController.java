@@ -40,7 +40,7 @@ public class ColaboradorController {
 
     @PostMapping("/login")
     ResponseEntity<UsuarioLoginDTO> login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
-        var userLogin = this.colaboradorService.login(usuarioLoginDTO);
+        var userLogin = colaboradorService.login(usuarioLoginDTO);
 
         if (!userLogin.equals(null)) {
             return ResponseEntity.status(HttpStatus.OK).body(userLogin);

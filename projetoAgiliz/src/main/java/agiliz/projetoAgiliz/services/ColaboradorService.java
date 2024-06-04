@@ -1,7 +1,6 @@
 package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
-import agiliz.projetoAgiliz.dto.ColaboradorDTO;
 import agiliz.projetoAgiliz.dto.LoginDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
@@ -11,17 +10,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ColaboradorService {
@@ -51,7 +47,6 @@ public class ColaboradorService {
     }
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
-        
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
         
         final Authentication authentication = this.authenticationManager.authenticate(credentials);

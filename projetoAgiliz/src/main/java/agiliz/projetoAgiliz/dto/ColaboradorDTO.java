@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 public record ColaboradorDTO(
         @NotBlank String nomeColaborador,
-        @NotBlank String CPF,
+        @NotBlank @CPF String CPF,
         @NotBlank String RG,
         @NotBlank String classeCarteira,
         @NotNull  Date dataNascimento,
