@@ -1,26 +1,25 @@
 package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.dto.DadosFinanceiros;
-import agiliz.projetoAgiliz.dto.UnidadeSimples;
-import agiliz.projetoAgiliz.models.Pacote;
-import agiliz.projetoAgiliz.models.Unidade;
-import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
 import agiliz.projetoAgiliz.repositories.IUnidadeRepository;
-import lombok.RequiredArgsConstructor;
+import agiliz.projetoAgiliz.services.PagamentoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class FinanceiroService {
 
-    private final PagamentoService pagamentoService;
+    @Autowired
+    private PagamentoService pagamentoService;
 
-    private final IPacoteRepository pacoteRepository;
+    @Autowired
+    private IPacoteRepository pacoteRepository;
 
-    private final IUnidadeRepository unidadeRepository;
+    @Autowired
+    private IUnidadeRepository unidadeRepository;
 
     public DadosFinanceiros getDadosDash(){
         var tickets = pacoteRepository.findZonaPrices();

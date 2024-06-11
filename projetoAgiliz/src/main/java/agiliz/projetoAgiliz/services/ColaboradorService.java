@@ -2,11 +2,15 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
 import agiliz.projetoAgiliz.dto.LoginDTO;
+import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +41,33 @@ public class ColaboradorService {
     public Colaborador inserir(Colaborador colaborador){
         colaboradorRepository.save(colaborador);
         return colaborador;
+    }
+
+    public List<String[]> listarMatriz() {
+        List<MatrizColaboradorDTO> lista = colaboradorRepository.listarMatriz();
+        
+        // Agrupar por CPF
+        Map<String, List<Double>> cpfToValoresMap = new HashMap<>();
+        for (MatrizColaboradorDTO colaborador : lista) {
+            cpfToValoresMap
+                .computeIfAbsent(colaborador.getCPF(), k -> new ArrayList<>())
+                .add(colaborador.getValor());
+        }
+
+        // Converter para matriz
+        List<String[]> matriz = new ArrayList<>();
+        for (Map.Entry<String, List<Double>> entry : cpfToValoresMap.entrySet()) {
+            String cpf = entry.getKey();
+            List<Double> valores = entry.getValue();
+            String[] linha = new String[valores.size() + 1];
+            linha[0] = cpf;
+            for (int i = 0; i < valores.size(); i++) {
+                linha[i + 1] = String.valueOf(valores.get(i));
+            }
+            matriz.add(linha);
+        }
+
+        return matriz;
     }
 
     public Page<Colaborador> listarTodos(Pageable pageable) {
