@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "funcionario")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Colaborador implements Serializable{
+public class Colaborador implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
