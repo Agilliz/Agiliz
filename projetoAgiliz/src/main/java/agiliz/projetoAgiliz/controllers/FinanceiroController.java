@@ -2,7 +2,6 @@ package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.DadosFinanceiros;
 import agiliz.projetoAgiliz.services.FinanceiroService;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +18,7 @@ public class FinanceiroController {
     private FinanceiroService service;
     
     @GetMapping("/dashboard-completa")
-    public DadosFinanceiros getDadosFinanceiros(){
+    public DadosFinanceiros getDadosFinanceiros() {
         return service.getDadosDash();
     }
 

@@ -10,4 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ColetasController {
     private final ColetasService service;
+
+
+
 }
