@@ -15,7 +15,6 @@ import agiliz.projetoAgiliz.dto.UnidadeDTO;
 import agiliz.projetoAgiliz.models.Unidade;
 import agiliz.projetoAgiliz.repositories.IUnidadeRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
-import agiliz.projetoAgiliz.services.UnidadeService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -31,6 +30,7 @@ public class UnidadeController {
         Page<Unidade> unidadeList = unidadeRepository.findAll(pageable);
 
         if (!unidadeList.isEmpty()) {
+            //UnidadeService.removeFornecedorListUnidade(unidadeList);
             MensageriaService mensageriaService = new MensageriaService("Unidades", unidadeList, 200);
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
         }

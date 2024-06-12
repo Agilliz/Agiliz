@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import agiliz.projetoAgiliz.dto.LoginDTO;
 import agiliz.projetoAgiliz.dto.UserDetailsDTO;
-import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 

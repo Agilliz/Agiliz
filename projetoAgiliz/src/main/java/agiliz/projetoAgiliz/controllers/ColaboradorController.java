@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.ColaboradorDTO;
+import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.services.AgendaDeTarefasService;
@@ -22,7 +23,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/funcionario")
@@ -40,7 +45,7 @@ public class ColaboradorController {
 
     @PostMapping("/login")
     ResponseEntity<UsuarioLoginDTO> login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
-        var userLogin = this.colaboradorService.login(usuarioLoginDTO);
+        var userLogin = colaboradorService.login(usuarioLoginDTO);
 
         if (!userLogin.equals(null)) {
             return ResponseEntity.status(HttpStatus.OK).body(userLogin);
@@ -78,6 +83,13 @@ public class ColaboradorController {
         colaboradorService.deletarPorId(idColaborador);
         return ResponseEntity.status(204).build();
     }
+
+    @GetMapping("/matriz-colaborador")
+    public ResponseEntity<List<String[]>> getMatrizColaboradorPorDespesa() {
+        return ResponseEntity.status(HttpStatus.OK)
+        .body(colaboradorService.listarMatriz());
+    }
+    
 
     @GetMapping("/")
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {

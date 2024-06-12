@@ -8,6 +8,7 @@ import agiliz.projetoAgiliz.utils.IObservador;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +33,7 @@ public class Unidade implements Serializable, IObservador {
     private UUID idUnidade;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "unidade")
+    @OneToMany(mappedBy = "unidade", fetch = FetchType.LAZY)
     private List<Pacote> pacotes;
 
     private String nomeUnidade;

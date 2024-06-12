@@ -43,7 +43,6 @@ public class AutenticacaoFilter extends OncePerRequestFilter{
             try {
                 userName = jwtTokenManager.getUsernameFromToken(jwtToken);
             } catch (ExpiredJwtException e) {
-                
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }
