@@ -50,7 +50,7 @@ public class PacoteService {
 
     private void associarFuncionario(UUID fkFuncionario, Pacote pacote) {
         Optional<Colaborador> funcionarioOpt = funcionarioRepository.findById(fkFuncionario);
-        if(funcionarioOpt.isEmpty()) return;
+        if(funcionarioOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         pacote.setColaborador(funcionarioOpt.get());
     }
 

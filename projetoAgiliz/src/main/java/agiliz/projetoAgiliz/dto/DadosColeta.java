@@ -6,9 +6,9 @@ public record DadosColeta (
        int entregasRealizadas,
        int entregasAusentes,
        int entregasEmRota,
-       String nomeColaboradorMenorEntrega,
-       String nomeColaboradorMaiorEntrega,
-       int quantidadeEntregas,
        int entregasCanceladas,
-       List<ZonaRanking> zonasRankeadas
+       String nomeClienteMenorColeta,
+       String nomeClienteMaiorColeta,
+       List<ZonaRanking> zonasRankeadas,
+       List<ColetasPorTempo> coletasPorTempo
 ) {}

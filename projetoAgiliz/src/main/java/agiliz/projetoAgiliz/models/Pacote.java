@@ -31,38 +31,31 @@ public class Pacote implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;
-
     private int tipo;
-
     private int status;
-
     private boolean pagamentoFeito;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_zona")
     private Zona zona;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_colaborador")
     private Colaborador colaborador;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_destinatario")
     private Destinatario destinatario;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_unidade")
     private Unidade unidade;
 
-    public StatusPacote getStatus(){
+    public StatusPacote getStatus() {
         return StatusPacote.valueOf(this.status);
     }
 
-    public TipoPacote getTipo(){
+    public TipoPacote getTipo() {
         return TipoPacote.valueOf(this.tipo);
     }
 

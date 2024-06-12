@@ -94,6 +94,7 @@ public class ColaboradorController {
     @GetMapping("/")
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
         Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
+        System.out.println(colaboradores);
 
         if (!colaboradores.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Funcionarios", colaboradores, 200);
