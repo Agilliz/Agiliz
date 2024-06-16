@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/dados-coleta")
 public class ColetasController {

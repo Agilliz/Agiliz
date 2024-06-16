@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.List;
@@ -38,5 +39,17 @@ public class Zona implements Serializable {
 
     public void setTipoZona(int tipoZona){
         this.tipoZona = TipoZona.valueOf(tipoZona);
+    }
+
+    @Override
+    public String toString() {
+        return "Zona{" +
+                "idZona=" + idZona +
+                ", nomeZona='" + nomeZona + '\'' +
+                ", valor=" + valor +
+                ", limiteSuperiorCEP=" + limiteSuperiorCEP +
+                ", limiteInferiorCEP=" + limiteInferiorCEP +
+                ", tipoZona=" + tipoZona +
+                '}';
     }
 }

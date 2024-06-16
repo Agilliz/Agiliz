@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import agiliz.projetoAgiliz.dto.ColetasPorTempo;
 import agiliz.projetoAgiliz.dto.PacoteDTO;
+import agiliz.projetoAgiliz.dto.ZonaRanking;
 import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
 import agiliz.projetoAgiliz.models.*;
 import agiliz.projetoAgiliz.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,15 +22,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @RequiredArgsConstructor
 public class PacoteService {
-
     private final IPacoteRepository pacoteRepository;
-
     private final IZonaRepository zonaRepository;
-
     private final IDestinatarioRepository destinatarioRepository;
-
     private final IColaboradorRepository funcionarioRepository;
-
     private final UnidadeService unidadeService;
 
     public Pacote inserir(PacoteDTO dto) {
@@ -40,6 +36,34 @@ public class PacoteService {
         associarZona(pacote);
         associarUnidade(dto.fkUnidade(), pacote);
         return pacoteRepository.save(pacote);
+    }
+
+    public List<ZonaRanking> getZonasRankeadas(int numeroEntregas) {
+        return pacoteRepository.findZonasRanking(numeroEntregas);
+    }
+
+    public List<Pacote> getAllPacoteStatusOnly() {
+        return pacoteRepository.findAllPacoteStatusOnly();
+    }
+
+    public List<ColetasPorTempo> getColetasPorTempo() {
+        return pacoteRepository.findColetasPorTempo();
+    }
+
+    public long getQuantidadeColetasRealizadas() {
+        return pacoteRepository.countColetasRealizadas();
+    }
+
+    public long getQuantidadeColetasCanceladas() {
+        return pacoteRepository.countColetasCanceladas();
+    }
+
+    public String getNomeClienteMaiorColeta() {
+        return pacoteRepository.findClienteMaiorColeta();
+    }
+
+    public String getNomeClienteMenorColeta() {
+        return pacoteRepository.findClienteMenorColeta();
     }
 
     private void associarUnidade(UUID fkUnidade, Pacote pacote) {

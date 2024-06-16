@@ -1,5 +1,6 @@
 package agiliz.projetoAgiliz.repositories;
 
+import java.time.LocalTime;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,9 @@ public interface IUnidadeRepository extends JpaRepository<Unidade, UUID>{
 
     @Query("SELECT u.nomeUnidade FROM Unidade u ORDER BY u.retornoTotal DESC LIMIT 1")
     String findUnidadeMaiorRetorno();
-    
+
+    @Query(value = "SELECT AVG(TIME_TO_SEC(horario_corte)) FROM Unidade", nativeQuery = true)
+    Double findAVGHorarioCorte();
+
+
 }

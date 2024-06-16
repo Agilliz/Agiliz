@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.models;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +44,7 @@ public class Unidade implements Serializable, IObservador {
     private Integer numero;
     private String telefoneUnidade;
     private Double retornoTotal;
+    private LocalTime horarioCorte;
 
     public void incrementarRetorno(double precoPacote){
         retornoTotal += precoPacote;
