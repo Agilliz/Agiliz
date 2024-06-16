@@ -7,6 +7,7 @@ import agiliz.projetoAgiliz.dto.ColetasPorTempo;
 import agiliz.projetoAgiliz.dto.ZonaRanking;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.models.Pacote;
+import agiliz.projetoAgiliz.models.Unidade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -42,15 +43,12 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID>{
         GROUP BY p.dataColeta
     """)
     List<ColetasPorTempo> findColetasPorTempo();
-
     @Query("SELECT p.unidade.nomeUnidade FROM Pacote p ORDER BY p.zona.valor ASC LIMIT 1")
     String findClienteMaiorColeta();
-
     @Query("SELECT p.unidade.nomeUnidade FROM Pacote p ORDER BY p.zona.valor DESC LIMIT 1")
     String findClienteMenorColeta();
-
-    @Query("SELECT COUNT(p.unidade) FROM Pacote p WHERE p.status = 2 AND p.tipo = 2 GROUP BY p.unidade")
-    long countColetasRealizadas();
-    @Query("SELECT COUNT(p.unidade) FROM Pacote p WHERE p.status = 3 AND p.tipo = 2 GROUP BY p.unidade")
-    long countColetasCanceladas();
+    @Query("SELECT p.unidade FROM Pacote p WHERE p.status = 2 AND p.tipo = 2 GROUP BY p.unidade")
+    List<Unidade> countColetasRealizadas();
+    @Query("SELECT p.unidade FROM Pacote p WHERE p.status = 3 AND p.tipo = 2 GROUP BY p.unidade")
+    List<Unidade> countColetasCanceladas();
 }

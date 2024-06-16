@@ -18,4 +18,10 @@ public class ZonaService {
         if(!zonaRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return zonaRepository.findById(id).get();
     }
+
+    public Zona getPorCep(String cep) {
+        var zonaOpt = zonaRepository.findByCep(Integer.parseInt(cep.substring(0, 5)));
+        if(zonaOpt.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return zonaOpt.get();
+    }
 }

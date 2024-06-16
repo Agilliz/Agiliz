@@ -32,9 +32,6 @@ public class PagamentoService {
     @Autowired
     private ContratoFactory contratoFactory;
 
-    @Autowired
-    private AgendaDeTarefasService agenda;
-
     public List<Pagamento> listar(){
         return pagamentoRepository.findAll();
     }
