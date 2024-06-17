@@ -26,8 +26,8 @@ public class Colaborador implements Serializable {
     private UUID idColaborador;
 
     private String nomeColaborador;
-    private String CPF;
-    private String RG;
+    private String cpf;
+    private String rg;
     private String classeCarteira;
     private Date dataNascimento;
     private String emailColaborador;
