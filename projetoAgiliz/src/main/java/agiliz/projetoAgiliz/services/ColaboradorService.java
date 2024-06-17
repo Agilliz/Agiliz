@@ -17,11 +17,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ColaboradorService {
@@ -34,9 +36,6 @@ public class ColaboradorService {
     
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private AgendaDeTarefasService agenda;
 
     public Colaborador inserir(Colaborador colaborador){
         colaboradorRepository.save(colaborador);
@@ -68,6 +67,11 @@ public class ColaboradorService {
         }
 
         return matriz;
+    }
+
+    public Colaborador getPorId(UUID id) {
+        if(!colaboradorRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return colaboradorRepository.findById(id).get();
     }
 
     public Page<Colaborador> listarTodos(Pageable pageable) {

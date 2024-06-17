@@ -10,7 +10,7 @@ public enum TipoPacote {
     private final int codigo;
     private final String alias;
 
-    TipoPacote(int codigo, String alias){
+    TipoPacote(int codigo, String alias) {
         this.codigo = codigo;
         this.alias = alias;
     }

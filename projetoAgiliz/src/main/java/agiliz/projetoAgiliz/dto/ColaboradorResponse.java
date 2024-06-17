@@ -13,7 +13,6 @@ public class ColaboradorResponse {
     private final String classeCarteira;
     private final Date dataNascimento;
     private final String emailColaborador;
-    private final String senhaColaborador;
     private final Date dataAdmissao;
     private final String telefoneColaborador;
 
@@ -24,7 +23,6 @@ public class ColaboradorResponse {
         this.classeCarteira = colaborador.getClasseCarteira();
         this.dataNascimento = colaborador.getDataNascimento();
         this.emailColaborador = colaborador.getEmailColaborador();
-        this.senhaColaborador = colaborador.getSenhaColaborador();
         this.dataAdmissao = colaborador.getDataAdmissao();
         this.telefoneColaborador = colaborador.getTelefoneColaborador();
     }

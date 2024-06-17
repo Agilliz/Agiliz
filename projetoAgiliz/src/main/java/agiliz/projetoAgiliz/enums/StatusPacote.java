@@ -1,10 +1,16 @@
 package agiliz.projetoAgiliz.enums;
 
+
 import lombok.Getter;
+
+@Getter
 public enum StatusPacote {
-    COLETA(1, "coleta"),
-    A_CAMINHO(2, "a caminho"),
-    ENTREGUE(3, "entregue");
+    A_CAMINHO(1, "a caminho"),
+    ENTREGUE(2, "entregue"),
+    CANCELADO(3, "cancelado"),
+    DEVOLVIDO(4, "devolvido"),
+    AUSENTE(5, "ausente"),
+    A_COLETAR(6, "a coletar");
 
     private final int codigo;
     private final String alias;
@@ -20,13 +26,5 @@ public enum StatusPacote {
         }
 
         throw new IllegalArgumentException("Código inválido");
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public String getAlias() {
-        return alias;
     }
 }
