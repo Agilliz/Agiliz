@@ -8,8 +8,8 @@ import java.sql.Date;
 @Getter
 public class ColaboradorResponse {
     private final String nomeColaborador;
-    private final String CPF;
-    private final String RG;
+    private final String cpf;
+    private final String rg;
     private final String classeCarteira;
     private final Date dataNascimento;
     private final String emailColaborador;
@@ -18,8 +18,8 @@ public class ColaboradorResponse {
 
     public ColaboradorResponse(Colaborador colaborador) {
         this.nomeColaborador = colaborador.getNomeColaborador();
-        this.CPF = colaborador.getCPF();
-        this.RG = colaborador.getRG();
+        this.cpf = colaborador.getCpf();
+        this.rg = colaborador.getRg();
         this.classeCarteira = colaborador.getClasseCarteira();
         this.dataNascimento = colaborador.getDataNascimento();
         this.emailColaborador = colaborador.getEmailColaborador();

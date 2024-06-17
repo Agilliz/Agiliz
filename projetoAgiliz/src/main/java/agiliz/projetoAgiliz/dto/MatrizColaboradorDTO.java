@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MatrizColaboradorDTO {
     private Double valor;
-    private String CPF;
+    private String cpf;
 }

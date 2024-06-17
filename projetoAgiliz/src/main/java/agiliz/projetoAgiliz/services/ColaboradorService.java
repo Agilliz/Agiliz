@@ -49,7 +49,7 @@ public class ColaboradorService {
         Map<String, List<Double>> cpfToValoresMap = new HashMap<>();
         for (MatrizColaboradorDTO colaborador : lista) {
             cpfToValoresMap
-                .computeIfAbsent(colaborador.getCPF(), k -> new ArrayList<>())
+                .computeIfAbsent(colaborador.getCpf(), k -> new ArrayList<>())
                 .add(colaborador.getValor());
         }
 

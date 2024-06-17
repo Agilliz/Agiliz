@@ -16,7 +16,7 @@ public interface IColaboradorRepository extends JpaRepository<Colaborador, UUID>
     @Query("SELECT new Colaborador(f.emailColaborador, f.senhaColaborador) FROM Colaborador f WHERE f.emailColaborador = :email")
     Optional<LoginDTO> findByEmailColaborador(@Param("email") String email);
 
-    @Query("SELECT new agiliz.projetoAgiliz.dto.MatrizColaboradorDTO(e.valor, f.CPF) FROM EmissaoPagamento e LEFT JOIN e.colaborador f")
+    @Query("SELECT new agiliz.projetoAgiliz.dto.MatrizColaboradorDTO(e.valor, f.cpf) FROM EmissaoPagamento e LEFT JOIN e.colaborador f")
     List<MatrizColaboradorDTO> listarMatriz();
     
 }
