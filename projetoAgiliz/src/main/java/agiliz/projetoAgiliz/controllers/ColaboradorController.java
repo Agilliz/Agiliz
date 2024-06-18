@@ -4,7 +4,6 @@ import agiliz.projetoAgiliz.dto.ColaboradorDTO;
 import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
-import agiliz.projetoAgiliz.services.AgendaDeTarefasService;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.utils.CalculadoraDatas;
@@ -39,9 +38,6 @@ public class ColaboradorController {
 
     @Autowired
     private ColaboradorService colaboradorService;
-
-    @Autowired
-    private AgendaDeTarefasService agenda;
 
     @PostMapping("/login")
     ResponseEntity<UsuarioLoginDTO> login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
@@ -94,6 +90,7 @@ public class ColaboradorController {
     @GetMapping("/")
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
         Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
+        System.out.println(colaboradores);
 
         if (!colaboradores.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Funcionarios", colaboradores, 200);

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TotalEntregaDTO {
-    private Long entregues;
-    private Long total;
+public class TotalAusenteECanceladasDTO {
+    private Long totalAusentes;
+    private Long totalCanceladas;
 }

@@ -37,8 +37,8 @@ public class GeradorArquivo {
                 saida.format("%s;%s;%s;%s;%s;%s;%s;%s\n",
 
                         colaborador.getNomeColaborador(),
-                        colaborador.getCPF(),
-                        colaborador.getRG(),
+                        colaborador.getCpf(),
+                        colaborador.getRg(),
                         colaborador.getClasseCarteira(),
                         colaborador.getDataNascimento().toString(),
                         colaborador.getEmailColaborador(),

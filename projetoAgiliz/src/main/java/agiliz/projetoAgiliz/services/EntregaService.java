@@ -26,10 +26,5 @@ public class EntregaService {
         return pacoteService.listarRankingEntregas();
     }
 
-    public MaiorEMenorEntregaDTO listarColaboradoresComMaiorEMenorEntrega(){
-        return colaboradorService.listarColaboradoresComMaiorEMenorEntrega();
-    }
-
-    
 
 }

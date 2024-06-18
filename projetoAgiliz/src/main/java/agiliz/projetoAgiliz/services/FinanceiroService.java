@@ -4,19 +4,16 @@ import agiliz.projetoAgiliz.dto.DadosFinanceiros;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
 import agiliz.projetoAgiliz.repositories.IUnidadeRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class FinanceiroService {
-    @Autowired
-    private PagamentoService pagamentoService;
-
-    @Autowired
-    private IPacoteRepository pacoteRepository;
-
-    @Autowired
-    private IUnidadeRepository unidadeRepository;
+    private final PagamentoService pagamentoService;
+    private final IPacoteRepository pacoteRepository;
+    private final UnidadeService unidadeService;
 
     public DadosFinanceiros getDadosDash(){
         var tickets = pacoteRepository.findZonaPrices();
@@ -32,8 +29,8 @@ public class FinanceiroService {
         return new DadosFinanceiros(
                 lucroBruto,
                 lucroLiquido,
-                unidadeRepository.findUnidadeMaiorRetorno(),
-                unidadeRepository.findUnidadeMenorRetorno(),
+                unidadeService.getNomeUnidadeMaiorRetorno(),
+                unidadeService.getNomeUnidadeMenorRetorno(),
                 ticketMedio,
                 0.,
                 0.,

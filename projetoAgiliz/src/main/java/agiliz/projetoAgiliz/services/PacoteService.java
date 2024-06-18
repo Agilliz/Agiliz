@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import agiliz.projetoAgiliz.dto.ColetasPorTempo;
 import agiliz.projetoAgiliz.dto.PacoteDTO;
 import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
 import agiliz.projetoAgiliz.dto.RankingEntregasDTO;
+import agiliz.projetoAgiliz.dto.ZonaRanking;
 import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
 import agiliz.projetoAgiliz.models.*;
@@ -20,37 +22,48 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PacoteService {
-
     private final IPacoteRepository pacoteRepository;
-
-    private final IZonaRepository zonaRepository;
-
-    private final IDestinatarioRepository destinatarioRepository;
-
-    private final IColaboradorRepository funcionarioRepository;
-
+    private final ZonaService zonaService;
+    private final DestinatarioService destinatarioService;
+    private final ColaboradorService colaboradorService;
     private final UnidadeService unidadeService;
 
     public Pacote inserir(PacoteDTO dto) {
         var pacote = new Pacote();
+        pacote.setDestinatario(destinatarioService.getPorId(dto.fkDestinatario()));
+        pacote.setColaborador(colaboradorService.getPorId(dto.fkFuncionario()));
+        pacote.setZona(zonaService.getPorCep(pacote.getDestinatario().getCepDestinatario()));
+        pacote.setUnidade(unidadeService.getUnidadePorId(dto.fkUnidade()));
         BeanUtils.copyProperties(dto, pacote);
-        associarDestinatario(dto.fkDestinatario(), pacote);
-        associarFuncionario(dto.fkFuncionario(), pacote);
-        associarZona(pacote);
-        associarUnidade(dto.fkUnidade(), pacote);
         return pacoteRepository.save(pacote);
     }
 
-    private void associarUnidade(UUID fkUnidade, Pacote pacote) {
-        var unidade = unidadeService.getUnidadePorId(fkUnidade);
-        unidadeService.contabilizarRetornoTotal(unidade, pacote.getZona().getValor());
-        pacote.setUnidade(unidade);
+    public List<ZonaRanking> getZonasRankeadas(int numeroEntregas) {
+        return pacoteRepository.findZonasRanking(numeroEntregas);
     }
 
-    private void associarFuncionario(UUID fkFuncionario, Pacote pacote) {
-        Optional<Colaborador> funcionarioOpt = funcionarioRepository.findById(fkFuncionario);
-        if(funcionarioOpt.isEmpty()) return;
-        pacote.setColaborador(funcionarioOpt.get());
+    public List<Pacote> getAllPacoteStatusOnly() {
+        return pacoteRepository.findAllPacoteStatusOnly();
+    }
+
+    public List<ColetasPorTempo> getColetasPorTempo() {
+        return pacoteRepository.findColetasPorTempo();
+    }
+
+    public long getQuantidadeColetasRealizadas() {
+        return pacoteRepository.countColetasRealizadas().size();
+    }
+
+    public long getQuantidadeColetasCanceladas() {
+        return pacoteRepository.countColetasCanceladas().size();
+    }
+
+    public String getNomeClienteMaiorColeta() {
+        return pacoteRepository.findClienteMaiorColeta();
+    }
+
+    public String getNomeClienteMenorColeta() {
+        return pacoteRepository.findClienteMenorColeta();
     }
 
     public Pacote atualizar(Pacote pacote){
@@ -71,19 +84,6 @@ public class PacoteService {
 
     public void deletarPorId(UUID id){
         pacoteRepository.deleteById(id);
-    }
-
-    private void associarZona(Pacote pacote) {
-        int cep = Integer.parseInt(pacote.getDestinatario().getCepDestinatario().substring(0, 5));
-        Zona zona = zonaRepository.findByCep(cep);
-        pacote.setZona(zona);
-    }
-
-    private void associarDestinatario(UUID idDestinatario, Pacote pacote){
-        var destinatarioOpt = destinatarioRepository.findById(idDestinatario);
-        if(destinatarioOpt.isEmpty()) return;
-        var destinatario = destinatarioOpt.get();
-        pacote.setDestinatario(destinatario);
     }
 
     public List<Pacote> listarPacotesParaPagar(Pagamento pagamento){

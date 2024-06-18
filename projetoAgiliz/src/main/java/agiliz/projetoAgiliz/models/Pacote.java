@@ -1,12 +1,14 @@
 package agiliz.projetoAgiliz.models;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import agiliz.projetoAgiliz.enums.StatusPacote;
 import agiliz.projetoAgiliz.enums.TipoPacote;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 @Getter
 @Setter
@@ -31,38 +34,42 @@ public class Pacote implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idPacote;
-
     private int tipo;
-
     private int status;
-
     private boolean pagamentoFeito;
+    private LocalDateTime dataColeta;
+    @Column
+    private LocalDateTime dataEntrega;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "fk_zona")
     private Zona zona;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "fk_colaborador")
     private Colaborador colaborador;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "fk_destinatario")
     private Destinatario destinatario;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "fk_unidade")
     private Unidade unidade;
 
-    public StatusPacote getStatus(){
+    public Pacote(int status) {
+        this.status = status;
+    }
+
+    public StatusPacote getStatus() {
         return StatusPacote.valueOf(this.status);
     }
 
-    public TipoPacote getTipo(){
+    public TipoPacote getTipo() {
         return TipoPacote.valueOf(this.tipo);
     }
 

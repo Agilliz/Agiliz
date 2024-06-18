@@ -42,7 +42,7 @@ public class PacoteController {
 
     @GetMapping
     public ResponseEntity<MensageriaService<Page<Pacote>>> listar(Pageable pageable) {
-        Page<Pacote> pacotes = pacoteService.listarTodos(pageable);
+        var pacotes = pacoteService.listarTodos(pageable);
 
         if (pacotes.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 

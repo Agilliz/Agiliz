@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.EntregaService;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import agiliz.projetoAgiliz.dto.DashColetasDTO;
 import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
 
 import java.util.List;
@@ -22,11 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EntregaController {
     
     @Autowired
-    private EntregaService entregaService;
+    private ColaboradorService colaboradorService;
 
     @GetMapping
-    public ResponseEntity<List<PacotePorcentagemDTO>> getMethodName() {
-        return ResponseEntity.status(HttpStatus.OK).body(entregaService.listarPorcentagem());
+    public ResponseEntity<DashColetasDTO> getMethodName() {
+        return ResponseEntity.status(HttpStatus.OK).body(colaboradorService.montarDash());
     }
     
 }

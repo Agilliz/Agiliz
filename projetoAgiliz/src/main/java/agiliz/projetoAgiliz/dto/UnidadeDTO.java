@@ -3,6 +3,8 @@ package agiliz.projetoAgiliz.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import java.time.LocalTime;
+
 public record UnidadeDTO(
         @NotBlank String rua,
         @NotBlank String cep,
@@ -10,6 +12,7 @@ public record UnidadeDTO(
         @NotBlank String digitosVerificadores,
         @NotBlank String telefoneUnidade,
         @NotBlank String nomeUnidade,
-        @NotBlank String cnpj
+        @NotBlank String cnpj,
+        LocalTime horarioCorte
 )
 {}
