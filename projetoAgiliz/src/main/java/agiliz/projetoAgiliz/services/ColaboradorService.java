@@ -113,24 +113,31 @@ public class ColaboradorService {
     }
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
-        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
-
-        final Authentication authentication = this.authenticationManager.authenticate(credentials);
-        
-        Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
-
-        UsuarioLoginDTO user = new UsuarioLoginDTO();
-
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = gerenciadorTokenJWT.generateToken(authentication);
-
-
-        user.setEmail(userFound.get().getEmailColaborador());
-        user.setSenha(userFound.get().getSenhaColaborador());
-        user.setToken(token);
-
-        return user;
+        try {
+            final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
+            
+            final Authentication authentication = this.authenticationManager.authenticate(credentials);
+            
+            Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
+            
+            if (!userFound.isPresent()) {
+                throw new ResponseEntityException(HttpStatus.NOT_FOUND, 
+                "Usuário não encontrado",404);
+            }
+    
+            UsuarioLoginDTO user = new UsuarioLoginDTO();
+            
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            final String token = gerenciadorTokenJWT.generateToken(authentication);
+            
+            user.setEmail(userFound.get().getEmailColaborador());
+            user.setSenha(userFound.get().getSenhaColaborador());
+            user.setToken(token);
+            
+            return user;
+        } catch (Exception e) {
+            throw new ResponseEntityException(HttpStatus.BAD_REQUEST, e.getMessage(),400);
+        }
     }
 
     public void deletarPorId(UUID idColaborador) throws Exception{
