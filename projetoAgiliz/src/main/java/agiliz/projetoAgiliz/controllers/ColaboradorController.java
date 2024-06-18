@@ -145,9 +145,7 @@ public class ColaboradorController {
     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
     public ResponseEntity<byte[]> gravarArquivo() throws Exception{
         try{
-            ListaObj<Colaborador> colaboradores = (ListaObj<Colaborador>) colaboradorService.listarTodos();
-
-            return ResponseEntity.status(HttpStatus.OK).body(GeradorArquivo.gravarArquivo(colaboradores, "Arquivo dos colaboradores"));
+            return ResponseEntity.status(HttpStatus.OK).body(GeradorArquivo.gravarArquivo(colaboradorService.listarTodos(), "Arquivo dos colaboradores"));
         }catch (Exception e){
             System.out.println(e);
             throw new Exception(e);
@@ -156,9 +154,7 @@ public class ColaboradorController {
     }
 
     @GetMapping("/ler-arquivo")
-    public void lerArquivo(ListaObj listaObj){
-
-
+    public void lerArquivo(){
         GeradorArquivo.leArquivoCsv("Arquivo dos colaboradores");
     }
 }

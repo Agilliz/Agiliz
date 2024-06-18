@@ -2,7 +2,9 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
 import agiliz.projetoAgiliz.dto.LoginDTO;
+import agiliz.projetoAgiliz.dto.MaiorEMenorEntregaDTO;
 import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
+import agiliz.projetoAgiliz.dto.TotalEntregaDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
@@ -41,6 +43,18 @@ public class ColaboradorService {
     public Colaborador inserir(Colaborador colaborador){
         colaboradorRepository.save(colaborador);
         return colaborador;
+    }
+
+    public MaiorEMenorEntregaDTO listarColaboradoresComMaiorEMenorEntrega(){
+        return colaboradorRepository.listarColaboradoresComMaiorEMenorEntrega().get();
+    }
+
+    public TotalEntregaDTO listarTotalEntreguesETotalPacotes(){
+        return colaboradorRepository.listarTotalEntreguesETotalPacotes();
+    }
+
+    public TotalEntregaDTO listarTotalEmRotaETotalPacotes(){
+        return colaboradorRepository.listarTotalEmRotaETotalPacotes();
     }
 
     public List<String[]> listarMatriz() {
