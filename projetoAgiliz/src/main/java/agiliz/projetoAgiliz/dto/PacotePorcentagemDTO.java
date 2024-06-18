@@ -7,9 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class MatrizColaboradorDTO {
-    private Double valor;
-    private String cpf;
+@AllArgsConstructor
+public class PacotePorcentagemDTO {
+    private Double percEntrega;
+    private Double percCaminho;
+    private Double percColeta;
 }

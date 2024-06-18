@@ -1,11 +1,17 @@
 package agiliz.projetoAgiliz.services;
 
+import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
+import agiliz.projetoAgiliz.dto.DashColetasDTO;
 import agiliz.projetoAgiliz.dto.LoginDTO;
+import agiliz.projetoAgiliz.dto.MaiorEMenorEntregaDTO;
 import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
+import agiliz.projetoAgiliz.dto.MesPorQtdDeEntregaDTO;
+import agiliz.projetoAgiliz.dto.TotalEntregaDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
+import agiliz.projetoAgiliz.repositories.IPacoteRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +39,9 @@ public class ColaboradorService {
 
     @Autowired
     private IColaboradorRepository colaboradorRepository;
+
+    @Autowired
+    private IPacoteRepository pacoteRepository;
     
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,6 +51,22 @@ public class ColaboradorService {
         return colaborador;
     }
 
+    public String listarColaboradoresComMaiorEntrega(){
+        return colaboradorRepository.findColaboradorComMaisPacotes().get(0);
+    }
+
+    public String listarColaboradoresComMenorEntrega(){
+        return colaboradorRepository.findColaboradorComMenosPacotes().get(0);
+    }
+
+    public TotalEntregaDTO listarTotalEntreguesETotalPacotes(){
+        return colaboradorRepository.listarTotalEntreguesETotalPacotes();
+    }
+
+    public TotalEntregaDTO listarTotalEmRotaETotalPacotes(){
+        return colaboradorRepository.listarTotalEmRotaETotalPacotes();
+    }
+
     public List<String[]> listarMatriz() {
         List<MatrizColaboradorDTO> lista = colaboradorRepository.listarMatriz();
         
@@ -49,7 +74,7 @@ public class ColaboradorService {
         Map<String, List<Double>> cpfToValoresMap = new HashMap<>();
         for (MatrizColaboradorDTO colaborador : lista) {
             cpfToValoresMap
-                .computeIfAbsent(colaborador.getCPF(), k -> new ArrayList<>())
+                .computeIfAbsent(colaborador.getCpf(), k -> new ArrayList<>())
                 .add(colaborador.getValor());
         }
 
@@ -69,8 +94,14 @@ public class ColaboradorService {
         return matriz;
     }
 
+    public List<MesPorQtdDeEntregaDTO> listarMesPorQtdEntrega(){
+        return pacoteRepository.findQtdEntregaPorMes();
+    }
+
     public Colaborador getPorId(UUID id) {
-        if(!colaboradorRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if(!colaboradorRepository.existsById(id)) throw new ResponseEntityException(HttpStatus.NOT_FOUND, 
+        "Colaborador não encontrado",404);
+
         return colaboradorRepository.findById(id).get();
     }
 
@@ -82,24 +113,31 @@ public class ColaboradorService {
     }
 
     public UsuarioLoginDTO login(UsuarioLoginDTO usuarioLoginDTO){
-        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
-
-        final Authentication authentication = this.authenticationManager.authenticate(credentials);
-        
-        Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
-
-        UsuarioLoginDTO user = new UsuarioLoginDTO();
-
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = gerenciadorTokenJWT.generateToken(authentication);
-
-
-        user.setEmail(userFound.get().getEmailColaborador());
-        user.setSenha(userFound.get().getSenhaColaborador());
-        user.setToken(token);
-
-        return user;
+        try {
+            final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
+            
+            final Authentication authentication = this.authenticationManager.authenticate(credentials);
+            
+            Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
+            
+            if (!userFound.isPresent()) {
+                throw new ResponseEntityException(HttpStatus.NOT_FOUND, 
+                "Usuário não encontrado",404);
+            }
+    
+            UsuarioLoginDTO user = new UsuarioLoginDTO();
+            
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            final String token = gerenciadorTokenJWT.generateToken(authentication);
+            
+            user.setEmail(userFound.get().getEmailColaborador());
+            user.setSenha(userFound.get().getSenhaColaborador());
+            user.setToken(token);
+            
+            return user;
+        } catch (Exception e) {
+            throw new ResponseEntityException(HttpStatus.BAD_REQUEST, e.getMessage(),400);
+        }
     }
 
     public void deletarPorId(UUID idColaborador) throws Exception{
@@ -107,6 +145,23 @@ public class ColaboradorService {
             colaboradorRepository.deleteById(idColaborador);
             return;
         }
-        throw new Exception("Funcionário não encontrado");
+        throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Colaborador não encontrado", 404);
+    }
+
+    public DashColetasDTO montarDash(){
+        var dadosDash = new DashColetasDTO();
+        var maiorEMenorEntrega = new MaiorEMenorEntregaDTO();
+
+        maiorEMenorEntrega.setNomeColaboradorMaiorEntrega(listarColaboradoresComMaiorEntrega());
+        maiorEMenorEntrega.setNomeColaboradorMenorEntrega(listarColaboradoresComMenorEntrega());
+
+        dadosDash.setMaiorEMenorEntregaColaborador(maiorEMenorEntrega);
+        dadosDash.setMesPorQtdDeEntrega(listarMesPorQtdEntrega());
+        dadosDash.setRankingEntregas(pacoteRepository.listarRankingEntregas());
+        dadosDash.setTotalAusentesECanceladas(colaboradorRepository.lisTotalAusenteECanceladas());
+        dadosDash.setTotalEntregaDTO(listarTotalEntreguesETotalPacotes());
+        dadosDash.setZonasAtendidas(dadosDash.getTotalEntregaDTO().getTotal());
+
+        return dadosDash;
     }
 }

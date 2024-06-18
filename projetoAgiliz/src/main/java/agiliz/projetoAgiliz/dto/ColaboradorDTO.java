@@ -9,8 +9,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public record ColaboradorDTO(
         @NotBlank String nomeColaborador,
-        @NotBlank @CPF String CPF,
-        @NotBlank String RG,
+        @NotBlank @CPF String cpf,
+        @NotBlank String rg,
         @NotBlank String classeCarteira,
         @NotNull  Date dataNascimento,
         @NotBlank String emailColaborador,

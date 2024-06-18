@@ -11,8 +11,8 @@ public class ContratoColaborador {
 
     public ContratoColaborador(Colaborador funcionario, IContrato contrato){
         this.nome = funcionario.getNomeColaborador();
-        this.cpf = funcionario.getCPF();
-        this.rg = funcionario.getRG();
+        this.cpf = funcionario.getCpf();
+        this.rg = funcionario.getRg();
         this.contrato = contrato;
     }
 

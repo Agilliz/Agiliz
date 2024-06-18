@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class MatrizColaboradorDTO {
-    private Double valor;
-    private String cpf;
+@AllArgsConstructor
+public class TotalAusenteECanceladasDTO {
+    private Long totalAusentes;
+    private Long totalCanceladas;
 }

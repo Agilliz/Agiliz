@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MatrizColaboradorDTO {
-    private Double valor;
-    private String cpf;
+public class MesPorQtdDeEntregaDTO {
+    private Integer mes;
+    private Long qtdEntregas;
 }
