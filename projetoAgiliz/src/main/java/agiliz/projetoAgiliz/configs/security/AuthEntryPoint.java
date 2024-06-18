@@ -17,15 +17,12 @@ public class AuthEntryPoint implements AuthenticationEntryPoint{
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException authException) throws IOException, ServletException {
-
-        // if(authException.getClass().equals(BadCredentialsException.class)
-        // ||authException.getClass().equals(InsufficientAuthenticationException.class)){
-        //     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);        
-        // }
-        // else{
-        //     response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                         AuthenticationException authException) throws IOException, ServletException {
+        // if (authException instanceof BadCredentialsException || authException instanceof InsufficientAuthenticationException) {
+        //     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido, ou você não possui privilégios suficientes para esse conteúdo");
+        // } 
+        // else {
+        //     response.sendError(HttpServletResponse.SC_FORBIDDEN, "Token inválido ou não enviado, faça login novamente ou contate nossa equipe técnica");
         // }
     }
-    
 }

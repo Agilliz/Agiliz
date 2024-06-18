@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import agiliz.projetoAgiliz.dto.ColetasPorTempo;
 import agiliz.projetoAgiliz.dto.PacoteDTO;
+import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
+import agiliz.projetoAgiliz.dto.RankingEntregasDTO;
 import agiliz.projetoAgiliz.dto.ZonaRanking;
 import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
@@ -15,9 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +70,10 @@ public class PacoteService {
         return pacoteRepository.save(pacote);
     }
 
+    public List<RankingEntregasDTO> listarRankingEntregas(){
+        return pacoteRepository.listarRankingEntregas();
+    }
+    
     public Page<Pacote> listarTodos(Pageable pageable){
         return pacoteRepository.findAll(pageable);
     }
@@ -98,5 +102,9 @@ public class PacoteService {
             pacote.setPagamentoFeito(true);
             pacoteRepository.save(pacote);
         }
+    }
+
+    public List<PacotePorcentagemDTO> listarPacotesPorcentagem(){
+        return pacoteRepository.listarPorcentagem();
     }
 }

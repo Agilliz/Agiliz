@@ -6,12 +6,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GeradorArquivo {
 
-    public static byte[] gravarArquivo(ListaObj <Colaborador> listaColaborador , String nomeArq) throws IOException {
+    public static byte[] gravarArquivo(List<Colaborador> listaColaborador , String nomeArq) throws IOException {
 
         FileWriter arq = null;
         Formatter saida = null;
@@ -30,8 +31,8 @@ public class GeradorArquivo {
 
 // Bloco try-catch para gravar o arquivo
         try {
-            for (int i = 0; i < listaColaborador.getNroElem(); i++) {
-                Colaborador colaborador = listaColaborador.getElemento(i);
+            for (int i = 0; i < listaColaborador.size(); i++) {
+                Colaborador colaborador = listaColaborador.get(i);
 //Recupere um elemento da lista e formate aqui:
                 saida.format("%s;%s;%s;%s;%s;%s;%s;%s\n",
 
@@ -72,7 +73,6 @@ public class GeradorArquivo {
 
         nomeArq += ".csv";
 
-// Bloco try-catch para abrir o arquivo
         try {
             arq = new FileReader(nomeArq);
             entrada = new Scanner(arq).useDelimiter(";|\\n");
@@ -81,9 +81,7 @@ public class GeradorArquivo {
             System.exit(1);
         }
 
-// Bloco try-catch para ler o arquivo
         try {
-//Leia e formate a saída no console aqui:
 
             // Cabeçalho
             System.out.printf("%-45S %-11S %-9S %-15S %-10S %-30S %-10S %-11S \n",  "nome Colaborador", "cpf", "rg",

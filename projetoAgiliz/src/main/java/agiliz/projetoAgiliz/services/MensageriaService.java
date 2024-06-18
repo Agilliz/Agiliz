@@ -30,6 +30,10 @@ public class MensageriaService<T> {
         this.status = status;
     }
 
+    public MensageriaService(String mensagemCliente) {
+        this.mensagemCliente = mensagemCliente;
+    }
+
     public MensageriaService(String mensagemCliente, List<T> datas, int status) {
         this.mensagemCliente = mensagemCliente;
         this.datas = datas;

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import agiliz.projetoAgiliz.enums.StatusPacote;
 import agiliz.projetoAgiliz.enums.TipoPacote;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +38,7 @@ public class Pacote implements Serializable {
     private int status;
     private boolean pagamentoFeito;
     private LocalDateTime dataColeta;
+    @Column
     private LocalDateTime dataEntrega;
 
     @ManyToOne
