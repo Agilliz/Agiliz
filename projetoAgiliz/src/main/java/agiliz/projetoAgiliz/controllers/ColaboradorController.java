@@ -23,9 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -72,6 +71,28 @@ public class ColaboradorController {
             MensageriaService mensageriaService = new MensageriaService(e, 500);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
         }
+    }
+
+    @PutMapping("alterar/{idColaborador}")
+    public ResponseEntity<MensageriaService<Colaborador>> alterarColaboradorById(@PathVariable UUID idColaborador, @Valid @RequestBody ColaboradorDTO colaboradorDTO) throws Exception{
+        
+        Colaborador colaborador = colaboradorService.getPorId(idColaborador);
+        
+        BeanUtils.copyProperties(colaboradorDTO, colaborador);
+
+        try {
+            colaboradorService.inserir(colaborador);
+
+            MensageriaService mensageriaService = new MensageriaService<>("Colaborador atualizado com sucesso", colaborador, 200);
+
+            return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
+
+        } catch (Exception e) {
+           
+            MensageriaService mensageriaService = new MensageriaService<>("Ocorreu um erro a atualizar o colaborador ", 400);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
+        }
+        
     }
 
     @DeleteMapping("/deletar/{idColaborador}")
