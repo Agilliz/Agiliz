@@ -1,5 +1,6 @@
 package agiliz.projetoAgiliz.services;
 
+import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
 import agiliz.projetoAgiliz.dto.DashColetasDTO;
 import agiliz.projetoAgiliz.dto.LoginDTO;
@@ -98,7 +99,9 @@ public class ColaboradorService {
     }
 
     public Colaborador getPorId(UUID id) {
-        if(!colaboradorRepository.existsById(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if(!colaboradorRepository.existsById(id)) throw new ResponseEntityException(HttpStatus.NOT_FOUND, 
+        "Colaborador não encontrado",404);
+
         return colaboradorRepository.findById(id).get();
     }
 
@@ -135,7 +138,7 @@ public class ColaboradorService {
             colaboradorRepository.deleteById(idColaborador);
             return;
         }
-        throw new Exception("Funcionário não encontrado");
+        throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Colaborador não encontrado", 404);
     }
 
     public DashColetasDTO montarDash(){

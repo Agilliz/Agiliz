@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 @RestController
 @RequestMapping("/funcionario")
 @CrossOrigin
@@ -52,16 +51,15 @@ public class ColaboradorController {
     @PostMapping("/cadastrar")
     ResponseEntity<MensageriaService<Colaborador>> cadastroColaborador(
             @RequestBody @Valid ColaboradorDTO colaboradorDTO) {
-        
+
         Colaborador colaborador = new Colaborador();
 
         String senhaCriptografada = passwordEncoder.encode(colaboradorDTO.senhaColaborador());
 
-          BeanUtils.copyProperties(colaboradorDTO, colaborador);
+        BeanUtils.copyProperties(colaboradorDTO, colaborador);
 
         colaborador.setSenhaColaborador(senhaCriptografada);
-        
-    
+
         try {
             MensageriaService mensageriaService = new MensageriaService<>(
                     "Funcionario Cadastrado com Sucesso",
@@ -74,29 +72,32 @@ public class ColaboradorController {
     }
 
     @PutMapping("alterar/{idColaborador}")
-    public ResponseEntity<MensageriaService<Colaborador>> alterarColaboradorById(@PathVariable UUID idColaborador, @Valid @RequestBody ColaboradorDTO colaboradorDTO) throws Exception{
-        
+    public ResponseEntity<MensageriaService<Colaborador>> alterarColaboradorById(@PathVariable UUID idColaborador,
+            @Valid @RequestBody ColaboradorDTO colaboradorDTO) throws Exception {
+
         Colaborador colaborador = colaboradorService.getPorId(idColaborador);
-        
+
         BeanUtils.copyProperties(colaboradorDTO, colaborador);
 
         try {
             colaboradorService.inserir(colaborador);
 
-            MensageriaService mensageriaService = new MensageriaService<>("Colaborador atualizado com sucesso", colaborador, 200);
+            MensageriaService mensageriaService = new MensageriaService<>("Colaborador atualizado com sucesso",
+                    colaborador, 200);
 
             return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
 
         } catch (Exception e) {
-           
-            MensageriaService mensageriaService = new MensageriaService<>("Ocorreu um erro a atualizar o colaborador ", 400);
+
+            MensageriaService mensageriaService = new MensageriaService<>("Ocorreu um erro a atualizar o colaborador ",
+                    400);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
         }
-        
+
     }
 
     @DeleteMapping("/deletar/{idColaborador}")
-    public ResponseEntity deleteColaboradorById(@PathVariable UUID idColaborador) throws Exception{
+    public ResponseEntity deleteColaboradorById(@PathVariable UUID idColaborador) throws Exception {
         colaboradorService.deletarPorId(idColaborador);
         return ResponseEntity.status(204).build();
     }
@@ -104,9 +105,8 @@ public class ColaboradorController {
     @GetMapping("/matriz-colaborador")
     public ResponseEntity<List<String[]>> getMatrizColaboradorPorDespesa() {
         return ResponseEntity.status(HttpStatus.OK)
-        .body(colaboradorService.listarMatriz());
+                .body(colaboradorService.listarMatriz());
     }
-    
 
     @GetMapping("/")
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
@@ -120,21 +120,14 @@ public class ColaboradorController {
         MensageriaService mensageriaService = new MensageriaService("Não há funcionários", 204);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    // @GetMapping("/{idFuncionario}")
-    // ResponseEntity<MensageriaService<List<Colaborador>>>
-    // listarFuncionariosPorId(@PathVariable UUID idFuncionario){
-    // Optional<Colaborador> colaboradorOpt =
-    // colaboradorService.listarTodos(idFuncionario);
-    //
-    // if (colaboradorOpt.isPresent()){
-    // MensageriaService mensageriaService = new MensageriaService<>("Funcionario",
-    // funcionarioId, 200);
-    // return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-    // }
-    // MensageriaService mensageriaService = new MensageriaService("Funcionário não
-    // encontrado",404);
-    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
-    // }
+
+    @GetMapping("/{idFuncionario}")
+    ResponseEntity<MensageriaService<Colaborador>> listarFuncionariosPorId(@PathVariable UUID idFuncionario) {
+        Colaborador colaborador = colaboradorService.getPorId(idFuncionario);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new MensageriaService<>(
+            "Funcionario", colaborador, 200));
+    }
 
     // @DeleteMapping("/{idFuncionario}")
     // ResponseEntity<MensageriaService<List<Colaborador>>> deletarPorId
@@ -161,10 +154,11 @@ public class ColaboradorController {
     }
 
     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
-    public ResponseEntity<byte[]> gravarArquivo() throws Exception{
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(GeradorArquivo.gravarArquivo(colaboradorService.listarTodos(), "Arquivo dos colaboradores"));
-        }catch (Exception e){
+    public ResponseEntity<byte[]> gravarArquivo() throws Exception {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(GeradorArquivo.gravarArquivo(colaboradorService.listarTodos(), "Arquivo dos colaboradores"));
+        } catch (Exception e) {
             System.out.println(e);
             throw new Exception(e);
         }
@@ -172,7 +166,7 @@ public class ColaboradorController {
     }
 
     @GetMapping("/ler-arquivo")
-    public void lerArquivo(){
+    public void lerArquivo() {
         GeradorArquivo.leArquivoCsv("Arquivo dos colaboradores");
     }
 }
