@@ -66,7 +66,7 @@ public class PacoteService {
         return pacoteRepository.findClienteMenorColeta();
     }
 
-    public Pacote atualizar(Pacote pacote){
+    public Pacote atualizar(Pacote pacote) {
         return pacoteRepository.save(pacote);
     }
 
@@ -82,7 +82,7 @@ public class PacoteService {
         pacoteRepository.deleteById(id);
     }
 
-    public List<Pacote> listarPacotesParaPagar(Pagamento pagamento){
+    public List<Pacote> listarPacotesParaPagar(Pagamento pagamento) {
         List<Pacote> pacotes = pacoteRepository.findPackagesForPayment(pagamento.getColaborador());
 
         return pacotes.stream()
@@ -91,7 +91,6 @@ public class PacoteService {
                             : pacote -> pacote.getZona().getTipoZona() == TipoZona.ZONA_NORMAL))
                     .toList();
     }
-
 
     public void confirmarPagamentoEntregas(List<Pacote> pacotes) {
         for(Pacote pacote : pacotes){

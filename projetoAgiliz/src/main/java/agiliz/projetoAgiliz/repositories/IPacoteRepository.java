@@ -25,10 +25,10 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID>{
 
     @Query("""
         SELECT
-            new agiliz.projetoAgiliz.dto.ZonaRanking(p.zona.nomeZona, (CAST((COUNT(p) / ?1) AS DOUBLE)) * 100) 
+            new agiliz.projetoAgiliz.dto.ZonaRanking(p.zona.nomeZona, (CAST((COUNT(p) / ?1) AS DOUBLE)) * 100)
         FROM Pacote p
-        WHERE p.tipo = 2 
-        GROUP BY p.zona        
+        WHERE p.tipo = 2
+        GROUP BY p.zona
     """)
     List<ZonaRanking> findZonasRanking(int quantidadePacotes);
 

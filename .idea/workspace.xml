@@ -6,14 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="35d466dd-ff30-475b-8ef3-4b4116138c34" name="Changes" comment="Remoção de alguns métodos inúteis">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ColaboradorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/controllers/ColaboradorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IPacoteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IPacoteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IZonaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/repositories/IZonaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColaboradorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColaboradorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/DestinatarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/DestinatarioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PacoteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PacoteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PagamentoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/PagamentoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ZonaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ZonaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/ProjetoAgilizApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/controllers/RotaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/models/Endereco.class" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/target/classes/agiliz/projetoAgiliz/models/Endereco.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
