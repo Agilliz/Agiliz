@@ -45,7 +45,7 @@ public class MensageriaService<T> {
         this.data = data;
     }
 
-    public MensageriaService(String mensagemCliente, int status) {
+    public MensageriaService(String mensagemCliente, Integer status) {
         this.mensagemCliente = mensagemCliente;
         this.status = status;
     }
