@@ -15,12 +15,11 @@ public class ColetasService {
     public DadosColeta getDadosColeta() {
         var pacotesStatusOnly = pacoteService.getAllPacoteStatusOnly();
 
-        //pacotesStatusOnly.stream().filter(pacote -> pacote.getStatus() == StatusPacote.CANCELADO).count()
-
         return new DadosColeta(
                 pacotesStatusOnly.stream().filter(pacote -> pacote.getStatus() == StatusPacote.ENTREGUE).count(),
                 pacotesStatusOnly.stream().filter(pacote -> pacote.getStatus() == StatusPacote.AUSENTE).count(),
                 pacotesStatusOnly.stream().filter(pacote -> pacote.getStatus() == StatusPacote.A_CAMINHO).count(),
+                pacotesStatusOnly.stream().filter(pacote -> pacote.getStatus() == StatusPacote.EM_ESPERA).count(),
                 pacoteService.getQuantidadeColetasRealizadas(),
                 pacoteService.getQuantidadeColetasCanceladas(),
                 pacoteService.getNomeClienteMenorColeta(),
