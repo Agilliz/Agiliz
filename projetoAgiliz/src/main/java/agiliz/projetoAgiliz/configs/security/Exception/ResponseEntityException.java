@@ -3,11 +3,8 @@ package agiliz.projetoAgiliz.configs.security.Exception;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.server.ResponseStatusException;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Getter
 @Setter
 public class ResponseEntityException extends ResponseStatusException{
