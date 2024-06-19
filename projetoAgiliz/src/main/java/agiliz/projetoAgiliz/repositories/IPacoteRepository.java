@@ -49,10 +49,11 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID> {
 
     @Query("""
         SELECT
-            new agiliz.projetoAgiliz.dto.ZonaRanking(p.zona.nomeZona, (CAST((COUNT(p) / ?1) AS DOUBLE)) * 100) 
+            new agiliz.projetoAgiliz.dto.ZonaRanking(p.zona.nomeZona, (CAST((COUNT(p) / ?1) AS DOUBLE)) * 100)
         FROM Pacote p
-        WHERE p.tipo = 2 
-        GROUP BY p.zona        
+        WHERE p.tipo = 2
+        GROUP BY p.zona
+        ORDER BY COUNT(p) DESC
     """)
     List<ZonaRanking> findZonasRanking(int quantidadePacotes);
 
@@ -73,12 +74,16 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID> {
         GROUP BY p.dataColeta
     """)
     List<ColetasPorTempo> findColetasPorTempo();
+
     @Query("SELECT p.unidade.nomeUnidade FROM Pacote p ORDER BY p.zona.valor ASC LIMIT 1")
     String findClienteMaiorColeta();
+
     @Query("SELECT p.unidade.nomeUnidade FROM Pacote p ORDER BY p.zona.valor DESC LIMIT 1")
     String findClienteMenorColeta();
+
     @Query("SELECT p.unidade FROM Pacote p WHERE p.status = 2 AND p.tipo = 2 GROUP BY p.unidade")
     List<Unidade> countColetasRealizadas();
+
     @Query("SELECT p.unidade FROM Pacote p WHERE p.status = 3 AND p.tipo = 2 GROUP BY p.unidade")
     List<Unidade> countColetasCanceladas();
 }

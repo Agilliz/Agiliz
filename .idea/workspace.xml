@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35d466dd-ff30-475b-8ef3-4b4116138c34" name="Changes" comment="Remoção de alguns métodos inúteis">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/AuthEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/AuthEntryPoint.java" afterDir="false" />
+    <list default="true" id="35d466dd-ff30-475b-8ef3-4b4116138c34" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/DadosColeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/DadosColeta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/enums/StatusPacote.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/enums/StatusPacote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColetasService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColetasService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,11 +44,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.ProjetoAgilizApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "Merging dev",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Aluno/Documents/GIT/Agiliz/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs",
     "project.structure.last.edited": "Project",

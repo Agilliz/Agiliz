@@ -7,6 +7,7 @@ public record DadosColeta (
        long pacotesColetados,
        long pacotesAusentes,
        long pacotesEmRota,
+       long pacotesAguardandoColeta,
        long coletasRealizadas,
        long coletasCanceladas,
        String nomeClienteMenorColeta,

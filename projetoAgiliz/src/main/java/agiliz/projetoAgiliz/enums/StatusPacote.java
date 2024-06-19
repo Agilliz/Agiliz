@@ -10,7 +10,7 @@ public enum StatusPacote {
     CANCELADO(3, "cancelado"),
     DEVOLVIDO(4, "devolvido"),
     AUSENTE(5, "ausente"),
-    A_COLETAR(6, "a coletar");
+    EM_ESPERA(6, "em espera");
 
     private final int codigo;
     private final String alias;

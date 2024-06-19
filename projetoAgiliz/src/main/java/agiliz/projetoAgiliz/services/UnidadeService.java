@@ -29,7 +29,9 @@ public class UnidadeService {
    }
 
     public LocalTime getHorarioCorteMedia() {
-       return LocalTime.ofSecondOfDay(repository.findAVGHorarioCorte().longValue());
+       Double horaMediaSegundos = repository.findAVGHorarioCorte();
+       if(horaMediaSegundos == null) return LocalTime.of(12, 0);
+       return LocalTime.ofSecondOfDay(horaMediaSegundos.longValue());
     }
 
    public String getNomeUnidadeMaiorRetorno() {
