@@ -2,13 +2,7 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
-import agiliz.projetoAgiliz.dto.DashColetasDTO;
-import agiliz.projetoAgiliz.dto.LoginDTO;
-import agiliz.projetoAgiliz.dto.MaiorEMenorEntregaDTO;
-import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
-import agiliz.projetoAgiliz.dto.MesPorQtdDeEntregaDTO;
-import agiliz.projetoAgiliz.dto.TotalEntregaDTO;
-import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.*;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
@@ -47,8 +41,13 @@ public class ColaboradorService {
     private AuthenticationManager authenticationManager;
 
     public Colaborador inserir(Colaborador colaborador){
+        // colocar o código do jwt de senha
         colaboradorRepository.save(colaborador);
         return colaborador;
+    }
+
+    public Colaborador alterar(ColaboradorDTO dto) {
+        return null;
     }
 
     public String listarColaboradoresComMaiorEntrega(){

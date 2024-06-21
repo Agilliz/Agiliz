@@ -110,7 +110,6 @@ public class ColaboradorController {
     @GetMapping("/")
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
         Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
-        System.out.println(colaboradores);
 
         if (!colaboradores.isEmpty()) {
             MensageriaService mensageriaService = new MensageriaService("Funcionarios", colaboradores, 200);
@@ -128,30 +127,6 @@ public class ColaboradorController {
             "Funcionario", colaborador, 200));
     }
 
-    // @DeleteMapping("/{idFuncionario}")
-    // ResponseEntity<MensageriaService<List<Colaborador>>> deletarPorId
-    // (@PathVariable UUID idFuncionario) {
-    // Optional<Colaborador> funcionarioList =
-    // colaboradorRepository.findById(idFuncionario);
-    //
-    // if (funcionarioList.isPresent()){
-    // colaboradorRepository.deleteById(idFuncionario);
-    // MensageriaService mensageriaService = new MensageriaService("Funcionário
-    // excluído com sucesso", 200);
-    // return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-    // }
-    // MensageriaService mensageriaService = new MensageriaService("Funcionário não
-    // encontrado", funcionarioList, 404);
-    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
-    //
-    // }
-
-    @GetMapping("/teste-chave")
-    public Date getData() {
-        LocalDate dataChave = LocalDate.of(2024, 8, 10);
-        return CalculadoraDatas.calcularQuintoDiaUtil(dataChave);
-    }
-
     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
     public ResponseEntity<byte[]> gravarArquivo() throws Exception {
         try {
@@ -162,10 +137,5 @@ public class ColaboradorController {
             throw new Exception(e);
         }
 
-    }
-
-    @GetMapping("/ler-arquivo")
-    public void lerArquivo() {
-        GeradorArquivo.leArquivoCsv("Arquivo dos colaboradores");
     }
 }
