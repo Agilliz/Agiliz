@@ -1,5 +1,6 @@
-package agiliz.projetoAgiliz.configs.security;
+package agiliz.projetoAgiliz.configs;
 
+import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,15 @@ public class GlobalExceptionHandler {
         String message = "Token inválido ou mal formatado";
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new MensageriaService<>(message, 401));
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<MensageriaService> handleSignatureException(SignatureException ex){
+        String message = "Token inválido ou mal formatado, tente se logar novamente ou entre em contato com nossa equipe técnica";
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        .body(new MensageriaService<>(message, 401));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

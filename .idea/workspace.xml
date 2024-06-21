@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35d466dd-ff30-475b-8ef3-4b4116138c34" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/DadosColeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/dto/DadosColeta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/enums/StatusPacote.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/enums/StatusPacote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColetasService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/services/ColetasService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/AutenticacaoFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/AutenticacaoFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/security/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs/GlobalExceptionHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging dev",
+    "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Aluno/Documents/GIT/Agiliz/projetoAgiliz/src/main/java/agiliz/projetoAgiliz/configs",
     "project.structure.last.edited": "Project",
@@ -62,6 +61,9 @@
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Aluno\Documents\GIT\Agiliz\projetoAgiliz\src\main\java\agiliz\projetoAgiliz\configs" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="agiliz.projetoAgiliz.configs" />
     </key>
   </component>
   <component name="RunManager">
@@ -94,6 +96,17 @@
       <updated>1708796833504</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Remoção de alguns métodos inúteis" />
