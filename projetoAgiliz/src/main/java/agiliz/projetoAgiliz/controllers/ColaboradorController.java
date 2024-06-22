@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +38,7 @@ public class ColaboradorController {
     @PostMapping("/login")
     ResponseEntity<UsuarioLoginDTO> login(@RequestBody @Valid UsuarioLoginDTO usuarioLoginDTO) {
         var userLogin = colaboradorService.login(usuarioLoginDTO);
+
         if (!userLogin.equals(null)) {
             return ResponseEntity.status(HttpStatus.OK).body(userLogin);
         }
@@ -46,9 +48,14 @@ public class ColaboradorController {
     @PostMapping("/cadastrar")
     ResponseEntity<MensageriaService<ColaboradorResponse>> cadastroColaborador(
             @RequestBody @Valid ColaboradorDTO colaboradorDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MensageriaService<>("Colaborador cadastrado com sucesso",
-                        new ColaboradorResponse(colaboradorService.inserir(colaboradorDTO))));
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new MensageriaService<ColaboradorResponse>()
+                            .builder()
+                            .mensagemCliente("Colaborador cadastrado com sucesso")
+                            .data(new ColaboradorResponse(colaboradorService.inserir(colaboradorDTO)))
+                            .build()
+            );
+
     }
 
     @PutMapping("/alterar/{idColaborador}")
