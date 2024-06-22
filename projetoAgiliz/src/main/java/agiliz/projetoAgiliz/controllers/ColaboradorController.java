@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.ColaboradorDTO;
+import agiliz.projetoAgiliz.dto.ColaboradorResponse;
 import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
 import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
@@ -31,71 +32,36 @@ import java.util.UUID;
 public class ColaboradorController {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private ColaboradorService colaboradorService;
 
     @PostMapping("/login")
     ResponseEntity<UsuarioLoginDTO> login(@RequestBody @Valid UsuarioLoginDTO usuarioLoginDTO) {
         var userLogin = colaboradorService.login(usuarioLoginDTO);
-
         if (!userLogin.equals(null)) {
             return ResponseEntity.status(HttpStatus.OK).body(userLogin);
         }
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<Colaborador>> cadastroColaborador(
+    ResponseEntity<MensageriaService<ColaboradorResponse>> cadastroColaborador(
             @RequestBody @Valid ColaboradorDTO colaboradorDTO) {
-
-        Colaborador colaborador = new Colaborador();
-
-        String senhaCriptografada = passwordEncoder.encode(colaboradorDTO.senhaColaborador());
-
-        BeanUtils.copyProperties(colaboradorDTO, colaborador);
-
-        colaborador.setSenhaColaborador(senhaCriptografada);
-
-        try {
-            MensageriaService mensageriaService = new MensageriaService<>(
-                    "Funcionario Cadastrado com Sucesso",
-                    colaboradorService.inserir(colaborador), 200);
-            return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
-        } catch (Exception e) {
-            MensageriaService mensageriaService = new MensageriaService(e, 500);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new MensageriaService<>("Colaborador cadastrado com sucesso",
+                        new ColaboradorResponse(colaboradorService.inserir(colaboradorDTO))));
     }
 
-    @PutMapping("alterar/{idColaborador}")
-    public ResponseEntity<MensageriaService<Colaborador>> alterarColaboradorById(@PathVariable UUID idColaborador,
-            @Valid @RequestBody ColaboradorDTO colaboradorDTO) throws Exception {
-
-        Colaborador colaborador = colaboradorService.getPorId(idColaborador);
-
-        BeanUtils.copyProperties(colaboradorDTO, colaborador);
-
-        try {
-            colaboradorService.inserir(colaborador);
-
-            MensageriaService mensageriaService = new MensageriaService<>("Colaborador atualizado com sucesso",
-                    colaborador, 200);
-
-            return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-
-        } catch (Exception e) {
-
-            MensageriaService mensageriaService = new MensageriaService<>("Ocorreu um erro a atualizar o colaborador ",
-                    400);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
-        }
-
+    @PutMapping("/alterar/{idColaborador}")
+    public ResponseEntity<MensageriaService<ColaboradorResponse>> alterarColaboradorById(
+            @PathVariable UUID idColaborador,
+            @Valid @RequestBody ColaboradorDTO colaboradorDTO) {
+               return ResponseEntity.status(HttpStatus.OK).body(
+                    new MensageriaService<>("Colaborador atualizado com sucesso",
+                            new ColaboradorResponse(colaboradorService.alterar(idColaborador, colaboradorDTO)))
+                   );
     }
 
-    @DeleteMapping("/deletar/{idColaborador}")
+    @DeleteMapping("/{idColaborador}")
     public ResponseEntity deleteColaboradorById(@PathVariable UUID idColaborador) throws Exception {
         colaboradorService.deletarPorId(idColaborador);
         return ResponseEntity.status(204).build();
@@ -107,7 +73,7 @@ public class ColaboradorController {
                 .body(colaboradorService.listarMatriz());
     }
 
-    @GetMapping("/")
+    @GetMapping
     ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
         Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
 

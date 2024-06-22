@@ -14,14 +14,17 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -40,14 +43,27 @@ public class ColaboradorService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public Colaborador inserir(Colaborador colaborador){
-        // colocar o código do jwt de senha
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Colaborador inserir(ColaboradorDTO colaboradorDTO){
+        Colaborador colaborador = new Colaborador();
+        BeanUtils.copyProperties(colaboradorDTO, colaborador);
+        criptografarSenha(colaboradorDTO.senhaColaborador(), colaborador);
         colaboradorRepository.save(colaborador);
         return colaborador;
     }
 
-    public Colaborador alterar(ColaboradorDTO dto) {
-        return null;
+    public void criptografarSenha(String senha, Colaborador colaborador){
+        String senhaCriptografada = passwordEncoder.encode(senha);
+        colaborador.setSenhaColaborador(senhaCriptografada);
+    }
+
+    public Colaborador alterar(UUID idColaborador, ColaboradorDTO colaboradorDTO) {
+        Colaborador colaborador = getPorId(idColaborador);
+        BeanUtils.copyProperties(colaboradorDTO, colaborador);
+        criptografarSenha(colaboradorDTO.senhaColaborador(), colaborador);
+        return colaboradorRepository.save(colaborador);
     }
 
     public String listarColaboradoresComMaiorEntrega(){

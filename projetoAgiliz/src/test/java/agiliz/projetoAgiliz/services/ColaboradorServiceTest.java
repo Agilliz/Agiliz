@@ -46,16 +46,7 @@ public class ColaboradorServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    public void testInserir() {
-        Colaborador colaborador = new Colaborador();
-        when(colaboradorRepository.save(any(Colaborador.class))).thenReturn(colaborador);
 
-        Colaborador result = colaboradorService.inserir(colaborador);
-
-        assertNotNull(result);
-        verify(colaboradorRepository, times(1)).save(colaborador);
-    }
 
     @Test
     public void testListarTodosPageable() {

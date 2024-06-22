@@ -31,8 +31,6 @@ public class DespesaController {
                 .body(
                         new MensageriaService<>(
                                 "Despesa cadastrada com sucesso",
-                                new DespesaResponse(despesaService.inserir(dto))
-                        )
-                );
+                                new DespesaResponse(despesaService.inserir(dto))));
     }
 }
