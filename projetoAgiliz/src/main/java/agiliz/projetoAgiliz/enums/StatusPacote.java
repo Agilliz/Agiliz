@@ -20,8 +20,8 @@ public enum StatusPacote {
         this.alias = alias;
     }
 
-    public static StatusPacote valueOf(Integer codigo){
-        for(StatusPacote tipo : StatusPacote.values()){
+    public static StatusPacote valueOf(int codigo) {
+        for(StatusPacote tipo : StatusPacote.values()) {
             if(codigo == tipo.getCodigo()) return tipo;
         }
 

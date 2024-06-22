@@ -1,6 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
 import agiliz.projetoAgiliz.dto.DespesaDTO;
+import agiliz.projetoAgiliz.dto.DespesaResponse;
 import agiliz.projetoAgiliz.models.Despesa;
 import agiliz.projetoAgiliz.services.DespesaService;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @RestController
-@RequestMapping("/despesa")
+@RequestMapping("/despesas")
 @CrossOrigin
 public class DespesaController {
 
@@ -22,32 +25,14 @@ public class DespesaController {
     private DespesaService despesaService;
 
 
-    @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<Despesa>> cadastrarDespesa(@RequestBody @Valid DespesaDTO despesaDTO){
-
-        try {
-            MensageriaService mensageriaService = new MensageriaService<>(
-                    "Despesa foi cadastrada com sucesso",
-                    despesaService.inserir(despesaDTO), 200);
-                    return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
-        } catch (Exception e){
-            MensageriaService mensageriaService = new MensageriaService<>(e, 500);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
-        }
+    @PostMapping
+    ResponseEntity<MensageriaService<DespesaResponse>> cadastrarDespesa(@RequestBody @Valid DespesaDTO dto){
+        return status(HttpStatus.CREATED)
+                .body(
+                        new MensageriaService<>(
+                                "Despesa cadastrada com sucesso",
+                                new DespesaResponse(despesaService.inserir(dto))
+                        )
+                );
     }
-
-//    @GetMapping("/")
-//    ResponseEntity<MensageriaService<Page<Despesa>>> listarDespesa(Pageable pageable){
-//        Page<Despesa> despesas = despesaService.listarDespesas(pageable);
-//
-//        if (!despesas.isEmpty()) {
-//            MensageriaService mensageriaService = new MensageriaService(" Despesas", despesas, 200);
-//            return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-//        }
-//        MensageriaService mensageriaService = new MensageriaService("Não há nenhuma despesa", 404);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
-
-
-
 }

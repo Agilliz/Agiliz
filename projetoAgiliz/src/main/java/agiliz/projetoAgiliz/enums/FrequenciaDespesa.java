@@ -3,24 +3,20 @@ package agiliz.projetoAgiliz.enums;
 import lombok.Getter;
 
 @Getter
-public enum TipoDespesa {
-
-    ALUGUEL(1,"Aluguel"),
-    LUZ(2  ,"Luz"),
-    AGUA(3, "Água"),
-    CUSTO_OPERACIONAL(4, "Custo operacional"),
-    IPVA(5, "IPVA");
+public enum FrequenciaDespesa {
+    FIXA(1,"Fixa"),
+    VARIAVEL(2  ,"Variável");
 
     private final int codigo;
     private final String alias;
 
-    TipoDespesa(int codigo, String alias) {
+    FrequenciaDespesa(int codigo, String alias) {
         this.codigo = codigo;
         this.alias = alias;
     }
 
-    public static TipoDespesa valueOf(int codigo) {
-        for (TipoDespesa tipo : TipoDespesa.values()) {
+    public static FrequenciaDespesa valueOf(int codigo) {
+        for (FrequenciaDespesa tipo : FrequenciaDespesa.values()) {
             if (codigo == tipo.getCodigo()) return tipo;
         }
 

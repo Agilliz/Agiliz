@@ -1,5 +1,7 @@
 package agiliz.projetoAgiliz.models;
 
+import agiliz.projetoAgiliz.enums.FrequenciaDespesa;
+import agiliz.projetoAgiliz.enums.TipoDespesa;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +21,17 @@ public class Despesa implements Serializable {
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private UUID idDespesa;
 
-    private Integer tipoDespesa;
-    private Double valorDespesa;
+    private int tipoDespesa;
+    private double valorDespesa;
+    private int frequenciaDespesa;
 
+    // Ver como será feito a questão do anexo
+
+    public TipoDespesa getTipoDespesa() {
+        return TipoDespesa.valueOf(tipoDespesa);
+    }
+
+    public FrequenciaDespesa getFrequenciaDespesa() {
+        return FrequenciaDespesa.valueOf(frequenciaDespesa);
+    }
 }

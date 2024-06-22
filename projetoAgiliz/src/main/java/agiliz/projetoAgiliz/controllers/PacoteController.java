@@ -6,7 +6,6 @@ import java.util.UUID;
 import agiliz.projetoAgiliz.models.Pacote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,6 +16,8 @@ import agiliz.projetoAgiliz.dto.PacoteDTO;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.services.PacoteService;
 import jakarta.validation.Valid;
+
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("/pacotes")
@@ -30,7 +31,7 @@ public class PacoteController {
     public ResponseEntity<MensageriaService<Pacote>> cadastrar(
                 @RequestBody @Valid PacoteDTO pacoteDTO
     ) {
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return status(HttpStatus.CREATED)
                 .body(
                         new MensageriaService<>(
                                 "Pacote inserido com sucesso",
@@ -44,9 +45,9 @@ public class PacoteController {
     public ResponseEntity<MensageriaService<Page<Pacote>>> listar(Pageable pageable) {
         var pacotes = pacoteService.listarTodos(pageable);
 
-        if (pacotes.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        if (pacotes.isEmpty()) return status(HttpStatus.NO_CONTENT).build();
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return status(HttpStatus.OK)
                 .body(
                         new MensageriaService<>(
                                 "Pacotes",
@@ -62,7 +63,7 @@ public class PacoteController {
         Optional<Pacote> pacote = pacoteService.listarPorId(id);
 
         if (pacote.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return status(HttpStatus.NOT_FOUND)
                     .body(
                             new MensageriaService<>(
                                     "Pacote não encontrado",
@@ -72,7 +73,7 @@ public class PacoteController {
                         );
         }
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return status(HttpStatus.OK)
                 .body(
                         new MensageriaService<>(
                                 "Pacote: ",
@@ -87,7 +88,7 @@ public class PacoteController {
         Optional<Pacote> pacoteOpt = pacoteService.listarPorId(id);
 
         if (pacoteOpt.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return status(HttpStatus.NOT_FOUND)
                     .body(
                             new MensageriaService<>(
                                     "Pacote não encontrado",
@@ -100,7 +101,7 @@ public class PacoteController {
         var pacote = pacoteOpt.get();
         BeanUtils.copyProperties(pacoteDTO, pacote);
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return status(HttpStatus.OK)
                 .body(
                         new MensageriaService<>(
                                 "Pacote atualizado com sucesso",
@@ -114,10 +115,10 @@ public class PacoteController {
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
         Optional<Pacote> pacoteOpt = pacoteService.listarPorId(id);
 
-        if (pacoteOpt.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (pacoteOpt.isEmpty()) return status(HttpStatus.NOT_FOUND).build();
 
         pacoteService.deletarPorId(id);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        return status(HttpStatus.ACCEPTED).build();
     }
 }
