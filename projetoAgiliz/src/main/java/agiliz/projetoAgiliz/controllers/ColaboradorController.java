@@ -55,7 +55,6 @@ public class ColaboradorController {
                             .data(new ColaboradorResponse(colaboradorService.inserir(colaboradorDTO)))
                             .build()
             );
-
     }
 
     @PutMapping("/alterar/{idColaborador}")
