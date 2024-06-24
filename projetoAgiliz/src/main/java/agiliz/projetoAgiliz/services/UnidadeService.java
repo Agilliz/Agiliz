@@ -3,6 +3,7 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.models.Unidade;
 import agiliz.projetoAgiliz.repositories.IUnidadeRepository;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

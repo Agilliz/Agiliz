@@ -12,24 +12,21 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "EnderecoFinal")
+@Table(name = "precificacaoZona")
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnderecoFinal implements Serializable {
+public class PrecificacaoZona implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idEnderecoFinal;
+    private UUID idPrecificacaoZona;
 
     @ManyToOne
-    @JoinColumn(name = "fk_colaborador")
-    private Colaborador colaborador;
+    private Unidade Unidade;
 
-    private String apelido;
-    private String cep;
-    private String rua;
-    private int numero;
+    private Double preco;
 
+    private int tipoZona;
 
 }
