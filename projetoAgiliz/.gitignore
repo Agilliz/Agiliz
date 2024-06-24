@@ -1,6 +1,10 @@
-src/main/resources/
+src/main/resources/application.properties
+src/main/resources/data.sql
 
-application.properties
+.vscode
+
+src/main/
+
 target/
 
 enderecosTesteRota.json

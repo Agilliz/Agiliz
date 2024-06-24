@@ -15,11 +15,7 @@ public class MensageriaService<T> {
     private String mensagemServidor;
     private T data;
     private Integer status;
-    private List<T> datas;
-
-    public MensageriaService<T> builder() {
-        return new MensageriaService<>();
-    }
+    private List datas;
 
     public MensageriaService<T> mensagemCliente(String mensagemCliente) {
         setMensagemCliente(mensagemCliente);
@@ -38,15 +34,6 @@ public class MensageriaService<T> {
 
     public MensageriaService<T> status(Integer status) {
         setStatus(status);
-        return this;
-    }
-
-    public MensageriaService<T> datas(List<T> datas) {
-        setDatas(datas);
-        return this;
-    }
-
-    public MensageriaService<T> build() {
         return this;
     }
 

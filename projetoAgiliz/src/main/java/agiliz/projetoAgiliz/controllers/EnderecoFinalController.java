@@ -35,10 +35,8 @@ public class EnderecoFinalController {
     ResponseEntity<MensageriaService<EnderecoFinalResponse>> cadastrar(
             @RequestBody @Valid EnderecoFinalDTO enderecoFinalDTO){
         return status(HttpStatus.OK).body(new MensageriaService<EnderecoFinalResponse>()
-                .builder()
                 .mensagemCliente("Endereço Cadastrado com Sucesso")
                 .data(new EnderecoFinalResponse(enderecoFinalService.cadastrar(enderecoFinalDTO)))
-                .build()
         );
     }
 
@@ -48,10 +46,8 @@ public class EnderecoFinalController {
     ResponseEntity<MensageriaService<EnderecoFinalResponse>> listarEnderecoFinalID (
             @PathVariable UUID idEnderecoFinal) {
         return status(HttpStatus.OK).body(new MensageriaService<EnderecoFinalResponse>()
-                .builder()
                 .mensagemCliente("Endereco Final por ID")
                 .data(new EnderecoFinalResponse(enderecoFinalService.listarEnderecoFinalID(idEnderecoFinal)))
-                .build()
         );
     }
 
@@ -59,10 +55,8 @@ public class EnderecoFinalController {
     ResponseEntity<MensageriaService<EnderecoFinalResponse>> alterarEnderecoFinalPorId(
             @PathVariable UUID idEnderecoFinal, @RequestBody @Valid EnderecoFinalDTO enderecoFinalDTO) {
         return status(HttpStatus.OK).body(new MensageriaService<EnderecoFinalResponse>()
-                .builder()
                 .mensagemCliente("Endereco Final alterado com sucesso")
                 .data(new EnderecoFinalResponse(enderecoFinalService.alterarEnderecoFinalPorId(idEnderecoFinal, enderecoFinalDTO)))
-                .build()
         );
     }
 
@@ -70,12 +64,8 @@ public class EnderecoFinalController {
     public ResponseEntity<MensageriaService<Void>> deletarEnderecoFinalPorId(@PathVariable UUID idEnderecoFinal) {
         enderecoFinalService.deletarEnderecoFinalPorId(idEnderecoFinal);
         return status(HttpStatus.OK).body(new MensageriaService<Void>()
-                .builder()
                 .mensagemCliente("Endereco Final excluído com sucesso")
                 .status(HttpStatus.OK.value())
-                .build()
         );
     }
-
-
 }

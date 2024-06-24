@@ -30,31 +30,17 @@ public class PrecificacaoZonaController {
     ResponseEntity<MensageriaService<PrecificacaoZonaResponse>> cadastrar(
             @RequestBody @Valid PrecificacaoZonaDTO precificacaoZonaDTO) {
       return  status(HttpStatus.OK).body(new MensageriaService<PrecificacaoZonaResponse>()
-                .builder()
                 .mensagemCliente("Precificação de zona cadastrada com sucesso")
                 .data(new PrecificacaoZonaResponse(precificacaoZonaService.cadastrar(precificacaoZonaDTO)))
-                .build()
         );
     }
-
-//    @GetMapping
-//    ResponseEntity<MensageriaService<Page<PrecificacaoZonaResponse>>> listarPrecificacaoZonas(Pageable pageable) {
-//        return status(HttpStatus.OK).body(new MensageriaService<Page<PrecificacaoZonaResponse>>()
-//                .builder()
-//                .mensagemCliente("Precificação de Zonas")
-//                .datas(new PrecificacaoZonaResponse(precificacaoZonaService.listarPrecificacaoZonas(pageable)))
-//                .build()
-//        );
-//    }
 
     @GetMapping("/{idPrecificacaoZona}")
     ResponseEntity<MensageriaService<PrecificacaoZonaResponse>> listarPrecificacaoZonaID (
             @PathVariable UUID idPrecificacaoZona) {
         return status(HttpStatus.OK).body(new MensageriaService<PrecificacaoZonaResponse>()
-                .builder()
                 .mensagemCliente("Colaborador por ID")
                 .data(new PrecificacaoZonaResponse(precificacaoZonaService.listarPrecificacaoZonaID(idPrecificacaoZona)))
-                .build()
         );
     }
 
@@ -62,10 +48,8 @@ public class PrecificacaoZonaController {
     ResponseEntity<MensageriaService<PrecificacaoZonaResponse>> alterarPrecificacaoZonaPorId(
             @PathVariable UUID idPrecificacaoZona, @RequestBody @Valid PrecificacaoZonaDTO precificacaoZonaDTO) {
         return status(HttpStatus.OK).body(new MensageriaService<PrecificacaoZonaResponse>()
-                .builder()
                 .mensagemCliente("Precificação de zona alterada com sucesso")
                 .data(new PrecificacaoZonaResponse(precificacaoZonaService.alterarPrecificacaoZonaPorId(idPrecificacaoZona, precificacaoZonaDTO)))
-                .build()
         );
     }
 
@@ -73,12 +57,8 @@ public class PrecificacaoZonaController {
     public ResponseEntity<MensageriaService<Void>> deletarPrecificacaoZonaPorId(@PathVariable UUID idPrecificacaoZona) {
         precificacaoZonaService.deletarPrecificacaoZonaPorId(idPrecificacaoZona);
         return status(HttpStatus.OK).body(new MensageriaService<Void>()
-                .builder()
                 .mensagemCliente("Precificação de zona excluída com sucesso")
                 .status(HttpStatus.OK.value())
-                .build()
         );
     }
-
-
 }

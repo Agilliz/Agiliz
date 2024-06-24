@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,8 +25,8 @@ public class MotoristaDaVez implements Serializable {
     private Colaborador colaborador;
 
     @ManyToOne
-    @JoinColumn(name = "id_veiculo")
-    private Veiculo idVeiculo;
+    @JoinColumn(name = "fk_veiculo")
+    private Veiculo veiculo;
 
-    private Date Data;
+    private LocalDate dataCorrida;
 }

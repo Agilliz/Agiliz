@@ -155,12 +155,11 @@ public class ColaboradorService {
         }
     }
 
-    public void deletarPorId(UUID idColaborador) throws Exception{
-        if(colaboradorRepository.findById(idColaborador).isPresent()){
-            colaboradorRepository.deleteById(idColaborador);
-            return;
-        }
-        throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Colaborador não encontrado", 404);
+    public void deletarPorId(UUID idColaborador) {
+        if(!colaboradorRepository.existsById(idColaborador))
+            throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Colaborador não encontrado", 404);
+
+        colaboradorRepository.deleteById(idColaborador);
     }
 
     public DashColetasDTO montarDash(){
