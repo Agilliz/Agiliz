@@ -52,6 +52,8 @@ public class PrecificacaoZonaService {
         return precificacaoZonaRepository.save(precificacaoZona);
     }
 
+
+
     public void deletarPrecificacaoZonaPorId(UUID idPrecificacaoZona) {
         if (!precificacaoZonaRepository.findById(idPrecificacaoZona).isPresent()) {
             throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Precificação de Zona não encontrada", 404);
