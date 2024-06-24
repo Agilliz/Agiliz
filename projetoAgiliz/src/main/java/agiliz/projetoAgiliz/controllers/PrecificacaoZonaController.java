@@ -19,11 +19,12 @@ import java.util.UUID;
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
-@RequestMapping("/precificacaoZona")
+@RequestMapping("/precificacao-zona")
+@CrossOrigin
 public class PrecificacaoZonaController {
 
     @Autowired
-    PrecificacaoZonaService precificacaoZonaService;
+    private PrecificacaoZonaService precificacaoZonaService;
 
     @PostMapping
     ResponseEntity<MensageriaService<PrecificacaoZonaResponse>> cadastrar(

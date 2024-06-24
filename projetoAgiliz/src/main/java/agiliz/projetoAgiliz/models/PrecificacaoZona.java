@@ -23,7 +23,7 @@ public class PrecificacaoZona implements Serializable {
     private UUID idPrecificacaoZona;
 
     @ManyToOne
-    Unidade fkUnidade;
+    private Unidade Unidade;
 
     private Double preco;
 

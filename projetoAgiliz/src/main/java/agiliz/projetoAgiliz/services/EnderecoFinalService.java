@@ -4,6 +4,7 @@ import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.dto.EnderecoFinalDTO;
 import agiliz.projetoAgiliz.dto.PrecificacaoZonaDTO;
 import agiliz.projetoAgiliz.dto.PrecificacaoZonaResponse;
+import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.models.EnderecoFinal;
 import agiliz.projetoAgiliz.models.PrecificacaoZona;
 import agiliz.projetoAgiliz.repositories.IEnderecoFinalRepository;
@@ -16,12 +17,15 @@ import java.util.UUID;
 
 @Service
 public class EnderecoFinalService {
+    @Autowired
+    private ColaboradorService colaboradorService;
 
     @Autowired
     private IEnderecoFinalRepository enderecoFinalRepository;
 
     public EnderecoFinal cadastrar(EnderecoFinalDTO enderecoFinalDTO) {
             var enderecoFinal = new EnderecoFinal();
+            enderecoFinal.setColaborador(colaboradorService.getPorId(enderecoFinalDTO.fkFuncionario()));
             BeanUtils.copyProperties(enderecoFinalDTO, enderecoFinal);
             enderecoFinalRepository.save(enderecoFinal);
             return enderecoFinal;

@@ -4,6 +4,7 @@ import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.dto.PrecificacaoZonaDTO;
 import agiliz.projetoAgiliz.dto.PrecificacaoZonaResponse;
 import agiliz.projetoAgiliz.models.PrecificacaoZona;
+import agiliz.projetoAgiliz.models.Unidade;
 import agiliz.projetoAgiliz.repositories.IPrecificacaoZona;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,14 @@ import java.util.UUID;
 
 @Service
 public class PrecificacaoZonaService {
+    @Autowired
+    UnidadeService unidadeService;
 
     @Autowired
     IPrecificacaoZona precificacaoZonaRepository;
     public PrecificacaoZona cadastrar(PrecificacaoZonaDTO precificacaoZonaDTO){
         PrecificacaoZona precificacaoZona = new PrecificacaoZona();
+        precificacaoZona.setUnidade(unidadeService.getUnidadePorId(precificacaoZonaDTO.fkUnidade()));
         BeanUtils.copyProperties(precificacaoZonaDTO, precificacaoZona);
         precificacaoZonaRepository.save(precificacaoZona);
         return precificacaoZona;

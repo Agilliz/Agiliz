@@ -11,11 +11,11 @@ import java.sql.Date;
 @Getter
 public class PrecificacaoZonaResponse {
 
-    private final Unidade fkUnidadae;
+    private final UnidadeResponse unidade;
     private final Double preco;
     private final int tipoZona;
     public PrecificacaoZonaResponse(PrecificacaoZona precificacaoZona) {
-        this.fkUnidadae = precificacaoZona.getFkUnidade();
+        this.unidade = new UnidadeResponse(precificacaoZona.getUnidade());
         this.preco = precificacaoZona.getPreco();
         this.tipoZona = precificacaoZona.getTipoZona();
     }
