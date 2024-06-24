@@ -1,4 +1,5 @@
 src/main/resources/
+!src/main/resources/banner.txt
 
 application.properties
 target/
@@ -273,3 +274,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+

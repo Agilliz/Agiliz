@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
             HttpRequestMethodNotSupportedException ex) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new MensageriaService<>(ex.getMessage(), 400));
+                .body(new MensageriaService<>(ex.getMessage() + " Tás usando o método HTTP errado endeota", 400));
     }
 
     @ExceptionHandler(ResponseEntityException.class)
