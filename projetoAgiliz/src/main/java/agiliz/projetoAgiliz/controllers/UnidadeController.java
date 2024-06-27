@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import agiliz.projetoAgiliz.dto.UnidadeDTO;
+import agiliz.projetoAgiliz.dto.unidade.UnidadeRequest;
 import agiliz.projetoAgiliz.models.Unidade;
 import agiliz.projetoAgiliz.repositories.IUnidadeRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -51,9 +51,9 @@ public class UnidadeController {
 
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<MensageriaService<Unidade>> cadastrarUnidade(@RequestBody @Valid UnidadeDTO unidadeDTO) {
+    public ResponseEntity<MensageriaService<Unidade>> cadastrarUnidade(@RequestBody @Valid UnidadeRequest unidadeRequest) {
         Unidade unidade = new Unidade();
-        BeanUtils.copyProperties(unidadeDTO, unidade);
+        BeanUtils.copyProperties(unidadeRequest, unidade);
         unidade.setRetornoTotal(0.);
 
         try {
@@ -72,14 +72,14 @@ public class UnidadeController {
     @PutMapping("alterar/{idUnidade}")
     public ResponseEntity<MensageriaService<Unidade>> alterarUnidadePorId(
             @PathVariable UUID idUnidade,
-            @RequestBody @Valid UnidadeDTO unidadeDTO
+            @RequestBody @Valid UnidadeRequest unidadeRequest
     ) {
         Optional<Unidade> unidade = unidadeRepository.findById(idUnidade);
 
         if(unidade.isPresent()){
             Unidade unidadeModel = new Unidade();
 
-            BeanUtils.copyProperties(unidadeDTO, unidadeModel);
+            BeanUtils.copyProperties(unidadeRequest, unidadeModel);
             
             try {
                 unidadeRepository.save(unidadeModel);

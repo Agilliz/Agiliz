@@ -1,6 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.VeiculoDTO;
+import agiliz.projetoAgiliz.dto.veiculo.VeiculoRequest;
 import agiliz.projetoAgiliz.models.Veiculo;
 import agiliz.projetoAgiliz.repositories.IVeiculoRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -25,9 +25,9 @@ public class VeiculoController {
     IVeiculoRepository veiculoRepository;
 
     @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<Veiculo>> cadastrarVeiculo(@RequestBody @Valid VeiculoDTO veiculoDTO){
+    ResponseEntity<MensageriaService<Veiculo>> cadastrarVeiculo(@RequestBody @Valid VeiculoRequest veiculoRequest){
         var veiculo = new Veiculo();
-        BeanUtils.copyProperties(veiculoDTO, veiculo);
+        BeanUtils.copyProperties(veiculoRequest, veiculo);
         try {
             MensageriaService mensageriaService = new MensageriaService(
                     "Multa cadastrada com sucesso",

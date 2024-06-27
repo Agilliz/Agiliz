@@ -1,20 +1,14 @@
 package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
-import agiliz.projetoAgiliz.dto.PrecificacaoZonaDTO;
-import agiliz.projetoAgiliz.dto.PrecificacaoZonaResponse;
+import agiliz.projetoAgiliz.dto.precificacaoZona.PrecificacaoZonaRequest;
 import agiliz.projetoAgiliz.models.PrecificacaoZona;
-import agiliz.projetoAgiliz.models.Unidade;
 import agiliz.projetoAgiliz.repositories.IPrecificacaoZona;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,10 +18,10 @@ public class PrecificacaoZonaService {
 
     @Autowired
     IPrecificacaoZona precificacaoZonaRepository;
-    public PrecificacaoZona cadastrar(PrecificacaoZonaDTO precificacaoZonaDTO){
+    public PrecificacaoZona cadastrar(PrecificacaoZonaRequest precificacaoZonaRequest){
         PrecificacaoZona precificacaoZona = new PrecificacaoZona();
-        precificacaoZona.setUnidade(unidadeService.getUnidadePorId(precificacaoZonaDTO.fkUnidade()));
-        BeanUtils.copyProperties(precificacaoZonaDTO, precificacaoZona);
+        precificacaoZona.setUnidade(unidadeService.getUnidadePorId(precificacaoZonaRequest.fkUnidade()));
+        BeanUtils.copyProperties(precificacaoZonaRequest, precificacaoZona);
         precificacaoZonaRepository.save(precificacaoZona);
         return precificacaoZona;
     }
@@ -46,9 +40,9 @@ public class PrecificacaoZonaService {
                     .orElseThrow(() -> new ResponseEntityException(HttpStatus.NOT_FOUND, "Precificação de Zona não encontrada", 404));
     }
 
-    public PrecificacaoZona alterarPrecificacaoZonaPorId(UUID idPrecificacaoZona, PrecificacaoZonaDTO precificacaoZonaDTO) {
+    public PrecificacaoZona alterarPrecificacaoZonaPorId(UUID idPrecificacaoZona, PrecificacaoZonaRequest precificacaoZonaRequest) {
         PrecificacaoZona precificacaoZona = listarPrecificacaoZonaID(idPrecificacaoZona);
-        BeanUtils.copyProperties(precificacaoZonaDTO, precificacaoZona);
+        BeanUtils.copyProperties(precificacaoZonaRequest, precificacaoZona);
         return precificacaoZonaRepository.save(precificacaoZona);
     }
 

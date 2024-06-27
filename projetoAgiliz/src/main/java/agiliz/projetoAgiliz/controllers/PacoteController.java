@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import agiliz.projetoAgiliz.dto.PacoteDTO;
+import agiliz.projetoAgiliz.dto.pacote.PacoteRequest;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.services.PacoteService;
 import jakarta.validation.Valid;
@@ -29,13 +29,13 @@ public class PacoteController {
     
     @PostMapping
     public ResponseEntity<MensageriaService<Pacote>> cadastrar(
-                @RequestBody @Valid PacoteDTO pacoteDTO
+                @RequestBody @Valid PacoteRequest pacoteRequest
     ) {
         return status(HttpStatus.CREATED)
                 .body(
                         new MensageriaService<>(
                                 "Pacote inserido com sucesso",
-                                pacoteService.inserir(pacoteDTO),
+                                pacoteService.inserir(pacoteRequest),
                                 HttpStatus.CREATED.value()
                         )
                 );
@@ -84,7 +84,7 @@ public class PacoteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<Pacote>> alterar(@RequestBody @Valid PacoteDTO pacoteDTO, @PathVariable UUID id) {
+    public ResponseEntity<MensageriaService<Pacote>> alterar(@RequestBody @Valid PacoteRequest pacoteRequest, @PathVariable UUID id) {
         Optional<Pacote> pacoteOpt = pacoteService.listarPorId(id);
 
         if (pacoteOpt.isEmpty()){
@@ -99,7 +99,7 @@ public class PacoteController {
         }
 
         var pacote = pacoteOpt.get();
-        BeanUtils.copyProperties(pacoteDTO, pacote);
+        BeanUtils.copyProperties(pacoteRequest, pacote);
 
         return status(HttpStatus.OK)
                 .body(

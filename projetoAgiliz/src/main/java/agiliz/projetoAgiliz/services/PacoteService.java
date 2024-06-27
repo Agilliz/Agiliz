@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import agiliz.projetoAgiliz.dto.ColetasPorTempo;
-import agiliz.projetoAgiliz.dto.PacoteDTO;
+import agiliz.projetoAgiliz.dto.dashColetas.ColetasPorTempo;
+import agiliz.projetoAgiliz.dto.pacote.PacoteRequest;
 import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
-import agiliz.projetoAgiliz.dto.RankingEntregasDTO;
-import agiliz.projetoAgiliz.dto.ZonaRanking;
+import agiliz.projetoAgiliz.dto.dashEntregas.RankingEntregasDTO;
+import agiliz.projetoAgiliz.dto.dashColetas.ZonaRanking;
 import agiliz.projetoAgiliz.enums.TipoPagamento;
 import agiliz.projetoAgiliz.enums.TipoZona;
 import agiliz.projetoAgiliz.models.*;
@@ -28,7 +28,7 @@ public class PacoteService {
     private final ColaboradorService colaboradorService;
     private final UnidadeService unidadeService;
 
-    public Pacote inserir(PacoteDTO dto) {
+    public Pacote inserir(PacoteRequest dto) {
         var pacote = new Pacote();
         pacote.setDestinatario(destinatarioService.getPorId(dto.fkDestinatario()));
         pacote.setColaborador(colaboradorService.getPorId(dto.fkFuncionario()));

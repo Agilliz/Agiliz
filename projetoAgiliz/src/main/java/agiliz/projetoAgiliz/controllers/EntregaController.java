@@ -7,13 +7,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import agiliz.projetoAgiliz.services.ColaboradorService;
-import agiliz.projetoAgiliz.services.EntregaService;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import agiliz.projetoAgiliz.dto.DashColetasDTO;
-import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.DashEntregas;
 
-import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -27,7 +24,7 @@ public class EntregaController {
     private ColaboradorService colaboradorService;
 
     @GetMapping
-    public ResponseEntity<DashColetasDTO> getMethodName() {
+    public ResponseEntity<DashEntregas> getMethodName() {
         return ResponseEntity.status(HttpStatus.OK).body(colaboradorService.montarDash());
     }
     

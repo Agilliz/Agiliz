@@ -1,7 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.DistanciaDTO;
-import agiliz.projetoAgiliz.dto.RotaDTO;
+import agiliz.projetoAgiliz.dto.rota.Rota;
 
 import java.util.List;
 
@@ -25,12 +24,7 @@ public class RotaController {
     @GetMapping("/calcular-rota")
     public List<String> calcularRota(@RequestParam String rotaString) throws JsonMappingException, JsonProcessingException {
         
-        RotaDTO rota = new ObjectMapper().readValue(rotaString, RotaDTO.class);
+        Rota rota = new ObjectMapper().readValue(rotaString, Rota.class);
         return service.calcularRota(rota.getEntregas(), rota.getInicio(), rota.getFim());
-    }
-
-    @GetMapping("/calcular-distancia")
-    public double calcularDinstancia(@RequestParam DistanciaDTO distanciaDTO) {
-        return service.calcularDistancia(distanciaDTO.getEndereco1(), distanciaDTO.getEndereco2());
     }
 }

@@ -1,12 +1,8 @@
 package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
-import agiliz.projetoAgiliz.dto.EnderecoFinalDTO;
-import agiliz.projetoAgiliz.dto.PrecificacaoZonaDTO;
-import agiliz.projetoAgiliz.dto.PrecificacaoZonaResponse;
-import agiliz.projetoAgiliz.models.Colaborador;
+import agiliz.projetoAgiliz.dto.enderecoFinal.EnderecoFinalRequest;
 import agiliz.projetoAgiliz.models.EnderecoFinal;
-import agiliz.projetoAgiliz.models.PrecificacaoZona;
 import agiliz.projetoAgiliz.repositories.IEnderecoFinalRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +19,7 @@ public class EnderecoFinalService {
     @Autowired
     private IEnderecoFinalRepository enderecoFinalRepository;
 
-    public EnderecoFinal cadastrar(EnderecoFinalDTO enderecoFinalDTO) {
+    public EnderecoFinal cadastrar(EnderecoFinalRequest enderecoFinalDTO) {
             var enderecoFinal = new EnderecoFinal();
             enderecoFinal.setColaborador(colaboradorService.getPorId(enderecoFinalDTO.fkFuncionario()));
             BeanUtils.copyProperties(enderecoFinalDTO, enderecoFinal);
@@ -36,9 +32,9 @@ public class EnderecoFinalService {
                 .orElseThrow(() -> new ResponseEntityException(HttpStatus.NOT_FOUND, "Endereco Final não encontrada", 404));
     }
 
-    public EnderecoFinal alterarEnderecoFinalPorId(UUID idEnderecoFinal, EnderecoFinalDTO enderecoFinalDTO) {
+    public EnderecoFinal alterarEnderecoFinalPorId(UUID idEnderecoFinal, EnderecoFinalRequest enderecoFinalRequest) {
         EnderecoFinal enderecoFinal = listarEnderecoFinalID(idEnderecoFinal);
-        BeanUtils.copyProperties(enderecoFinalDTO, enderecoFinal);
+        BeanUtils.copyProperties(enderecoFinalRequest, enderecoFinal);
         return enderecoFinalRepository.save(enderecoFinal);
     }
 

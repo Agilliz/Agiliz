@@ -5,9 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import agiliz.projetoAgiliz.dto.MaiorEMenorEntregaDTO;
 import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
-import agiliz.projetoAgiliz.dto.RankingEntregasDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.RankingEntregasDTO;
 
 @Service
 public class EntregaService {

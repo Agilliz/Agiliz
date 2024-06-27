@@ -2,7 +2,14 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
-import agiliz.projetoAgiliz.dto.*;
+import agiliz.projetoAgiliz.dto.colaborador.ColaboradorRequest;
+import agiliz.projetoAgiliz.dto.colaborador.LoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.MatrizColaboradorDTO;
+import agiliz.projetoAgiliz.dto.colaborador.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.DashEntregas;
+import agiliz.projetoAgiliz.dto.dashEntregas.MaiorEMenorEntrega;
+import agiliz.projetoAgiliz.dto.dashEntregas.MesPorQtdDeEntregaDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.TotalEntregaDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
@@ -19,14 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ColaboradorService {
@@ -46,7 +51,7 @@ public class ColaboradorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Colaborador inserir(ColaboradorDTO colaboradorDTO){
+    public Colaborador inserir(ColaboradorRequest colaboradorDTO){
         Colaborador colaborador = new Colaborador();
         BeanUtils.copyProperties(colaboradorDTO, colaborador);
         criptografarSenha(colaboradorDTO.senhaColaborador(), colaborador);
@@ -59,10 +64,10 @@ public class ColaboradorService {
         colaborador.setSenhaColaborador(senhaCriptografada);
     }
 
-    public Colaborador alterar(UUID idColaborador, ColaboradorDTO colaboradorDTO) {
+    public Colaborador alterar(UUID idColaborador, ColaboradorRequest colaboradorRequest) {
         Colaborador colaborador = getPorId(idColaborador);
-        BeanUtils.copyProperties(colaboradorDTO, colaborador);
-        criptografarSenha(colaboradorDTO.senhaColaborador(), colaborador);
+        BeanUtils.copyProperties(colaboradorRequest, colaborador);
+        criptografarSenha(colaboradorRequest.senhaColaborador(), colaborador);
         return colaboradorRepository.save(colaborador);
     }
 
@@ -162,9 +167,9 @@ public class ColaboradorService {
         colaboradorRepository.deleteById(idColaborador);
     }
 
-    public DashColetasDTO montarDash(){
-        var dadosDash = new DashColetasDTO();
-        var maiorEMenorEntrega = new MaiorEMenorEntregaDTO();
+    public DashEntregas montarDash(){
+        var dadosDash = new DashEntregas();
+        var maiorEMenorEntrega = new MaiorEMenorEntrega();
 
         maiorEMenorEntrega.setNomeColaboradorMaiorEntrega(listarColaboradoresComMaiorEntrega());
         maiorEMenorEntrega.setNomeColaboradorMenorEntrega(listarColaboradoresComMenorEntrega());

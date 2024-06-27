@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.stereotype.Service;
 
 import agiliz.projetoAgiliz.models.CalculadoraRotas;
-import agiliz.projetoAgiliz.models.Endereco;
+import agiliz.projetoAgiliz.dto.rota.Endereco;
 
 @Service
 public class RotaService {

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import agiliz.projetoAgiliz.dto.DestinatarioDTO;
+import agiliz.projetoAgiliz.dto.destinatario.DestinatarioDTO;
 import agiliz.projetoAgiliz.models.Destinatario;
 import agiliz.projetoAgiliz.repositories.IDestinatarioRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;

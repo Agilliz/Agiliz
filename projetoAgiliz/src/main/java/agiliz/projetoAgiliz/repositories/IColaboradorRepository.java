@@ -1,10 +1,9 @@
 package agiliz.projetoAgiliz.repositories;
 
-import agiliz.projetoAgiliz.dto.LoginDTO;
-import agiliz.projetoAgiliz.dto.MaiorEMenorEntregaDTO;
-import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
-import agiliz.projetoAgiliz.dto.TotalAusenteECanceladasDTO;
-import agiliz.projetoAgiliz.dto.TotalEntregaDTO;
+import agiliz.projetoAgiliz.dto.colaborador.LoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.MatrizColaboradorDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.TotalAusenteECanceladasDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.TotalEntregaDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,25 +18,25 @@ public interface IColaboradorRepository extends JpaRepository<Colaborador, UUID>
         @Query("SELECT new Colaborador(f.emailColaborador, f.senhaColaborador) FROM Colaborador f WHERE f.emailColaborador = :email")
         Optional<LoginDTO> findByEmailColaborador(@Param("email") String email);
 
-        @Query("SELECT new agiliz.projetoAgiliz.dto.MatrizColaboradorDTO(e.valor, f.cpf) FROM EmissaoPagamento e LEFT JOIN e.colaborador f")
+        @Query("SELECT new agiliz.projetoAgiliz.dto.colaborador.MatrizColaboradorDTO(e.valor, f.cpf) FROM EmissaoPagamento e LEFT JOIN e.colaborador f")
         List<MatrizColaboradorDTO> listarMatriz();
 
         @Query("""
-                        SELECT new agiliz.projetoAgiliz.dto.TotalEntregaDTO(
+                        SELECT new agiliz.projetoAgiliz.dto.dashEntregas.TotalEntregaDTO(
                         COUNT(CASE WHEN p.status = 2 THEN p.idPacote ELSE NULL END) AS entregues,
                         COUNT(p.idPacote) AS total
                         ) FROM Pacote p
                         """)
         TotalEntregaDTO listarTotalEntreguesETotalPacotes();
 
-        @Query("SELECT new agiliz.projetoAgiliz.dto.TotalAusenteECanceladasDTO(" +
+        @Query("SELECT new agiliz.projetoAgiliz.dto.dashEntregas.TotalAusenteECanceladasDTO(" +
            "SUM(CASE WHEN p.status = 3 THEN 1 ELSE 0 END), " +
            "SUM(CASE WHEN p.status = 5 THEN 1 ELSE 0 END)) " +
            "FROM Pacote p")
         TotalAusenteECanceladasDTO lisTotalAusenteECanceladas();
 
         @Query("""
-                        SELECT new agiliz.projetoAgiliz.dto.TotalEntregaDTO(
+                        SELECT new agiliz.projetoAgiliz.dto.dashEntregas.TotalEntregaDTO(
                         COUNT(CASE WHEN p.status = 2 THEN p.idPacote ELSE NULL END) AS entregues,
                         COUNT(p.idPacote) AS total
                         ) FROM Pacote p

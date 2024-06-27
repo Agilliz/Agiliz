@@ -1,7 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.DespesaDTO;
-import agiliz.projetoAgiliz.dto.DespesaResponse;
+import agiliz.projetoAgiliz.dto.despesa.DespesaRequest;
+import agiliz.projetoAgiliz.dto.despesa.DespesaResponse;
 import agiliz.projetoAgiliz.services.DespesaService;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class DespesaController {
 
 
     @PostMapping
-    ResponseEntity<MensageriaService<? extends DespesaResponse>> cadastrar(@RequestBody @Valid DespesaDTO dto) {
+    ResponseEntity<MensageriaService<? extends DespesaResponse>> cadastrar(@RequestBody @Valid DespesaRequest dto) {
         return status(HttpStatus.CREATED)
                 .body(
                         new MensageriaService<DespesaResponse>()
@@ -61,7 +61,7 @@ public class DespesaController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<MensageriaService<DespesaResponse>> alterar(@RequestBody @Valid DespesaDTO dto, @PathVariable UUID id) {
+    ResponseEntity<MensageriaService<DespesaResponse>> alterar(@RequestBody @Valid DespesaRequest dto, @PathVariable UUID id) {
         return status(HttpStatus.OK).body(
                 new MensageriaService<DespesaResponse>()
                         .mensagemCliente("Alterado com sucesso")

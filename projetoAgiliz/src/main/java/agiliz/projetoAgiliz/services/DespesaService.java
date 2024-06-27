@@ -1,7 +1,7 @@
 package agiliz.projetoAgiliz.services;
 
-import agiliz.projetoAgiliz.dto.DespesaDTO;
-import agiliz.projetoAgiliz.dto.DespesaResponse;
+import agiliz.projetoAgiliz.dto.despesa.DespesaRequest;
+import agiliz.projetoAgiliz.dto.despesa.DespesaResponse;
 import agiliz.projetoAgiliz.enums.TipoDespesa;
 import agiliz.projetoAgiliz.models.Despesa;
 import agiliz.projetoAgiliz.repositories.IDespesaRepository;
@@ -37,7 +37,7 @@ public class DespesaService {
         return despesaRepository.findById(id).get();
     }
 
-    public Despesa inserir(DespesaDTO dto){
+    public Despesa inserir(DespesaRequest dto){
         var despesa = new Despesa();
 
         if(TipoDespesa.valueOf(dto.tipoDespesa()) == TipoDespesa.IPVA){
@@ -49,7 +49,7 @@ public class DespesaService {
         return despesaRepository.save(despesa);
     }
 
-    public Despesa alterar(DespesaDTO dto, UUID idDespesa) {
+    public Despesa alterar(DespesaRequest dto, UUID idDespesa) {
         var despesa = getPorId(idDespesa);
         BeanUtils.copyProperties(dto, despesa);
 

@@ -1,30 +1,22 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.ColaboradorDTO;
-import agiliz.projetoAgiliz.dto.ColaboradorResponse;
-import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
-import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.ColaboradorRequest;
+import agiliz.projetoAgiliz.dto.colaborador.ColaboradorResponse;
+import agiliz.projetoAgiliz.dto.colaborador.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
-import agiliz.projetoAgiliz.utils.CalculadoraDatas;
 import agiliz.projetoAgiliz.utils.GeradorArquivo;
-import agiliz.projetoAgiliz.utils.ListaObj;
 import jakarta.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,23 +43,23 @@ public class ColaboradorController {
 
     @PostMapping("/cadastrar")
     ResponseEntity<MensageriaService<ColaboradorResponse>> cadastroColaborador(
-            @RequestBody @Valid ColaboradorDTO colaboradorDTO) {
+            @RequestBody @Valid ColaboradorRequest colaboradorRequest) {
             return status(HttpStatus.OK).body(
                     new MensageriaService<ColaboradorResponse>()
                             .mensagemCliente("Colaborador cadastrado com sucesso")
-                            .data(new ColaboradorResponse(colaboradorService.inserir(colaboradorDTO)))
+                            .data(new ColaboradorResponse(colaboradorService.inserir(colaboradorRequest)))
             );
     }
 
     @PutMapping("/alterar/{idColaborador}")
     public ResponseEntity<MensageriaService<ColaboradorResponse>> alterarColaboradorById(
             @PathVariable UUID idColaborador,
-            @Valid @RequestBody ColaboradorDTO colaboradorDTO) {
+            @Valid @RequestBody ColaboradorRequest colaboradorRequest) {
                return status(HttpStatus.OK)
                        .body(
                                new MensageriaService<ColaboradorResponse>()
                                        .mensagemCliente("Colaborador alterado com sucesso")
-                                       .data(new ColaboradorResponse(colaboradorService.alterar(idColaborador, colaboradorDTO)))
+                                       .data(new ColaboradorResponse(colaboradorService.alterar(idColaborador, colaboradorRequest)))
                                        .status(200)
                        );
     }
@@ -75,12 +67,7 @@ public class ColaboradorController {
     @DeleteMapping("/{idColaborador}")
     public ResponseEntity<MensageriaService<Void>> deleteColaboradorById(@PathVariable UUID idColaborador) {
         colaboradorService.deletarPorId(idColaborador);
-        return status(204)
-                .body(
-                    new MensageriaService<Void>()
-                            .mensagemCliente("eletado com sucesso")
-                            .status(204)
-                );
+        return status(204).build();
     }
 
     @GetMapping("/matriz-colaborador")
@@ -104,7 +91,7 @@ public class ColaboradorController {
                             new MensageriaService<Page<Colaborador>>()
                                     .mensagemCliente("Funcionários")
                                     .data(colaboradores)
-                                    .status(204)
+                                    .status(200)
                     );
         }
 

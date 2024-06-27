@@ -1,11 +1,9 @@
 package agiliz.projetoAgiliz.services;
 
-import agiliz.projetoAgiliz.dto.DadosFinanceiros;
+import agiliz.projetoAgiliz.dto.dashFinanceira.DadosFinanceiros;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
-import agiliz.projetoAgiliz.repositories.IUnidadeRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
