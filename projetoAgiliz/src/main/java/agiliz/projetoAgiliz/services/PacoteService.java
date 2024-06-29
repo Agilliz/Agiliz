@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.dto.dashColetas.ColetasPorTempo;
 import agiliz.projetoAgiliz.dto.pacote.PacoteRequest;
 import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
@@ -17,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +34,7 @@ public class PacoteService {
 
     public Pacote inserir(PacoteRequest dto) {
         var pacote = new Pacote();
-        pacote.setDestinatario(destinatarioService.getPorId(dto.fkDestinatario()));
-        pacote.setColaborador(colaboradorService.getPorId(dto.fkFuncionario()));
-        pacote.setZona(zonaService.getPorCep(pacote.getDestinatario().getCepDestinatario()));
-        pacote.setUnidade(unidadeService.getUnidadePorId(dto.fkUnidade()));
+        associarRelacionamentos(dto, pacote);
         BeanUtils.copyProperties(dto, pacote);
         return pacoteRepository.save(pacote);
     }
@@ -66,7 +67,10 @@ public class PacoteService {
         return pacoteRepository.findClienteMenorColeta();
     }
 
-    public Pacote atualizar(Pacote pacote) {
+    public Pacote atualizar(PacoteRequest dto, UUID id) {
+        var pacote = listarPorId(id);
+        associarRelacionamentos(dto, pacote);
+        BeanUtils.copyProperties(dto, pacote);
         return pacoteRepository.save(pacote);
     }
 
@@ -78,11 +82,17 @@ public class PacoteService {
         return pacoteRepository.findAll(pageable);
     }
 
-    public Optional<Pacote> listarPorId(UUID idPacote){
-        return pacoteRepository.findById(idPacote);
+    public Pacote listarPorId(UUID id){
+        if(!pacoteRepository.existsById(id))
+            throw new ResponseEntityException(HttpStatusCode.valueOf(404), "Pacote com id listado não existe", 404);
+
+        return pacoteRepository.findById(id).get();
     }
 
     public void deletarPorId(UUID id){
+        if(!pacoteRepository.existsById(id))
+            throw new ResponseEntityException(HttpStatusCode.valueOf(404), "Pacote com id listado não existe", 404);
+
         pacoteRepository.deleteById(id);
     }
 
@@ -105,5 +115,12 @@ public class PacoteService {
 
     public List<PacotePorcentagemDTO> listarPacotesPorcentagem(){
         return pacoteRepository.listarPorcentagem();
+    }
+
+    private void associarRelacionamentos(PacoteRequest dto, Pacote pacote) {
+        pacote.setDestinatario(destinatarioService.getPorId(dto.fkDestinatario()));
+        pacote.setColaborador(colaboradorService.getPorId(dto.fkFuncionario()));
+        pacote.setZona(zonaService.getPorCep(pacote.getDestinatario().getCepDestinatario()));
+        pacote.setUnidade(unidadeService.getUnidadePorId(dto.fkUnidade()));
     }
 }

@@ -3,6 +3,7 @@ package agiliz.projetoAgiliz.controllers;
 import java.util.Optional;
 import java.util.UUID;
 
+import agiliz.projetoAgiliz.dto.pacote.PacoteResponse;
 import agiliz.projetoAgiliz.models.Pacote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -59,66 +60,30 @@ public class PacoteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MensageriaService<Pacote>> listarPorId(@PathVariable UUID id) {
-        Optional<Pacote> pacote = pacoteService.listarPorId(id);
-
-        if (pacote.isEmpty()){
-            return status(HttpStatus.NOT_FOUND)
-                    .body(
-                            new MensageriaService<>(
-                                    "Pacote não encontrado",
-                                    "No content",
-                                    HttpStatus.NOT_FOUND.value()
-                                )
-                        );
-        }
-
+    public ResponseEntity<MensageriaService<PacoteResponse>> listarPorId(@PathVariable UUID id) {
         return status(HttpStatus.OK)
                 .body(
-                        new MensageriaService<>(
-                                "Pacote: ",
-                                pacote.get(),
-                                HttpStatus.OK.value()
-                        )
+                        new MensageriaService<PacoteResponse>()
+                                .mensagemCliente("Pacote: ")
+                                .data(new PacoteResponse(pacoteService.listarPorId(id)))
+                                .status(HttpStatus.OK.value())
                 );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<Pacote>> alterar(@RequestBody @Valid PacoteRequest pacoteRequest, @PathVariable UUID id) {
-        Optional<Pacote> pacoteOpt = pacoteService.listarPorId(id);
-
-        if (pacoteOpt.isEmpty()){
-            return status(HttpStatus.NOT_FOUND)
-                    .body(
-                            new MensageriaService<>(
-                                    "Pacote não encontrado",
-                                    "No content",
-                                    HttpStatus.NOT_FOUND.value()
-                                )
-                        );
-        }
-
-        var pacote = pacoteOpt.get();
-        BeanUtils.copyProperties(pacoteRequest, pacote);
-
+    public ResponseEntity<MensageriaService<PacoteResponse>> alterar(@RequestBody @Valid PacoteRequest dto, @PathVariable UUID id) {
         return status(HttpStatus.OK)
                 .body(
-                        new MensageriaService<>(
-                                "Pacote atualizado com sucesso",
-                                pacoteService.atualizar(pacote),
-                                HttpStatus.OK.value()
-                        )
+                        new MensageriaService<PacoteResponse>()
+                                .mensagemCliente("Pacote atualizado com sucesso")
+                                .data(new PacoteResponse(pacoteService.atualizar(dto, id)))
+                                .status(HttpStatus.OK.value())
                 );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
-        Optional<Pacote> pacoteOpt = pacoteService.listarPorId(id);
-
-        if (pacoteOpt.isEmpty()) return status(HttpStatus.NOT_FOUND).build();
-
         pacoteService.deletarPorId(id);
-
         return status(HttpStatus.ACCEPTED).build();
     }
 }

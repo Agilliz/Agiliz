@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import agiliz.projetoAgiliz.dto.destinatario.DestinatarioDTO;
+import agiliz.projetoAgiliz.dto.destinatario.DestinatarioRequest;
 import agiliz.projetoAgiliz.models.Destinatario;
 import agiliz.projetoAgiliz.repositories.IDestinatarioRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -57,10 +57,10 @@ public class DestinatarioController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<MensageriaService<Destinatario>> cadastrarDestinatario(
-            @RequestBody @Valid DestinatarioDTO destinatarioDTO) {
+            @RequestBody @Valid DestinatarioRequest destinatarioRequest) {
         Destinatario destinatario = new Destinatario();
 
-        BeanUtils.copyProperties(destinatarioDTO, destinatario);
+        BeanUtils.copyProperties(destinatarioRequest, destinatario);
 
         try {
             destinatarioRepository.save(destinatario);
@@ -77,7 +77,7 @@ public class DestinatarioController {
     }
 
     @PutMapping("/alterar/{idDestinatario}")
-    public ResponseEntity<MensageriaService<Destinatario>> alterarDestinatario(@PathVariable UUID idDestinatario, @RequestBody @Valid DestinatarioDTO destinatarioDTO){
+    public ResponseEntity<MensageriaService<Destinatario>> alterarDestinatario(@PathVariable UUID idDestinatario, @RequestBody @Valid DestinatarioRequest destinatarioDTO){
         Optional<Destinatario> destinatario = destinatarioRepository.findById(idDestinatario);
 
         if (destinatario.isPresent()) {

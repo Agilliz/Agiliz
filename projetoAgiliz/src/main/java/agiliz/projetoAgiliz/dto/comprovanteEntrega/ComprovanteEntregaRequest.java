@@ -1,6 +1,11 @@
 package agiliz.projetoAgiliz.dto.comprovanteEntrega;
 
-public record ComprovanteEntregaRequest (
+import jakarta.validation.constraints.NotNull;
 
+import java.util.UUID;
+
+public record ComprovanteEntregaRequest (
+    @NotNull
+    UUID fkPacote
 )
 {}

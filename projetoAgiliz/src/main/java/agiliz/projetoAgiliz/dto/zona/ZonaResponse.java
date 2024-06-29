@@ -5,14 +5,14 @@ import lombok.Getter;
 
 
 @Getter
-public class ZonaGet {
+public class ZonaResponse {
     private String nomeZona;
     private Double valor;
     private Integer limiteSuperiorCEP;
     private Integer limiteInferiorCEP;
     private String tipoZona;
 
-    public ZonaGet(Zona zona){
+    public ZonaResponse(Zona zona){
         this.nomeZona = zona.getNomeZona();
         this.valor = zona.getValor();
         this.limiteSuperiorCEP = zona.getLimiteSuperiorCEP();
