@@ -83,7 +83,7 @@ public class ColaboradorServiceTest {
         LoginDTO loginDTO = new LoginDTO();
         loginDTO.setEmailColaborador("test@example.com");
         loginDTO.setSenhaColaborador("password");
-        when(colaboradorRepository.findByEmailColaborador(anyString())).thenReturn(Optional.of(loginDTO));
+        when(colaboradorRepository.findyEmailColaborador(anyString())).thenReturn(Optional.of(loginDTO));
 
         when(gerenciadorTokenJWT.generateToken(any(Authentication.class))).thenReturn("token");
 

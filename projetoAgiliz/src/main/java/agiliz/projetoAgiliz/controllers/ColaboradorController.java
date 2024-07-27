@@ -1,8 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.colaborador.ColaboradorRequest;
-import agiliz.projetoAgiliz.dto.colaborador.ColaboradorResponse;
-import agiliz.projetoAgiliz.dto.colaborador.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.*;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -20,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.http.ResponseEntity.noContent;
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
@@ -29,6 +28,20 @@ public class ColaboradorController {
 
     @Autowired
     private ColaboradorService colaboradorService;
+
+    @PostMapping("/email-recuperacao-senha")
+    public ResponseEntity<Void> solicitarAlteracaoSenha(
+            @RequestBody @Valid EmailAlterarSenhaRequest dto
+    ) {
+        colaboradorService.mandarEmailAlteracaoSenha(dto.email());
+        return noContent().build();
+    }
+
+    @PatchMapping("/alterar-senha")
+    public ResponseEntity<Void> alterarSenha(@RequestBody @Valid AlterarSenhaRequest dto) {
+        colaboradorService.alterarSenha(dto);
+        return noContent().build();
+    }
 
     @PostMapping("/login")
     ResponseEntity<UsuarioLoginDTO> login(@RequestBody @Valid UsuarioLoginDTO usuarioLoginDTO) {
@@ -82,7 +95,7 @@ public class ColaboradorController {
     }
 
     @GetMapping
-    ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
+    public ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
         Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
 
         if (!colaboradores.isEmpty()) {
@@ -99,7 +112,7 @@ public class ColaboradorController {
     }
 
     @GetMapping("/{idFuncionario}")
-    ResponseEntity<MensageriaService<Colaborador>> listarFuncionariosPorId(@PathVariable UUID idFuncionario) {
+    public ResponseEntity<MensageriaService<Colaborador>> listarFuncionariosPorId(@PathVariable UUID idFuncionario) {
         return status(HttpStatus.OK)
                 .body(
                         new MensageriaService<Colaborador>()
@@ -110,7 +123,7 @@ public class ColaboradorController {
     }
 
     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
-    public ResponseEntity<MensageriaService<byte[]>> gravarArquivo() throws Exception {
+    public ResponseEntity<MensageriaService<byte[]>> gravarArquivo() {
         try {
             return status(HttpStatus.OK)
                     .body(

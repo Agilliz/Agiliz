@@ -2,10 +2,7 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
-import agiliz.projetoAgiliz.dto.colaborador.ColaboradorRequest;
-import agiliz.projetoAgiliz.dto.colaborador.LoginDTO;
-import agiliz.projetoAgiliz.dto.colaborador.MatrizColaboradorDTO;
-import agiliz.projetoAgiliz.dto.colaborador.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.*;
 import agiliz.projetoAgiliz.dto.dashEntregas.DashEntregas;
 import agiliz.projetoAgiliz.dto.dashEntregas.MaiorEMenorEntrega;
 import agiliz.projetoAgiliz.dto.dashEntregas.MesPorQtdDeEntregaDTO;
@@ -21,11 +18,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,22 +34,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ColaboradorService {
 
-    @Autowired
-    GerenciadorTokenJWT gerenciadorTokenJWT;
-
-    @Autowired
-    private IColaboradorRepository colaboradorRepository;
-
-    @Autowired
-    private IPacoteRepository pacoteRepository;
-    
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final GerenciadorTokenJWT gerenciadorTokenJWT;
+    private final IColaboradorRepository colaboradorRepository;
+    private final IPacoteRepository pacoteRepository;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     public Colaborador inserir(ColaboradorRequest colaboradorDTO){
         Colaborador colaborador = new Colaborador();
@@ -138,7 +131,7 @@ public class ColaboradorService {
             
             final Authentication authentication = this.authenticationManager.authenticate(credentials);
             
-            Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
+            Optional<LoginDTO> userFound = colaboradorRepository.findyEmailColaborador(usuarioLoginDTO.getEmail());
             
             if (!userFound.isPresent()) {
                 throw new ResponseEntityException(HttpStatus.NOT_FOUND, 
@@ -182,5 +175,23 @@ public class ColaboradorService {
         dadosDash.setZonasAtendidas(dadosDash.getTotalEntregaDTO().getTotal());
 
         return dadosDash;
+    }
+
+    public void mandarEmailAlteracaoSenha(String destinatario) {
+        if (!colaboradorRepository.existsByEmailColaborador(destinatario)) return;
+
+        // coloquei o endpoint de get funcionarios só pra testar, depois por o link para tela de
+        // redefinição de senha
+        emailService.enviarEmail(
+                destinatario,
+                "Recuperação de Senha",
+                Map.of("link", "http://localhost:8080/funcionario")
+        );
+    }
+
+    public void alterarSenha(AlterarSenhaRequest dto) {
+        var colaborador = getPorId(dto.idColaborador());
+        criptografarSenha(dto.senha(), colaborador);
+        colaboradorRepository.save(colaborador);
     }
 }

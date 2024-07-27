@@ -22,7 +22,7 @@ public class AutenticacaoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<LoginDTO> user = colaboradorRepository.findByEmailColaborador(username);
+        Optional<LoginDTO> user = colaboradorRepository.findyEmailColaborador(username);
 
 
         if (user.isEmpty()) {

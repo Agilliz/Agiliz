@@ -2,6 +2,7 @@ package agiliz.projetoAgiliz.services;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MensageriaService<T> {
     private String mensagemCliente;
     private String mensagemServidor;

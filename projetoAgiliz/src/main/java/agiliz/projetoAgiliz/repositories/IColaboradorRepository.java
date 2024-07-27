@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface IColaboradorRepository extends JpaRepository<Colaborador, UUID> {
 
         @Query("SELECT new Colaborador(f.emailColaborador, f.senhaColaborador) FROM Colaborador f WHERE f.emailColaborador = :email")
-        Optional<LoginDTO> findByEmailColaborador(@Param("email") String email);
+        Optional<LoginDTO> findyEmailColaborador(@Param("email") String email);
 
         @Query("SELECT new agiliz.projetoAgiliz.dto.colaborador.MatrizColaboradorDTO(e.valor, f.cpf) FROM EmissaoPagamento e LEFT JOIN e.colaborador f")
         List<MatrizColaboradorDTO> listarMatriz();
@@ -56,4 +56,6 @@ public interface IColaboradorRepository extends JpaRepository<Colaborador, UUID>
                         "GROUP BY p.colaborador.nomeColaborador " +
                         "ORDER BY COUNT(p.idPacote) ASC")
         List<String> findColaboradorComMenosPacotes();
+
+        boolean existsByEmailColaborador(String email);
 }

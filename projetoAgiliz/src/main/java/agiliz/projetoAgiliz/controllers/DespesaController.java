@@ -49,7 +49,7 @@ public class DespesaController {
                     );
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     ResponseEntity<MensageriaService<DespesaResponse>> getPorId(@PathVariable UUID id) {
         return status(200)
                 .body(
