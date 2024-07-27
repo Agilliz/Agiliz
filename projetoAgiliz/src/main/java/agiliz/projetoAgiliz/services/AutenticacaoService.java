@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import agiliz.projetoAgiliz.dto.LoginDTO;
-import agiliz.projetoAgiliz.dto.UserDetailsDTO;
+import agiliz.projetoAgiliz.dto.colaborador.LoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.UserDetailsDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 
@@ -22,7 +22,7 @@ public class AutenticacaoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<LoginDTO> user = colaboradorRepository.findByEmailColaborador(username);
+        Optional<LoginDTO> user = colaboradorRepository.findyEmailColaborador(username);
 
 
         if (user.isEmpty()) {

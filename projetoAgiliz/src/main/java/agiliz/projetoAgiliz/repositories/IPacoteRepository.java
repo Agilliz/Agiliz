@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import agiliz.projetoAgiliz.dto.PacotePorcentagemDTO;
-import agiliz.projetoAgiliz.dto.RankingEntregasDTO;
-import agiliz.projetoAgiliz.dto.ColetasPorTempo;
-import agiliz.projetoAgiliz.dto.MesPorQtdDeEntregaDTO;
-import agiliz.projetoAgiliz.dto.ZonaRanking;
+import agiliz.projetoAgiliz.dto.dashEntregas.RankingEntregasDTO;
+import agiliz.projetoAgiliz.dto.dashColetas.ColetasPorTempo;
+import agiliz.projetoAgiliz.dto.dashEntregas.MesPorQtdDeEntregaDTO;
+import agiliz.projetoAgiliz.dto.dashColetas.ZonaRanking;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.models.Pacote;
 import agiliz.projetoAgiliz.models.Unidade;
@@ -21,8 +21,9 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID> {
     // @Query("SELECT p FROM Pacote p WHERE p.colaborador = ?1 AND p.status = 3 AND
     // pagamentoFeito = false")
     // List<Pacote> findPackagesForPayment(Colaborador colaborador);
+
     @Query(
-        "SELECT new agiliz.projetoAgiliz.dto.RankingEntregasDTO(" +
+        "SELECT new agiliz.projetoAgiliz.dto.dashEntregas.RankingEntregasDTO(" +
         "z.nomeZona, " +
         "ROUND(COUNT(p) * 100.0 / (SELECT COUNT(p2) FROM Pacote p2), 2)) " +
         "FROM Pacote p " +
@@ -49,7 +50,7 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID> {
 
     @Query("""
         SELECT
-            new agiliz.projetoAgiliz.dto.ZonaRanking(p.zona.nomeZona, (CAST((COUNT(p) / ?1) AS DOUBLE)) * 100)
+            new agiliz.projetoAgiliz.dto.dashColetas.ZonaRanking(p.zona.nomeZona, (CAST((COUNT(p) / ?1) AS DOUBLE)) * 100)
         FROM Pacote p
         WHERE p.tipo = 2
         GROUP BY p.zona
@@ -60,7 +61,7 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID> {
     @Query("SELECT new Pacote(p.status) FROM Pacote p WHERE p.tipo = 2")
     List<Pacote> findAllPacoteStatusOnly();
 
-    @Query("SELECT new agiliz.projetoAgiliz.dto.MesPorQtdDeEntregaDTO(FUNCTION('MONTH', p.dataEntrega), COUNT(p.idPacote)) " +
+    @Query("SELECT new agiliz.projetoAgiliz.dto.dashEntregas.MesPorQtdDeEntregaDTO(FUNCTION('MONTH', p.dataEntrega), COUNT(p.idPacote)) " +
            "FROM Pacote p " +
            "GROUP BY FUNCTION('MONTH', p.dataEntrega) " +
            "ORDER BY FUNCTION('MONTH', p.dataEntrega)")
@@ -68,7 +69,7 @@ public interface IPacoteRepository extends JpaRepository<Pacote, UUID> {
 
     @Query("""
         SELECT
-            new agiliz.projetoAgiliz.dto.ColetasPorTempo(COUNT(p), p.dataColeta)
+            new agiliz.projetoAgiliz.dto.dashColetas.ColetasPorTempo(COUNT(p), p.dataColeta)
         FROM Pacote p
         WHERE p.dataColeta is not null
         GROUP BY p.dataColeta

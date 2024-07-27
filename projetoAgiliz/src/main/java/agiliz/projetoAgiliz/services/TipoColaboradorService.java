@@ -1,7 +1,7 @@
 package agiliz.projetoAgiliz.services;
 
-import agiliz.projetoAgiliz.dto.TipoColaboradorDTO;
-import agiliz.projetoAgiliz.dto.TipoColaboradorResponse;
+import agiliz.projetoAgiliz.dto.tipoColaborador.TipoColaboradorRequest;
+import agiliz.projetoAgiliz.dto.tipoColaborador.TipoColaboradorResponse;
 import agiliz.projetoAgiliz.models.TipoColaborador;
 import agiliz.projetoAgiliz.repositories.ITipoColaboradorRepository;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +17,7 @@ public class TipoColaboradorService {
     private ITipoColaboradorRepository tipoColaboradorRepository;
 
 
-    public TipoColaborador inserir(TipoColaboradorDTO dto){
+    public TipoColaborador inserir(TipoColaboradorRequest dto){
         var tipoColaborador = new TipoColaborador();
         BeanUtils.copyProperties(dto, tipoColaborador);
         tipoColaboradorRepository.save(tipoColaborador);

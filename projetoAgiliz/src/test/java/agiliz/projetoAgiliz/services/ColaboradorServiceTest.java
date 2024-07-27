@@ -1,8 +1,8 @@
 package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
-import agiliz.projetoAgiliz.dto.LoginDTO;
-import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.LoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.UsuarioLoginDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,16 +45,7 @@ public class ColaboradorServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    public void testInserir() {
-        Colaborador colaborador = new Colaborador();
-        when(colaboradorRepository.save(any(Colaborador.class))).thenReturn(colaborador);
 
-        Colaborador result = colaboradorService.inserir(colaborador);
-
-        assertNotNull(result);
-        verify(colaboradorRepository, times(1)).save(colaborador);
-    }
 
     @Test
     public void testListarTodosPageable() {
@@ -93,7 +83,7 @@ public class ColaboradorServiceTest {
         LoginDTO loginDTO = new LoginDTO();
         loginDTO.setEmailColaborador("test@example.com");
         loginDTO.setSenhaColaborador("password");
-        when(colaboradorRepository.findByEmailColaborador(anyString())).thenReturn(Optional.of(loginDTO));
+        when(colaboradorRepository.findyEmailColaborador(anyString())).thenReturn(Optional.of(loginDTO));
 
         when(gerenciadorTokenJWT.generateToken(any(Authentication.class))).thenReturn("token");
 

@@ -3,12 +3,14 @@ package agiliz.projetoAgiliz.configs.security;
 import java.io.IOException;
 import java.util.Objects;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
 import agiliz.projetoAgiliz.services.AutenticacaoService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -44,6 +46,7 @@ public class AutenticacaoFilter extends OncePerRequestFilter{
                 userName = jwtTokenManager.getUsernameFromToken(jwtToken);
             } catch (ExpiredJwtException e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                throw new ResponseEntityException(HttpStatus.UNAUTHORIZED, "Token inválido, tente fazer login novamente", 401);
             }
         }
 

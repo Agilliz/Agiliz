@@ -1,6 +1,6 @@
 package agiliz.projetoAgiliz.services;
 
-import agiliz.projetoAgiliz.dto.PagamentoDTO;
+import agiliz.projetoAgiliz.dto.pagamento.PagamentoRequest;
 import agiliz.projetoAgiliz.models.*;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import agiliz.projetoAgiliz.repositories.IPagamentoRepository;
@@ -42,11 +42,11 @@ public class PagamentoService {
         return pagamento.get();
     }
 
-    public Pagamento cadastrar(PagamentoDTO dto){
+    public Pagamento cadastrar(PagamentoRequest dto){
         return pagamentoRepository.save(gerarPagamento(dto));
     }
 
-    private Pagamento gerarPagamento(PagamentoDTO dto){
+    private Pagamento gerarPagamento(PagamentoRequest dto){
         var pagamento = new Pagamento(dto.tipoPagamento());
         BeanUtils.copyProperties(dto, pagamento);
         pagamento.setTipoColaborador(retornarTipoColaborador(dto.fkTipoColaborador()));

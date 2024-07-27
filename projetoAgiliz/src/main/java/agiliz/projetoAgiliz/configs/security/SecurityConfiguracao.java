@@ -44,7 +44,8 @@ public class SecurityConfiguracao {
     private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
             new AntPathRequestMatcher("/funcionario/login"),
             new AntPathRequestMatcher("/funcionario/cadastrar"),
-            new AntPathRequestMatcher("/logistica/funcionario/login")
+            new AntPathRequestMatcher("/logistica/funcionario/login"),
+            new AntPathRequestMatcher("/funcionario")
     };
 
     @Bean

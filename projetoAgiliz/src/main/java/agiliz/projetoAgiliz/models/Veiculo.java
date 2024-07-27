@@ -21,7 +21,4 @@ public class Veiculo implements Serializable {
     private String tipoVeiculo;
     private String proprietario;
     private String placa;
-
-    @OneToMany(mappedBy = "idColaborador")
-    private List<Colaborador> colaborador;
 }

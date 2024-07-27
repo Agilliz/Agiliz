@@ -1,7 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.TipoColaboradorDTO;
-import agiliz.projetoAgiliz.dto.TipoColaboradorResponse;
+import agiliz.projetoAgiliz.dto.tipoColaborador.TipoColaboradorRequest;
+import agiliz.projetoAgiliz.dto.tipoColaborador.TipoColaboradorResponse;
 import agiliz.projetoAgiliz.models.TipoColaborador;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import agiliz.projetoAgiliz.services.TipoColaboradorService;
@@ -23,7 +23,7 @@ public class TipoColaboradorController {
 
     @PostMapping
     public ResponseEntity<MensageriaService<TipoColaborador>> cadastrar(
-            @RequestBody @Valid TipoColaboradorDTO dto
+            @RequestBody @Valid TipoColaboradorRequest dto
     ){
         return ResponseEntity.status(HttpStatus.CREATED).body(
           new MensageriaService<>(

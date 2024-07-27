@@ -1,5 +1,7 @@
 package agiliz.projetoAgiliz.models;
 
+import agiliz.projetoAgiliz.dto.rota.Endereco;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,43 +12,14 @@ import java.util.Set;
 public class CalculadoraRotas {
     private Set<String> enderecos;
     private Map<String, Map<String, Double>> mapaDeDistancia;
-    private List<String> vizinhos;
-    private Map<String, List<String>> memo;
 
     public CalculadoraRotas(List<Endereco> enderecos) {
-        enderecos.forEach(endereco -> System.out.println(endereco.getId()));
         this.enderecos = new HashSet<>(enderecos.stream().map(Endereco::getId).toList());
         this.mapaDeDistancia = calcularDistancias(enderecos);
-        this.vizinhos = new ArrayList<>(enderecos.stream().map(Endereco::getId).toList());
-        this.memo = new HashMap<>();
     }
 
     public List<String> gerarRota(String vtxInicial, String vtxFinal) {
-        List<String> rota = kOpt(calcularRota(enderecos, vtxInicial, vtxFinal));
-        List<String> rotaDinamica = gerarRotaDinamica(vtxInicial, vizinhos);
-        System.out.println(rotaDinamica);
-        return rota;
-    }
-
-    private List<String> gerarRotaDinamica(String vtxAtual, List<String> vizinhos){
-        if(memo.containsKey(vtxAtual)) return memo.get(vtxAtual);
-        if(vizinhos.isEmpty()) return new ArrayList<>();
-
-        List<String> rotaIdeal = null;
-        double menorDistancia = Double.MAX_VALUE;
-
-        for(String vizinho : vizinhos){
-            List<String> vizinhosDaVez = new ArrayList<>(vizinhos);
-            vizinhosDaVez.remove(vizinho);
-            List<String> rotaAtual = new ArrayList<>(List.of(vizinho));
-            rotaAtual.addAll(gerarRotaDinamica(vizinho, vizinhosDaVez));
-            double distancia = calcularDistancia(rotaAtual);
-            if(distancia < menorDistancia) rotaIdeal = rotaAtual;
-        }
-
-        //System.out.println(rotaIdeal);
-        memo.put(vtxAtual, rotaIdeal);
-        return rotaIdeal;
+        return kOpt(calcularRota(enderecos, vtxInicial, vtxFinal));
     }
 
     private List<String> kOpt(List<String> rota) {
@@ -157,8 +130,7 @@ public class CalculadoraRotas {
         for (Endereco endereco : enderecos) {
             mapaDeDistancia.put(endereco.getId(), new HashMap<>());
             for (Endereco enderecoMapa : enderecos) {
-                if (enderecoMapa.equals(endereco))
-                    continue;
+                if (enderecoMapa.equals(endereco)) continue;
                 double distancia = calcularHarvesine(endereco, enderecoMapa);
                 mapaDeDistancia.get(endereco.getId()).put(enderecoMapa.getId(), distancia);
             }
@@ -177,8 +149,6 @@ public class CalculadoraRotas {
         double a = Math.sin(deltaLatitude / 2) * Math.sin(deltaLatitude / 2) + Math.cos(latitude1) * Math.cos(latitude2)
                 * (Math.sin(deltaLongitude / 2) * Math.sin(deltaLongitude / 2));
 
-        double c = 2 * Math.asin(Math.sqrt(a));
-
-        return c * 6371.0072;
+        return 2 * Math.asin(Math.sqrt(a)) * 6371.0072;
     }
 }

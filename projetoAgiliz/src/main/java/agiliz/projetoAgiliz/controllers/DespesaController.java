@@ -1,53 +1,78 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.DespesaDTO;
-import agiliz.projetoAgiliz.models.Despesa;
+import agiliz.projetoAgiliz.dto.despesa.DespesaRequest;
+import agiliz.projetoAgiliz.dto.despesa.DespesaResponse;
 import agiliz.projetoAgiliz.services.DespesaService;
 import agiliz.projetoAgiliz.services.MensageriaService;
 import jakarta.validation.Valid;
-import org.hibernate.query.Page;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
+import java.util.List;
+import java.util.UUID;
+
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
-@RequestMapping("/despesa")
+@RequestMapping("/despesas")
 @CrossOrigin
+@RequiredArgsConstructor
 public class DespesaController {
 
-    @Autowired
-    private DespesaService despesaService;
+    private final DespesaService service;
 
 
-    @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<Despesa>> cadastrarDespesa(@RequestBody @Valid DespesaDTO despesaDTO){
-
-        try {
-            MensageriaService mensageriaService = new MensageriaService<>(
-                    "Despesa foi cadastrada com sucesso",
-                    despesaService.inserir(despesaDTO), 200);
-                    return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
-        } catch (Exception e){
-            MensageriaService mensageriaService = new MensageriaService<>(e, 500);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
-        }
+    @PostMapping
+    ResponseEntity<MensageriaService<? extends DespesaResponse>> cadastrar(@RequestBody @Valid DespesaRequest dto) {
+        return status(HttpStatus.CREATED)
+                .body(
+                        new MensageriaService<DespesaResponse>()
+                                .mensagemCliente("Despesa cadastrada com sucesso")
+                                .data(new DespesaResponse(service.inserir(dto)))
+                                .status(201)
+                );
     }
 
-//    @GetMapping("/")
-//    ResponseEntity<MensageriaService<Page<Despesa>>> listarDespesa(Pageable pageable){
-//        Page<Despesa> despesas = despesaService.listarDespesas(pageable);
-//
-//        if (!despesas.isEmpty()) {
-//            MensageriaService mensageriaService = new MensageriaService(" Despesas", despesas, 200);
-//            return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-//        }
-//        MensageriaService mensageriaService = new MensageriaService("Não há nenhuma despesa", 404);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
+    @GetMapping
+    ResponseEntity<MensageriaService<List<DespesaResponse>>> getAll() {
+        var despesasResponse = service.getAllResponse();
 
+        if(despesasResponse.isEmpty()) status(HttpStatus.NO_CONTENT).build();
 
+        return status(HttpStatus.OK)
+                    .body(
+                            new MensageriaService<List<DespesaResponse>>()
+                                    .mensagemCliente("Despesas: ")
+                                    .data(despesasResponse)
+                    );
+    }
 
+    @GetMapping("/{id}")
+    ResponseEntity<MensageriaService<DespesaResponse>> getPorId(@PathVariable UUID id) {
+        return status(200)
+                .body(
+                        new MensageriaService<DespesaResponse>()
+                                .mensagemCliente("Despesa por id")
+                                .data(new DespesaResponse(service.getPorId(id)))
+                                .status(200)
+                );
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<MensageriaService<DespesaResponse>> alterar(@RequestBody @Valid DespesaRequest dto, @PathVariable UUID id) {
+        return status(HttpStatus.OK).body(
+                new MensageriaService<DespesaResponse>()
+                        .mensagemCliente("Alterado com sucesso")
+                        .data(new DespesaResponse(service.alterar(dto, id)))
+                        .status(200)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<MensageriaService<Void>> deletar(@PathVariable UUID id) {
+        service.deletarPorId(id);
+        return status(204).build();
+    }
 }

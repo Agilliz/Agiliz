@@ -1,7 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.ZonaDTO;
-import agiliz.projetoAgiliz.dto.ZonaGet;
+import agiliz.projetoAgiliz.dto.zona.ZonaRequest;
 import agiliz.projetoAgiliz.models.Zona;
 import agiliz.projetoAgiliz.repositories.IZonaRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -12,7 +11,6 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +24,9 @@ public class ZonaController {
     private IZonaRepository repository;
     
     @PostMapping
-    public ResponseEntity<MensageriaService<Zona>> cadastrar(@RequestBody @Valid ZonaDTO zonaDTO) {
+    public ResponseEntity<MensageriaService<Zona>> cadastrar(@RequestBody @Valid ZonaRequest zonaRequest) {
         var zona = new Zona();
-        BeanUtils.copyProperties(zonaDTO, zona);
+        BeanUtils.copyProperties(zonaRequest, zona);
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(new MensageriaService<Zona>(
@@ -68,13 +66,13 @@ public class ZonaController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<MensageriaService<Zona>> alterar(@RequestBody @Valid ZonaDTO zonaDTO, @PathVariable UUID id) {
+    public ResponseEntity<MensageriaService<Zona>> alterar(@RequestBody @Valid ZonaRequest zonaRequest, @PathVariable UUID id) {
         var zonaOpt = repository.findById(id);
 
         if(zonaOpt.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
         var zona = zonaOpt.get();
-        BeanUtils.copyProperties(zonaDTO, zona);
+        BeanUtils.copyProperties(zonaRequest, zona);
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(new MensageriaService<Zona>(

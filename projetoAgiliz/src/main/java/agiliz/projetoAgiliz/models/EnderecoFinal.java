@@ -1,7 +1,9 @@
 package agiliz.projetoAgiliz.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "EnderecoFinal")
+@AllArgsConstructor
+@NoArgsConstructor
 public class EnderecoFinal implements Serializable {
     private static final long serialVersionUID = 1L;
 

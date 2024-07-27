@@ -1,6 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.DadosColeta;
+import agiliz.projetoAgiliz.dto.dashColetas.DadosColeta;
 import agiliz.projetoAgiliz.services.ColetasService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

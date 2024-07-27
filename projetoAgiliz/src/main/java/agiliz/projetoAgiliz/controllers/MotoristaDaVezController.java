@@ -1,6 +1,6 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.MotoristaDaVezDTO;
+import agiliz.projetoAgiliz.dto.motoristaDaVez.MotoristaDaVezDTO;
 import agiliz.projetoAgiliz.models.MotoristaDaVez;
 import agiliz.projetoAgiliz.repositories.IMotoristaDaVezRepository;
 import agiliz.projetoAgiliz.services.MensageriaService;

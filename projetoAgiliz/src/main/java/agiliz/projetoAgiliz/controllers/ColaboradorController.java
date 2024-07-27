@@ -1,29 +1,25 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.ColaboradorDTO;
-import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
-import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.*;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.services.ColaboradorService;
 import agiliz.projetoAgiliz.services.MensageriaService;
-import agiliz.projetoAgiliz.utils.CalculadoraDatas;
 import agiliz.projetoAgiliz.utils.GeradorArquivo;
-import agiliz.projetoAgiliz.utils.ListaObj;
 import jakarta.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @RequestMapping("/funcionario")
@@ -31,141 +27,113 @@ import java.util.UUID;
 public class ColaboradorController {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private ColaboradorService colaboradorService;
 
+    @PostMapping("/email-recuperacao-senha")
+    public ResponseEntity<Void> solicitarAlteracaoSenha(
+            @RequestBody @Valid EmailAlterarSenhaRequest dto
+    ) {
+        colaboradorService.mandarEmailAlteracaoSenha(dto.email());
+        return noContent().build();
+    }
+
+    @PatchMapping("/alterar-senha")
+    public ResponseEntity<Void> alterarSenha(@RequestBody @Valid AlterarSenhaRequest dto) {
+        colaboradorService.alterarSenha(dto);
+        return noContent().build();
+    }
+
     @PostMapping("/login")
-    ResponseEntity<UsuarioLoginDTO> login(@RequestBody UsuarioLoginDTO usuarioLoginDTO) {
+    ResponseEntity<UsuarioLoginDTO> login(@RequestBody @Valid UsuarioLoginDTO usuarioLoginDTO) {
         var userLogin = colaboradorService.login(usuarioLoginDTO);
 
         if (!userLogin.equals(null)) {
-            return ResponseEntity.status(HttpStatus.OK).body(userLogin);
+            return status(HttpStatus.OK).body(userLogin);
         }
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("/cadastrar")
-    ResponseEntity<MensageriaService<Colaborador>> cadastroColaborador(
-            @RequestBody @Valid ColaboradorDTO colaboradorDTO) {
-
-        Colaborador colaborador = new Colaborador();
-
-        String senhaCriptografada = passwordEncoder.encode(colaboradorDTO.senhaColaborador());
-
-        BeanUtils.copyProperties(colaboradorDTO, colaborador);
-
-        colaborador.setSenhaColaborador(senhaCriptografada);
-
-        try {
-            MensageriaService mensageriaService = new MensageriaService<>(
-                    "Funcionario Cadastrado com Sucesso",
-                    colaboradorService.inserir(colaborador), 200);
-            return ResponseEntity.status(HttpStatus.CREATED).body(mensageriaService);
-        } catch (Exception e) {
-            MensageriaService mensageriaService = new MensageriaService(e, 500);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensageriaService);
-        }
+    ResponseEntity<MensageriaService<ColaboradorResponse>> cadastroColaborador(
+            @RequestBody @Valid ColaboradorRequest colaboradorRequest) {
+            return status(HttpStatus.OK).body(
+                    new MensageriaService<ColaboradorResponse>()
+                            .mensagemCliente("Colaborador cadastrado com sucesso")
+                            .data(new ColaboradorResponse(colaboradorService.inserir(colaboradorRequest)))
+            );
     }
 
-    @PutMapping("alterar/{idColaborador}")
-    public ResponseEntity<MensageriaService<Colaborador>> alterarColaboradorById(@PathVariable UUID idColaborador,
-            @Valid @RequestBody ColaboradorDTO colaboradorDTO) throws Exception {
-
-        Colaborador colaborador = colaboradorService.getPorId(idColaborador);
-
-        BeanUtils.copyProperties(colaboradorDTO, colaborador);
-
-        try {
-            colaboradorService.inserir(colaborador);
-
-            MensageriaService mensageriaService = new MensageriaService<>("Colaborador atualizado com sucesso",
-                    colaborador, 200);
-
-            return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-
-        } catch (Exception e) {
-
-            MensageriaService mensageriaService = new MensageriaService<>("Ocorreu um erro a atualizar o colaborador ",
-                    400);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(mensageriaService);
-        }
-
+    @PutMapping("/alterar/{idColaborador}")
+    public ResponseEntity<MensageriaService<ColaboradorResponse>> alterarColaboradorById(
+            @PathVariable UUID idColaborador,
+            @Valid @RequestBody ColaboradorRequest colaboradorRequest) {
+               return status(HttpStatus.OK)
+                       .body(
+                               new MensageriaService<ColaboradorResponse>()
+                                       .mensagemCliente("Colaborador alterado com sucesso")
+                                       .data(new ColaboradorResponse(colaboradorService.alterar(idColaborador, colaboradorRequest)))
+                                       .status(200)
+                       );
     }
 
-    @DeleteMapping("/deletar/{idColaborador}")
-    public ResponseEntity deleteColaboradorById(@PathVariable UUID idColaborador) throws Exception {
+    @DeleteMapping("/{idColaborador}")
+    public ResponseEntity<MensageriaService<Void>> deleteColaboradorById(@PathVariable UUID idColaborador) {
         colaboradorService.deletarPorId(idColaborador);
-        return ResponseEntity.status(204).build();
+        return status(204).build();
     }
 
     @GetMapping("/matriz-colaborador")
-    public ResponseEntity<List<String[]>> getMatrizColaboradorPorDespesa() {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(colaboradorService.listarMatriz());
+    public ResponseEntity<MensageriaService<List<String[]>>> getMatrizColaboradorPorDespesa() {
+        return status(HttpStatus.OK)
+                .body(
+                        new MensageriaService<List<String[]>>()
+                                .mensagemCliente("Matriz colaborador por CPF")
+                                .data(colaboradorService.listarMatriz())
+                                .status(200)
+                );
     }
 
-    @GetMapping("/")
-    ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<MensageriaService<Page<Colaborador>>> listarColaborador(Pageable pageable) {
         Page<Colaborador> colaboradores = colaboradorService.listarTodos(pageable);
-        System.out.println(colaboradores);
 
         if (!colaboradores.isEmpty()) {
-            MensageriaService mensageriaService = new MensageriaService("Funcionarios", colaboradores, 200);
-            return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
+            return status(HttpStatus.OK)
+                    .body(
+                            new MensageriaService<Page<Colaborador>>()
+                                    .mensagemCliente("Funcionários")
+                                    .data(colaboradores)
+                                    .status(200)
+                    );
         }
-        MensageriaService mensageriaService = new MensageriaService("Não há funcionários", 204);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        return status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/{idFuncionario}")
-    ResponseEntity<MensageriaService<Colaborador>> listarFuncionariosPorId(@PathVariable UUID idFuncionario) {
-        Colaborador colaborador = colaboradorService.getPorId(idFuncionario);
-
-        return ResponseEntity.status(HttpStatus.OK).body(new MensageriaService<>(
-            "Funcionario", colaborador, 200));
-    }
-
-    // @DeleteMapping("/{idFuncionario}")
-    // ResponseEntity<MensageriaService<List<Colaborador>>> deletarPorId
-    // (@PathVariable UUID idFuncionario) {
-    // Optional<Colaborador> funcionarioList =
-    // colaboradorRepository.findById(idFuncionario);
-    //
-    // if (funcionarioList.isPresent()){
-    // colaboradorRepository.deleteById(idFuncionario);
-    // MensageriaService mensageriaService = new MensageriaService("Funcionário
-    // excluído com sucesso", 200);
-    // return ResponseEntity.status(HttpStatus.OK).body(mensageriaService);
-    // }
-    // MensageriaService mensageriaService = new MensageriaService("Funcionário não
-    // encontrado", funcionarioList, 404);
-    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensageriaService);
-    //
-    // }
-
-    @GetMapping("/teste-chave")
-    public Date getData() {
-        LocalDate dataChave = LocalDate.of(2024, 8, 10);
-        return CalculadoraDatas.calcularQuintoDiaUtil(dataChave);
+    public ResponseEntity<MensageriaService<Colaborador>> listarFuncionariosPorId(@PathVariable UUID idFuncionario) {
+        return status(HttpStatus.OK)
+                .body(
+                        new MensageriaService<Colaborador>()
+                                .mensagemCliente("Funcionário")
+                                .data(colaboradorService.getPorId(idFuncionario))
+                                .status(200)
+                );
     }
 
     @GetMapping(value = "/gravar-arquivo", produces = "text/csv")
-    public ResponseEntity<byte[]> gravarArquivo() throws Exception {
+    public ResponseEntity<MensageriaService<byte[]>> gravarArquivo() {
         try {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(GeradorArquivo.gravarArquivo(colaboradorService.listarTodos(), "Arquivo dos colaboradores"));
+            return status(HttpStatus.OK)
+                    .body(
+                            new MensageriaService<byte[]>()
+                                    .mensagemCliente("CSV colaboradores")
+                                    .data(GeradorArquivo.gravarArquivo(colaboradorService.listarTodos(), "Arquivo dos colaboradores"))
+                                    .status(200)
+                    );
         } catch (Exception e) {
-            System.out.println(e);
-            throw new Exception(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
-
-    }
-
-    @GetMapping("/ler-arquivo")
-    public void lerArquivo() {
-        GeradorArquivo.leArquivoCsv("Arquivo dos colaboradores");
     }
 }

@@ -1,7 +1,7 @@
 package agiliz.projetoAgiliz.controllers;
 
-import agiliz.projetoAgiliz.dto.PagamentoAdapter;
-import agiliz.projetoAgiliz.dto.PagamentoDTO;
+import agiliz.projetoAgiliz.dto.pagamento.PagamentoResponse;
+import agiliz.projetoAgiliz.dto.pagamento.PagamentoRequest;
 import agiliz.projetoAgiliz.utils.FolhaDePagamento;
 import agiliz.projetoAgiliz.models.Pagamento;
 import agiliz.projetoAgiliz.services.MensageriaService;
@@ -23,7 +23,7 @@ public class PagamentoController {
     private PagamentoService pagamentoService;
 
     @PostMapping
-    public ResponseEntity<MensageriaService<Pagamento>> cadastrar(@RequestBody @Valid PagamentoDTO dto){
+    public ResponseEntity<MensageriaService<Pagamento>> cadastrar(@RequestBody @Valid PagamentoRequest dto){
         return ResponseEntity.ok().body(
                 new MensageriaService<>(
                         "Inserido com sucesso",
@@ -33,13 +33,13 @@ public class PagamentoController {
     }
 
     @GetMapping
-    public ResponseEntity<MensageriaService<List<PagamentoAdapter>>> get(){
+    public ResponseEntity<MensageriaService<List<PagamentoResponse>>> get(){
         List<Pagamento> pagamentos = pagamentoService.listar();
 
         if(pagamentos.isEmpty()) return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         return ResponseEntity.ok().body(
-          new MensageriaService<List<PagamentoAdapter>>(
+          new MensageriaService<List<PagamentoResponse>>(
                   "Pagamentos",
                   serializarListaPagamentos(pagamentos),
                   HttpStatus.OK.value()
@@ -69,13 +69,13 @@ public class PagamentoController {
         );
     }
 
-    private List<PagamentoAdapter> serializarListaPagamentos(List<Pagamento> pagamentos){
+    private List<PagamentoResponse> serializarListaPagamentos(List<Pagamento> pagamentos){
         return pagamentos.stream()
                 .map(this::serializarPagamento)
                 .toList();
     }
 
-    private PagamentoAdapter serializarPagamento(Pagamento pagamento){
-        return new PagamentoAdapter(pagamento);
+    private PagamentoResponse serializarPagamento(Pagamento pagamento){
+        return new PagamentoResponse(pagamento);
     }
 }

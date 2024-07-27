@@ -2,13 +2,11 @@ package agiliz.projetoAgiliz.services;
 
 import agiliz.projetoAgiliz.configs.security.Exception.ResponseEntityException;
 import agiliz.projetoAgiliz.configs.security.JWT.GerenciadorTokenJWT;
-import agiliz.projetoAgiliz.dto.DashColetasDTO;
-import agiliz.projetoAgiliz.dto.LoginDTO;
-import agiliz.projetoAgiliz.dto.MaiorEMenorEntregaDTO;
-import agiliz.projetoAgiliz.dto.MatrizColaboradorDTO;
-import agiliz.projetoAgiliz.dto.MesPorQtdDeEntregaDTO;
-import agiliz.projetoAgiliz.dto.TotalEntregaDTO;
-import agiliz.projetoAgiliz.dto.UsuarioLoginDTO;
+import agiliz.projetoAgiliz.dto.colaborador.*;
+import agiliz.projetoAgiliz.dto.dashEntregas.DashEntregas;
+import agiliz.projetoAgiliz.dto.dashEntregas.MaiorEMenorEntrega;
+import agiliz.projetoAgiliz.dto.dashEntregas.MesPorQtdDeEntregaDTO;
+import agiliz.projetoAgiliz.dto.dashEntregas.TotalEntregaDTO;
 import agiliz.projetoAgiliz.models.Colaborador;
 import agiliz.projetoAgiliz.repositories.IColaboradorRepository;
 import agiliz.projetoAgiliz.repositories.IPacoteRepository;
@@ -20,35 +18,50 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@RequiredArgsConstructor
 public class ColaboradorService {
 
-    @Autowired
-    GerenciadorTokenJWT gerenciadorTokenJWT;
+    private final GerenciadorTokenJWT gerenciadorTokenJWT;
+    private final IColaboradorRepository colaboradorRepository;
+    private final IPacoteRepository pacoteRepository;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    @Autowired
-    private IColaboradorRepository colaboradorRepository;
-
-    @Autowired
-    private IPacoteRepository pacoteRepository;
-    
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    public Colaborador inserir(Colaborador colaborador){
+    public Colaborador inserir(ColaboradorRequest colaboradorDTO){
+        Colaborador colaborador = new Colaborador();
+        BeanUtils.copyProperties(colaboradorDTO, colaborador);
+        criptografarSenha(colaboradorDTO.senhaColaborador(), colaborador);
         colaboradorRepository.save(colaborador);
         return colaborador;
+    }
+
+    public void criptografarSenha(String senha, Colaborador colaborador){
+        String senhaCriptografada = passwordEncoder.encode(senha);
+        colaborador.setSenhaColaborador(senhaCriptografada);
+    }
+
+    public Colaborador alterar(UUID idColaborador, ColaboradorRequest colaboradorRequest) {
+        Colaborador colaborador = getPorId(idColaborador);
+        BeanUtils.copyProperties(colaboradorRequest, colaborador);
+        criptografarSenha(colaboradorRequest.senhaColaborador(), colaborador);
+        return colaboradorRepository.save(colaborador);
     }
 
     public String listarColaboradoresComMaiorEntrega(){
@@ -118,7 +131,7 @@ public class ColaboradorService {
             
             final Authentication authentication = this.authenticationManager.authenticate(credentials);
             
-            Optional<LoginDTO> userFound = colaboradorRepository.findByEmailColaborador(usuarioLoginDTO.getEmail());
+            Optional<LoginDTO> userFound = colaboradorRepository.findyEmailColaborador(usuarioLoginDTO.getEmail());
             
             if (!userFound.isPresent()) {
                 throw new ResponseEntityException(HttpStatus.NOT_FOUND, 
@@ -140,17 +153,16 @@ public class ColaboradorService {
         }
     }
 
-    public void deletarPorId(UUID idColaborador) throws Exception{
-        if(colaboradorRepository.findById(idColaborador).isPresent()){
-            colaboradorRepository.deleteById(idColaborador);
-            return;
-        }
-        throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Colaborador não encontrado", 404);
+    public void deletarPorId(UUID idColaborador) {
+        if(!colaboradorRepository.existsById(idColaborador))
+            throw new ResponseEntityException(HttpStatus.NOT_FOUND, "Colaborador não encontrado", 404);
+
+        colaboradorRepository.deleteById(idColaborador);
     }
 
-    public DashColetasDTO montarDash(){
-        var dadosDash = new DashColetasDTO();
-        var maiorEMenorEntrega = new MaiorEMenorEntregaDTO();
+    public DashEntregas montarDash(){
+        var dadosDash = new DashEntregas();
+        var maiorEMenorEntrega = new MaiorEMenorEntrega();
 
         maiorEMenorEntrega.setNomeColaboradorMaiorEntrega(listarColaboradoresComMaiorEntrega());
         maiorEMenorEntrega.setNomeColaboradorMenorEntrega(listarColaboradoresComMenorEntrega());
@@ -163,5 +175,23 @@ public class ColaboradorService {
         dadosDash.setZonasAtendidas(dadosDash.getTotalEntregaDTO().getTotal());
 
         return dadosDash;
+    }
+
+    public void mandarEmailAlteracaoSenha(String destinatario) {
+        if (!colaboradorRepository.existsByEmailColaborador(destinatario)) return;
+
+        // coloquei o endpoint de get funcionarios só pra testar, depois por o link para tela de
+        // redefinição de senha
+        emailService.enviarEmail(
+                destinatario,
+                "Recuperação de Senha",
+                Map.of("link", "http://localhost:8080/funcionario")
+        );
+    }
+
+    public void alterarSenha(AlterarSenhaRequest dto) {
+        var colaborador = getPorId(dto.idColaborador());
+        criptografarSenha(dto.senha(), colaborador);
+        colaboradorRepository.save(colaborador);
     }
 }

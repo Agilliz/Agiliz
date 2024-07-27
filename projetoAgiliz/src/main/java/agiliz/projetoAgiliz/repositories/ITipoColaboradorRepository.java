@@ -1,6 +1,6 @@
 package agiliz.projetoAgiliz.repositories;
 
-import agiliz.projetoAgiliz.dto.TipoColaboradorResponse;
+import agiliz.projetoAgiliz.dto.tipoColaborador.TipoColaboradorResponse;
 import agiliz.projetoAgiliz.models.TipoColaborador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
