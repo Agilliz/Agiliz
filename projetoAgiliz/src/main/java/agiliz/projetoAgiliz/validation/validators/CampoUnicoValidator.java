@@ -17,17 +17,14 @@ public class CampoUnicoValidator implements ConstraintValidator<CampoUnico, Obje
 
     @PersistenceContext
     private EntityManager entityManager;
-
     private String fieldName;
     private Class<?> entityClass;
-    private String message;
 
 
     @Override
     public void initialize(CampoUnico campoUnico) {
         this.fieldName = campoUnico.fieldName();
         this.entityClass = campoUnico.entityClass();
-        this.message = campoUnico.message();
     }
 
     @Override
@@ -35,9 +32,7 @@ public class CampoUnicoValidator implements ConstraintValidator<CampoUnico, Obje
         if(value == null) return true;
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
         CriteriaQuery<Long> query = cb.createQuery(Long.class);
-
         Root<?> root = query.from(entityClass);
 
         query.select(cb.count(root))
