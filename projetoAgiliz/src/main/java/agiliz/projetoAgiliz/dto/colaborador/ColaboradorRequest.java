@@ -1,5 +1,8 @@
 package agiliz.projetoAgiliz.dto.colaborador;
 
+import agiliz.projetoAgiliz.models.Colaborador;
+
+import agiliz.projetoAgiliz.validation.annotations.CampoUnico;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,7 +16,9 @@ public record ColaboradorRequest(
         @NotBlank String rg,
         @NotBlank String classeCarteira,
         @NotNull  Date dataNascimento,
-        @NotBlank String emailColaborador,
+        @NotBlank
+        @CampoUnico(message = "E-mail já cadastrado", fieldName = "emailColaborador", entityClass = Colaborador.class)
+        String emailColaborador,
         @NotBlank String senhaColaborador,
         @NotNull Date dataAdmissao,
         @NotBlank String telefoneColaborador
